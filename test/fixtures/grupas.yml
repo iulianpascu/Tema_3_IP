@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  grupa: MyString
+  studenti: 1
+
+two:
+  grupa: MyString
+  studenti: 1

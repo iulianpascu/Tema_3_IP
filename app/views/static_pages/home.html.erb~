@@ -1,0 +1,6 @@
+<h1>StaticPages#home</h1>
+
+<div class="center">
+		
+	<%= link_to "Generate", '#',class: "btn btn-large btn-primary" %>
+</div>
