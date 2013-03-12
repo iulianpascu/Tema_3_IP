@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311171759) do
+ActiveRecord::Schema.define(:version => 20130312214428) do
 
   create_table "grupas", :force => true do |t|
     t.string   "grupa"
@@ -23,8 +23,13 @@ ActiveRecord::Schema.define(:version => 20130311171759) do
   create_table "users", :force => true do |t|
     t.string   "token"
     t.string   "grupa"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "token_digest"
+    t.string   "cookie"
   end
+
+  add_index "users", ["cookie"], :name => "index_users_on_cookie"
+  add_index "users", ["token"], :name => "index_users_on_token", :unique => true
 
 end

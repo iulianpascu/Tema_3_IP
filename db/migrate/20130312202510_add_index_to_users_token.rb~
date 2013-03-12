@@ -1,0 +1,4 @@
+class AddIndexToUsersToken < ActiveRecord::Migration
+  def change
+  end
+end

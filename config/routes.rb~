@@ -1,14 +1,31 @@
 GossipLogin::Application.routes.draw do
 
+  get "student/listare"
+
+  get "student/completare"
+
+  get "administrare/listare"
+
+  get "administrare/adaugare"
+
+  get "administrare/generare"
+
+  get "autentificare/autentifica"
+
   get "static_pages/home"
 
   resources :grupas
 
   resources :users
+	
+  resources :sessions, only: [:new, :create, :destroy]
 
  root to: 'static_pages#home'
 
- match '/signup', to: 'users#new'
+  match '/sign_in', to: 'sessions#new'
+  match '/sign_out', to: 'sessions#destroy', :via => :delete
+
+ #match '/signup', to: 'users#new'
 
 
   # The priority is based upon order of creation:

@@ -17,10 +17,15 @@ GossipLogin::Application.routes.draw do
   resources :grupas
 
   resources :users
+	
+  resources :sessions, only: [:new, :create, :destroy]
 
- root to: 'static_pages#home'
+ #root to: 'static_pages#home'
 
- match '/signup', to: 'users#new'
+  match '/sign_in', to: 'sessions#new'
+  match '/sign_out', to: 'sessions#destroy', :via => :delete
+
+ #match '/signup', to: 'users#new'
 
 
   # The priority is based upon order of creation:
