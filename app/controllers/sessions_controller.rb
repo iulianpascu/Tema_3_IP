@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
    user = User.find_by_token(params[:sessions][:token])
      if user 
        sign_in user
-       redirect_to '/users'
+       redirect_to '/student/listare'
      elsif (!user)
        flash[:notice] = "An account associated with this token doesn't exist"
        render 'new'
@@ -23,6 +23,8 @@ class SessionsController < ApplicationController
 
 
  def destroy
+   sign_out
+   redirect_to root_path
  end
 
 end
