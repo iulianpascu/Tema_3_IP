@@ -49,6 +49,7 @@ class UsersController < ApplicationController
       else
         render action: "new"
       end
+    end
   end
 
   # PUT /users/1
