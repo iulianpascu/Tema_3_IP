@@ -24,8 +24,8 @@ GossipLogin::Application.routes.draw do
 
   match '/sign_in', to: 'sessions#new'
   match '/sign_out', to: 'sessions#destroy', :via => :delete
-  match '/pdf_generate', to: 'pdfs#show'
-
+  match '/pdf_gen', to: 'static_pages#home'
+	match '/pdf', to: 'static_pages#home'
  #match '/signup', to: 'users#new'
 
 

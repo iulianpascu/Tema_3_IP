@@ -1,9 +1,5 @@
 GossipLogin::Application.routes.draw do
 
-  get "tokens/index"
-
-  get "tokens/show"
-
   get "student/listare"
 
   get "student/completare"
@@ -28,8 +24,7 @@ GossipLogin::Application.routes.draw do
 
   match '/sign_in', to: 'sessions#new'
   match '/sign_out', to: 'sessions#destroy', :via => :delete
-  match '/pdf_generate', to: 'tokens#show'
-
+  match '/pdf_gen', to: 'static_pages#home'
  #match '/signup', to: 'users#new'
 
 
