@@ -18,8 +18,15 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.pdf do
+				pdf = UserPdf.new(@user)
+				send_data pdf.render, filename:
+					"Token_test.pdf",
+				type: "application/pdf"
+				#disposition: "inline"
+			end
     end
-  end
+	end
 
   # GET /users/new
   # GET /users/new.json

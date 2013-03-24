@@ -1,5 +1,9 @@
 GossipLogin::Application.routes.draw do
 
+  get "tokens/index"
+
+  get "tokens/show"
+
   get "student/listare"
 
   get "student/completare"
@@ -17,13 +21,14 @@ GossipLogin::Application.routes.draw do
   resources :grupas
 
   resources :users
-	
+
   resources :sessions, only: [:new, :create, :destroy]
 
  root to: 'users#index'
 
   match '/sign_in', to: 'sessions#new'
   match '/sign_out', to: 'sessions#destroy', :via => :delete
+  match '/pdf_generate', to: 'tokens#show'
 
  #match '/signup', to: 'users#new'
 
