@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id_prof: 1
+  nume_prof: MyString
+
+two:
+  id_prof: 1
+  nume_prof: MyString

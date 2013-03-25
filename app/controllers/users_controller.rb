@@ -42,13 +42,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
+   respond_to do |format|
       if @user.save
        sign_in @user
        #redirect_to .....
-       flash[:success] = "Your're token is valid!"
+      # flash[:success] = "Your're token is valid!"
+       format.html { redirect_to @user, notice: 'User was successfully created.' }
       else
-        render action: "new"
+        #render action: "new"
+	format.html { render action: "new" }	
       end
+    end
   end
 
   # PUT /users/1

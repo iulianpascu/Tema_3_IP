@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
    before_save :create_cookie
 
    belongs_to :grupas
+   
+   has_one :evaluare_in_progres
 
    validates :token, :presence => true, length: {maximum: 10}
 

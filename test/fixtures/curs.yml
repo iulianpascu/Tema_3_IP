@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id_curs: 1
+  nume_curs: MyString
+  tip_curs: MyString
+
+two:
+  id_curs: 1
+  nume_curs: MyString
+  tip_curs: MyString

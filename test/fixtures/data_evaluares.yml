@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  an_terminal: false
+  data_start: 2013-03-19 15:56:16
+  data_stop: 2013-03-19 15:56:16
+
+two:
+  an_terminal: false
+  data_start: 2013-03-19 15:56:16
+  data_stop: 2013-03-19 15:56:16
