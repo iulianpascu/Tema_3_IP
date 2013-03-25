@@ -1,0 +1,25 @@
+<h1>Listing activare_butons</h1>
+
+<table>
+  <tr>
+    <th>Data inceput</th>
+    <th>Data sf</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @activare_butons.each do |activare_buton| %>
+  <tr>
+    <td><%= activare_buton.data_inceput %></td>
+    <td><%= activare_buton.data_sf %></td>
+    <td><%= link_to 'Show', activare_buton %></td>
+    <td><%= link_to 'Edit', edit_activare_buton_path(activare_buton) %></td>
+    <td><%= link_to 'Destroy', activare_buton, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Activare buton', new_activare_buton_path %>

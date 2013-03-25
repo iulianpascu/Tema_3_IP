@@ -1,0 +1,25 @@
+<%= form_for(@activare_buton) do |f| %>
+  <% if @activare_buton.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@activare_buton.errors.count, "error") %> prohibited this activare_buton from being saved:</h2>
+
+      <ul>
+      <% @activare_buton.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :data_inceput %><br />
+    <%= f.text_field :data_inceput %>
+  </div>
+  <div class="field">
+    <%= f.label :data_sf %><br />
+    <%= f.text_field :data_sf %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

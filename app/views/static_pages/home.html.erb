@@ -1,5 +1,7 @@
 <h1>StaticPages#home</h1>
 
 <div class="pdf_link">
-	<%= link_to "Generate", pdf_gen_path(:format => "pdf"),class: "btn btn-large btn-primary" %>
+	<%= button_to "Generate", pdf_gen_path(:format => "pdf"),
+	{:id => "generate_button"}%>
+	<%= javascript_include_tag 'static_pages.js.coffee' %>
 </div>

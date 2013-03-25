@@ -1,5 +1,7 @@
 GossipLogin::Application.routes.draw do
 
+  resources :activare_butons
+
   get "student/listare"
 
   get "student/completare"
