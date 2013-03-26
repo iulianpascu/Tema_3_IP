@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+
+$(document).getElementById("generate_button").disabled=true;

@@ -5,3 +5,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+
+$("#generate_button").attr("disabled", true);
