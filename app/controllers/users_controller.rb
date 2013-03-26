@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @user }
     end
-  end
+	end
 
   # GET /users/new
   # GET /users/new.json
