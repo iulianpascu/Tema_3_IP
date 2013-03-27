@@ -58,7 +58,7 @@ require "rexml/document"
 							
 							
 							XPath.each( doc, "//categorie/attribute::id") do |element|  
-               				@id.push element
+               				@id.push element.id
 							end
 							
 							
