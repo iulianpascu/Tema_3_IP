@@ -1,0 +1,25 @@
+<h1>Listing token_users</h1>
+
+<table>
+  <tr>
+    <th>Grupa</th>
+    <th>Token</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @token_users.each do |token_user| %>
+  <tr>
+    <td><%= token_user.grupa %></td>
+    <td><%= token_user.token %></td>
+    <td><%= link_to 'Show', token_user %></td>
+    <td><%= link_to 'Edit', edit_token_user_path(token_user) %></td>
+    <td><%= link_to 'Destroy', token_user, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Token user', new_token_user_path %>

@@ -1,0 +1,33 @@
+<h1>Start#refresh_data</h1>
+<p>Find me in app/views/start/refresh_data.html.erb</p>
+<table>
+<% @cursuri.each do |curs| %>
+	<tr>
+		<td><%= curs["course_name"]%></td>
+		<td><%= curs["teacher_firstname"]%></td>
+		<td><%= curs["teacher_lastname"]%></td>
+		<td><%= curs["course_type"]%></td>
+		<td><%= curs["group"]%></td>
+		<td><%= curs["teacher_id"]%></td>
+	</tr>
+<% end %>
+</table>
+
+
+<table>
+<% @grupe.each do |grupa| %>
+	<tr>
+		<td><%= grupa["grupa"]%></td>
+		<td><%= grupa["studenti"]%></td>
+	</tr>
+<% end %>
+</table>
+
+<table>
+<% @tokens.each do |t| %>
+	<tr>
+		<td><%= t["grupa"]%></td>
+		<td><%= t["token"]%></td>
+	</tr>
+<% end %>
+</table>

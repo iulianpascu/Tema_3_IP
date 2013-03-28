@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Grupa:</b>
+  <%= @token_user.grupa %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%= @token_user.token %>
+</p>
+
+
+<%= link_to 'Edit', edit_token_user_path(@token_user) %> |
+<%= link_to 'Back', token_users_path %>
