@@ -1,0 +1,17 @@
+class CreateCurs < ActiveRecord::Migration
+  def change
+<<<<<<< HEAD
+
+=======
+    #drop_table :curs
+>>>>>>> Autentificare
+
+    create_table :curs do |t|
+      t.integer :id_curs
+      t.string :nume_curs
+      t.string :tip_curs
+
+      t.timestamps
+    end
+  end
+end
