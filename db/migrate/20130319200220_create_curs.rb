@@ -1,7 +1,7 @@
 class CreateCurs < ActiveRecord::Migration
   def change
-    drop_table :curs 
-   
+    #drop_table :curs
+
     create_table :curs do |t|
       t.integer :id_curs
       t.string :nume_curs
