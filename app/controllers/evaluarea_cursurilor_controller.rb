@@ -2,8 +2,8 @@ class EvaluareaCursurilorController < ApplicationController
 
 	def verificare
 
-		#user = IncognitoUser.find_by_token(session[:token])
-		user = IncognitoUser.find_by_token("1234")
+		user = IncognitoUser.find_by_token(session[:user_token])
+		#user = IncognitoUser.find_by_token("1234")
 		grupa = Grupa.find_by_nume(user.grupa_nume)
 		eval = EvaluareDisponibila.find(:all, :conditions =>
 																					{:grupa_nume => grupa.nume})

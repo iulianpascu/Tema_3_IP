@@ -14,7 +14,7 @@ Grupa.create(nume: 344, studenti:30)
 Grupa.create(nume: 341, studenti:20)
 Grupa.create(nume: 342, studenti:22)
 
-EvaluareDisponibila.create(curs_id: 4, grupa_nume: 344)
+EvaluareDisponibila.create(curs_id: 3, grupa_nume: 344)
 EvaluareDisponibila.create(curs_id: 2, grupa_nume: 344)
 EvaluareDisponibila.create(curs_id: 1, grupa_nume: 344)
 

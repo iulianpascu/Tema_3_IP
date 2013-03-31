@@ -10,7 +10,7 @@
         	<div class="nav-collapse collapse nav-bar-inverse-collapse">
         		<ul class="nav pull-right">
 
-        		<li><a href="#">Iesire</a></li>
+        		<li><%= link_to "Iesire", '/sign_out' %></li>
         		</ul>
         	</div>
         </div>
@@ -42,6 +42,7 @@
         <th>Evalueaza</th>
       </tr>
       <% i=0 %>
+      <%=@eval%>
       <% @curs.each_slice(3) do |slice| %>
       <tr>
       <% slice.each do |value| %>
