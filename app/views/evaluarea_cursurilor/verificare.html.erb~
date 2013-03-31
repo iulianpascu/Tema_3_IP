@@ -41,12 +41,15 @@
         <th>Tip</th>
         <th>Evalueaza</th>
       </tr>
-      <% (1..10).each_slice(3) do |slice| %>
+      <% i=0 %>
+      <% @curs.each_slice(3) do |slice| %>
       <tr>
       <% slice.each do |value| %>
         <td><%=value%></td>
       <% end %>
-        <td><button class="modalButton btn btn-primary span2 " id="1">Evalueaza!</button></td>
+
+        <td><button class="modalButton btn btn-primary span2 " id="<%= i+=1 %>">Evalueaza!</button></td>
+			</tr>
     <% end %>
     </table>
     <div class="clearfix"></div>
