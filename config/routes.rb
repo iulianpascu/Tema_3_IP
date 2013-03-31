@@ -1,5 +1,7 @@
 GossipLogin::Application.routes.draw do
 
+  #get "evaluarea_cursurilor/verificare"
+
   get "student/listare"
 
   get "student/completare"
@@ -23,6 +25,7 @@ GossipLogin::Application.routes.draw do
   match '/sign_in', to: 'sessions#new', as: "/sign_in"
   match '/sign_out', to: 'sessions#destroy'
   match '/pdf_gen', to: 'static_pages#home'
+  match '/verificare', to: 'evaluarea_cursurilor#verificare'
  #match '/signup', to: 'users#new'
 
 
