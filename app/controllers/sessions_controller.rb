@@ -1,29 +1,26 @@
 class SessionsController < ApplicationController
 
+def new
+end
 
- def new
- end
-
- def create
+def create
 
 
-   user = User.find_by_token(params[:sessions][:token])
-     if user 
-       sign_in user
-       redirect_to '/student/listare'
-     elsif (!user)
-       flash[:notice] = "An account associated with this token doesn't exist"
-       render 'new'
-       else 
-         flash[:notice] = "You entered the wrong token"
-         render 'new'
-     end
+   
+  if IncognitoUser.find_by_token(params[:sessions][:token])
+    session[:user_token] = params[:sessions][:token]
+    redirect_to   sign_in_path flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"
+  else
+    flash[:notice] = "An account associated with this token doesn't exist"
+    render 'new'
+  end
 
- end
+end
 
 
  def destroy
-   sign_out
+   session[:user_token] = nil
+   flash[:notice] = "Ai iesit cu ochii-n soare"
    redirect_to root_path
  end
 

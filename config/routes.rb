@@ -14,16 +14,14 @@ GossipLogin::Application.routes.draw do
 
   get "static_pages/home"
 
-  resources :grupas
 
-  resources :users
 
   resources :sessions, only: [:new, :create, :destroy]
 
- root to: 'users#index'
+ root to: 'sessions#new'
 
-  match '/sign_in', to: 'sessions#new'
-  match '/sign_out', to: 'sessions#destroy', :via => :delete
+  match '/sign_in', to: 'sessions#new', as: "/sign_in"
+  match '/sign_out', to: 'sessions#destroy'
   match '/pdf_gen', to: 'static_pages#home'
  #match '/signup', to: 'users#new'
 

@@ -1,6 +1,5 @@
 class Curs < ActiveRecord::Base
-  attr_accessible :id_curs, :nume_curs, :tip_curs
-
-  has_many :evaluares
-  has_many :evaluare_finalizata
+  attr_accessible :nume, :profesor_id, :tip
+  belongs_to :profesor
+  has_many :evaluare_disponibile
 end

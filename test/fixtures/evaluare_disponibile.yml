@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  grupa_terminal: false
-  data: 2013-03-31
+  curs_id: 1
+  grupa_nume: 1
+  formular_id: 1
 
 two:
-  grupa_terminal: false
-  data: 2013-03-31
+  curs_id: 1
+  grupa_nume: 1
+  formular_id: 1

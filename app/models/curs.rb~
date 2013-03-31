@@ -1,5 +1,0 @@
-class Curs < ActiveRecord::Base
-  attr_accessible :id_curs, :nume_curs, :tip_curs
-
-  has_many :evaluares
-end

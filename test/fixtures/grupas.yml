@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  grupa: MyString
+  nume: 1
   studenti: 1
+  terminal: false
 
 two:
-  grupa: MyString
+  nume: 1
   studenti: 1
+  terminal: false

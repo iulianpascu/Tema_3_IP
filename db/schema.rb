@@ -11,76 +11,55 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319200220) do
+ActiveRecord::Schema.define(:version => 20130331144906) do
 
-  create_table "curs", :force => true do |t|
-    t.integer  "id_curs"
-    t.string   "nume_curs"
-    t.string   "tip_curs"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "cursuri", :force => true do |t|
+    t.string  "nume"
+    t.string  "tip"
+    t.integer "profesor_id"
   end
 
-  create_table "data_evaluares", :force => true do |t|
-    t.boolean  "an_terminal"
-    t.datetime "data_start"
-    t.datetime "data_stop"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "data_evaluari", :force => true do |t|
+    t.boolean "grupa_terminal"
+    t.date    "data"
   end
 
-  create_table "evaluare_finalizata", :force => true do |t|
-    t.integer  "id_curs"
-    t.integer  "id_prof"
-    t.string   "token"
-    t.string   "grupa"
-    t.text     "detalii"
-    t.integer  "durata"
-    t.datetime "data_completare"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+  create_table "evaluare_completate", :force => true do |t|
+    t.integer "evaluare_disponibila_id"
+    t.string  "incognito_user_token"
+    t.text    "continut"
+    t.integer "timp"
   end
 
-  create_table "evaluare_in_progres", :force => true do |t|
-    t.string   "token"
-    t.datetime "incepere_sesiune"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  create_table "evaluare_disponibile", :force => true do |t|
+    t.integer "curs_id"
+    t.integer "grupa_nume"
+    t.integer "formular_id"
   end
 
-  create_table "evaluares", :force => true do |t|
-    t.integer  "id_curs"
-    t.integer  "id_prof"
-    t.string   "grupa"
-    t.boolean  "an_terminal"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "formulare", :force => true do |t|
+    t.text "continut"
   end
 
-  create_table "grupas", :force => true do |t|
-    t.string   "grupa"
-    t.integer  "studenti"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "grupe", :force => true do |t|
+    t.integer "nume"
+    t.integer "studenti"
+    t.boolean "terminal"
   end
 
-  create_table "profesors", :force => true do |t|
-    t.integer  "id_prof"
-    t.string   "nume_prof"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "incognito_users", :force => true do |t|
+    t.string  "token"
+    t.integer "grupa_nume"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "token"
-    t.string   "grupa"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "token_digest"
-    t.string   "cookie"
+  create_table "profesori", :force => true do |t|
+    t.string "nume"
+    t.string "prenume"
   end
 
-  add_index "users", ["cookie"], :name => "index_users_on_cookie"
-  add_index "users", ["token"], :name => "index_users_on_token", :unique => true
+  create_table "sesiune_active", :force => true do |t|
+    t.string   "incognito_user_token"
+    t.datetime "incepere_data"
+  end
 
 end
