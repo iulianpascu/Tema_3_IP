@@ -8,7 +8,8 @@ def create
 
 
   if IncognitoUser.find_by_token(params[:sessions][:token])
-    session[:user_token] = params[:sessions][:token]
+    session[:user_token] =
+    SesiuneActiva.create(incognito_user_token:  params[:sessions][:token], incepere_data:Time.now)
     redirect_to verificare_path
     							#flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"
   else
