@@ -33,7 +33,7 @@
 
 
     <div class="well">
-	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
+	   <table class="table table-striped" style="margin-top:15px; float:left; position:absolute">
 
       <tr>
         <th>Curs</th>
@@ -42,8 +42,9 @@
         <th>Evalueaza</th>
       </tr>
       <% i=0 %>
-      <%=@eval%>
+
       <% @curs.each_slice(3) do |slice| %>
+
       <tr>
       <% slice.each do |value| %>
         <td><%=value%></td>
@@ -51,6 +52,7 @@
 
         <td><button class="modalButton btn btn-primary span2 " id="<%= i+=1 %>">Evalueaza!</button></td>
 			</tr>
+
     <% end %>
     </table>
     <div class="clearfix"></div>

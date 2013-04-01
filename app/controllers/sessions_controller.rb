@@ -9,7 +9,8 @@ def create
 
   if IncognitoUser.find_by_token(params[:sessions][:token])
     session[:user_token] = params[:sessions][:token]
-    redirect_to   verificare_path# flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"
+    redirect_to verificare_path
+    							#flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"
   else
     flash[:notice] = "An account associated with this token doesn't exist"
     render 'new'
