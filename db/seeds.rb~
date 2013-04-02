@@ -20,6 +20,8 @@ EvaluareDisponibila.create(curs_id: 1, grupa_nume: 344)
 EvaluareDisponibila.create(curs_id: 3, grupa_nume: 344)
 EvaluareDisponibila.create(curs_id: 5, grupa_nume: 344)
 EvaluareDisponibila.create(curs_id: 6, grupa_nume: 344)
+EvaluareDisponibila.create(curs_id: 7, grupa_nume: 344)
+EvaluareDisponibila.create(curs_id: 8, grupa_nume: 344)
 
 Curs.create(nume: "POO", tip: "curs", profesor_id: 1)
 Curs.create(nume: "Programare declarativa", tip: "curs", profesor_id: 2)
