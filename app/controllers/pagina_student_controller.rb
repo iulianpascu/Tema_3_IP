@@ -1,0 +1,2 @@
+class PaginaStudentController < ApplicationController
+end

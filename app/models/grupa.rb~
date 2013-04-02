@@ -4,5 +4,4 @@ class Grupa < ActiveRecord::Base
   has_many :incognito_users
   has_many :evaluare_disponibile
   has_many :cursuri, :through => :evaluare_disponibile
-
 end

@@ -28,6 +28,9 @@ GossipLogin::Application.routes.draw do
   match '/sign_out', to: 'sessions#destroy'
   match '/pdf_gen', to: 'static_pages#home'
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
+  match '/admin', to: 'pagina_administrator#pagAdmin'
+  match '/profesor', to: 'pagina_profesor#pagProfesor'
+  match '/student', to: 'pagina_student#pagStudent'
  #match '/signup', to: 'users#new'
 
 
