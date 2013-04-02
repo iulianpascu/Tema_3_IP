@@ -2,10 +2,11 @@ class EvaluareaCursurilorController < ApplicationController
 
 	def verificare
 
-	token = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
+	sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
 
-		if token
-			if token.incepere_data < Time.now-600
+		if sesiune
+		flash[:notice] = "Aici"
+			if sesiune.incepere_data < Time.now-600
 					user = IncognitoUser.find_by_token(session[:user_token])
 					#user = IncognitoUser.find_by_token("1234")
 					grupa = Grupa.find_by_nume(user.grupa_nume)
