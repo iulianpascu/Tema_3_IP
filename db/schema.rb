@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331144906) do
+ActiveRecord::Schema.define(:version => 20130403211740) do
 
   create_table "cursuri", :force => true do |t|
     t.string  "nume"
     t.string  "tip"
     t.integer "profesor_id"
+    t.integer "an"
   end
 
   create_table "data_evaluari", :force => true do |t|

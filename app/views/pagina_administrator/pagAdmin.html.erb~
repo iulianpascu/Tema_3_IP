@@ -9,7 +9,7 @@
         	<div class="nav-collapse collapse nav-bar-inverse-collapse">
         		<ul class="nav pull-right">
 
-        		<li><a href="#">Iesire</a></li>
+        		<li><%= link_to "Iesire", '/sign_out' %></li>
         		</ul>
         	</div>
         </div>
