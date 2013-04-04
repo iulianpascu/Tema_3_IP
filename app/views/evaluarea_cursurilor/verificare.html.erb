@@ -58,7 +58,9 @@
     <div class="clearfix"></div>
     </div>
     </div>
-	    <div class="modal hide fade" id="modal1">
+
+    <%(1..i).each do |k| %>
+	    <div class="modal hide fade" id="modal<%=k%>">
       <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Evaluare curs</h3>
@@ -100,88 +102,8 @@
 
       </div>
     </div>
+    <%end%>
 
-    <div class="modal hide fade" id="modal2">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Evaluare curs</h3>
-      </div>
-        <div class="modal-body">
-                <h4>1. Intrebare1 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>2. Intrebare2 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>3. Intrebare3 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-
-        <h4>Informatii suplimentare.</h4>
-        <input type="textarea" placeholder="Raspunde aici!" rows="5" style="width:440px;">
-        </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Trimite</button>      </div>
-    </div>
-
-			    <div class="modal hide fade" id="modal3">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Evaluare curs</h3>
-      </div>
-        <div class="modal-body">
-                <h4>1. Intrebare1 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>2. Intrebare2 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>3. Intrebare3 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-
-        <h4>Informatii suplimentare.</h4>
-        <input type="textarea" placeholder="Raspunde aici!" rows="5" style="width:440px;">
-        </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Trimite</button>      </div>
-    </div>
 
 
 

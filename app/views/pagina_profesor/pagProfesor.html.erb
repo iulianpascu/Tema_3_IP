@@ -65,36 +65,23 @@
         <th>Arata statistici</th>
         <th>Descarca PDF</th>
       </tr>
+
+      <% i=0%>
+
+      <% @valori_profesor.each_slice(2) do |slice| %>
+
       <tr>
-        <td>1</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success" value="Detalii"/></td>
+      <% slice.each do |value| %>
+        <td><%=value%></td>
+      <% end %>
+
+         <td><input type="button" class="btn btn-success modalButton"
+        id="<%= i+=1 %>" value="Detalii"/></td>
         <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-       <tr>
-        <td>1</td>
-        <td>Analiza</td>
-        <td><input type="button" class="btn btn-success" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-         <tr>
-        <td>1</td>
-        <td>Programare logica</td>
-        <td><input type="button" class="btn btn-success" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-           <tr>
-        <td>2</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-       <tr>
-        <td>2</td>
-        <td>Algebra</td>
-        <td><input type="button" class="btn btn-success" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
+			</tr>
+
+      <% end %>
+
     </table>
         <div class="clearfix"></div>
     </div>

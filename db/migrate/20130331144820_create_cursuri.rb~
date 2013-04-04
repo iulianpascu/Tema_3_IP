@@ -4,7 +4,8 @@ class CreateCursuri < ActiveRecord::Migration
       t.string :nume
       t.string :tip
       t.integer :profesor_id
-
+      t.integer :an
+      t.string :specializare
     end
   end
 end

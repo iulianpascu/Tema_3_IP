@@ -57,7 +57,7 @@
           </div>
     </div>
 
-    <div class="well">
+    <div class="well" style="overflow-x:hidden" >
 	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
       <tr>
         <th>An</th>
@@ -67,46 +67,22 @@
         <th>Descarca PDF</th>
       </tr>
       <% i=0%>
+
+      <% @valori_admin.each_slice(3) do |slice| %>
+
       <tr>
-        <td>1</td>
-        <td>Programare declarativa</td>
-        <td>Georgescu</td>
-        <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-       <tr>
-        <td>1</td>
-        <td>Analiza</td>
-        <td>Vasile</td>
+      <% slice.each do |value| %>
+        <td><%=value%></td>
+      <% end %>
+
          <td><input type="button" class="btn btn-success modalButton"
         id="<%= i+=1 %>" value="Detalii"/></td>
         <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-         <tr>
-        <td>1</td>
-        <td>Programare logica</td>
-        <td>Ionescu</td>
-         <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-           <tr>
-        <td>2</td>
-        <td>Programare declarativa</td>
-        <td>Georgescu</td>
-        <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
-       <tr>
-        <td>2</td>
-        <td>Algebra</td>
-        <td>Mincu</td>
-         <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-      </tr>
+			</tr>
+
+      <% end %>
+
+
     </table>
         <div class="clearfix"></div>
     </div>
