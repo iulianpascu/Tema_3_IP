@@ -22,6 +22,9 @@ class EvaluareaCursurilorController < ApplicationController
 						@curs << e.curs["profesor_id"]
 						@curs << e.curs["tip"]
 					end
+
+
+
 #			else
 #				sesiune.destroy
 #			end

@@ -59,59 +59,63 @@
     </div>
     </div>
 
-    <%(1..i).each do |k| %>
-	    <div class="modal hide fade" id="modal<%=k%>">
+
+	    <div class="modal hide fade" id="modal">
+
       <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Evaluare curs</h3>
       </div>
         <div class="modal-body">
-        <h4>1. Intrebare1 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>2. Intrebare2 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
-        <h4>3. Intrebare3 ?</h4>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Nu.
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            Da.
-          </label>
 
-        <h4>Informatii suplimentare.</h4>
-        <input type="textarea" placeholder="Raspunde aici!" rows="5" style="width:440px;">
-        </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Trimite</button>
+		  	<%contor1=1%>
+		  	<%contor2=0 %>
+				<%i=0%>
 
-      </div>
+   	<h4> <%= contor1%> . <%= @intrebari_alegeri[0] %></h4>
+    	<%@texte_intrebari.each do |texte|%>
+        <%contor2=0 %>
+
+				<% texte.elements.each do |enunt| %>
+					<%contor2+=1 %>
+
+					<%if enunt.text!=''%>
+						<h5><%=contor1%>.<%=contor2%>. <%=enunt.text%></h5>
+					<%end%>
+
+					<% @categorii[i].elements.each do |catenunt| %>
+					<label class="radio">
+						<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+						<%=catenunt.text%>
+					</label>
+
+
+				<%end%> <!-- do |enunt| -->
+		<%end%> <!-- do |catenunt|-->
+
+				<%contor1+=1%>
+				<%i+=1%>
+				<h4> <%=contor1%>. <%= @intrebari_alegeri[i] %>    </h4>
+
+			<%end%> <!-- do |texte| -->
+
+       	<%@intrebari_libere.each do |num|%>
+		      <h4><%=contor1%>. <%= num %></h4>
+					<%contor1+=1%>
+		      <input type="textarea" placeholder="Raspunde aici!" rows="5" style="width:440px;">
+        <%end%> <!-- do |num| -->
+
+        </div> <!-- modal-body -->
+						<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Trimite</button>
+						</div>
     </div>
-    <%end%>
-
 
 
 
 	<div class="bottom-logo">
 		<img src="assets/logo.png" width="150px" height="150px"/>
 	</div>
-
-
 
 
 	<script src="../bootstrap/js/jquery.min.js" type="text/javascript"></script>
@@ -121,7 +125,7 @@
    <script type="text/javascript">
       $(".modalButton").click(function(){
         var id = this.id;
-        var modalNou = '#modal' + id;
+        var modalNou = '#modal';
       $(modalNou).modal('show');
       });
   </script>
