@@ -37,71 +37,34 @@ doc = Document.new File.new("Chestionar.xml")
 @texte_intrebari = Array.new
 @categorii = Array.new
 @intrebari_libere = Array.new
-@id_cat = Array.new
-@id_intrebare = Array.new
-@id_text = Array.new
-@intrid = Array.new
-@nrcat = Array.new
-@nrintr = Array.new
-@intrebari_alegeri1 = Array.new
 
+	respond_to do |format|
 
-
-		respond_to do |format|
-
-			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/
-			enunt_intrebare") do |element|
+			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/enunt_intrebare") do |element|
 						@intrebari_alegeri.push element.text
 			end
 
 
 
-			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/
-			categorii") do |element|
+			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/categorii") do |element|
 						@categorii.push element
 			end
 
 
 
-			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/
-			texte_intrebari") do |element|
+			doc.elements.each("//chestionar/intrebari_alegeri/intrebare_alegeri/texte_intrebari") do |element|
 						@texte_intrebari.push element
 			end
 
 
 
-			doc.elements.each("//chestionar/intrebari_libere/intrebare_libere/
-			enunt_intrebare") do |element|
+			doc.elements.each("//chestionar/intrebari_libere/intrebare_libere/enunt_intrebare") do |element|
 						@intrebari_libere.push element.text
 			end
 
 
-			XPath.each( doc, "//categorie/attribute::id") do |element|
-						@id_cat.push element
-			end
 
-
-			XPath.each( doc, "//intrebare_alegeri/attribute::id") do |element|
-						@id_intrebare.push element
-			end
-
-
-			XPath.each( doc, "//text_intrebare/attribute::id") do |element|
-            @id_text.push element
-  		end
-
-      XPath.each( doc, "//intrebare_alegeri/attribute::id") do |element|
-            @intrid.push element
-			end
-
- 			XPath.each( doc, "//intrebare_alegeri/attribute::nr_cat") do |element|
-      			@nrcat.push element
-			end
-
- 			XPath.each( doc, "//intrebare_alegeri/attribute::nr_texte") do |element|
-            @nrintr.push element
-			end
-
+			
 
 
 			format.html # verificare.html.erb

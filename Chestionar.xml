@@ -19,15 +19,16 @@
 					75-100%
 				</categorie>
 			</categorii>
+			<texte_intrebari>  
+                                <text_intrebare id = "intr2.1">
+				</text_intrebare>
+			</texte_intrebari>
 		</intrebare_alegeri>
 		<intrebare_alegeri id = "intrebare2">
 			<enunt_intrebare>
 				Cum apreciati materia cursului:
 			</enunt_intrebare>
 			<categorii>
-				<categorie id = "cat2">
-					Caracteristici
-				</categorie>
 				<categorie id = "cat2">
 					Prea scazut(a)
 				</categorie>
@@ -58,9 +59,6 @@
 				In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra cursului:
 			</enunt_intrebare>
 			<categorii>
-				<categorie id = "cat3">
-					Caracteristici
-				</categorie>
 				<categorie id = "cat3">
 					Dezacord total
 				</categorie>
@@ -103,9 +101,6 @@
 				In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra modului de predare al profesorului:
 			</enunt_intrebare>
 			<categorii>
-				<categorie id = "cat4">
-					Caracteristici
-				</categorie>
 				<categorie id = "cat4">
 					Dezacord total
 				</categorie>

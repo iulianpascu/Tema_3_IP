@@ -79,7 +79,7 @@
 				<% texte.elements.each do |enunt| %>
 					<%contor2+=1 %>
 
-					<%if enunt.text!=''%>
+					<%if contor1!=1%>
 						<h5><%=contor1%>.<%=contor2%>. <%=enunt.text%></h5>
 					<%end%>
 
@@ -90,14 +90,15 @@
 					</label>
 
 
-				<%end%> <!-- do |enunt| -->
-		<%end%> <!-- do |catenunt|-->
+					<%end%> <!-- do |catenunt| -->
+				<%end%> <!-- do |enunt|-->
 
 				<%contor1+=1%>
 				<%i+=1%>
-				<h4> <%=contor1%>. <%= @intrebari_alegeri[i] %>    </h4>
-
-			<%end%> <!-- do |texte| -->
+				<%if contor1<=@intrebari_alegeri.length%>
+                                   <h4> <%=contor1%>. <%= @intrebari_alegeri[i] %>    </h4>
+				<%end%>
+	<%end%> <!-- do |texte| -->
 
        	<%@intrebari_libere.each do |num|%>
 		      <h4><%=contor1%>. <%= num %></h4>
