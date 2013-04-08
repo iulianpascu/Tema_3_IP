@@ -1,36 +1,40 @@
 GossipLogin::Application.routes.draw do
 
+  get 'pagina_setare/create'
+  post 'pagina_setare/create'
+
   #get "evaluarea_cursurilor/verificare"
 
-  get "student/listare"
+  #get "student/listare"
+  #
+  #get "student/completare"
+  #
+  #get "administrare/listare"
+  #
+  #get "administrare/adaugare"
+  #
+  #get "administrare/generare"
+  #
+  #get "autentificare/autentifica"
+  #
+  #get "static_pages/home"
 
-  get "student/completare"
-
-  get "administrare/listare"
-
-  get "administrare/adaugare"
-
-  get "administrare/generare"
-
-  get "autentificare/autentifica"
-
-  get "static_pages/home"
-
-
+  match 'auth/:provider/callback' => 'sessions#create_signed'
+  match 'auth/failure' => 'sessions#failure'
 
 
 
   resources :sessions, only: [:new, :create, :destroy]
 
- root to: 'sessions#new'
-
-  match '/sign_in', to: 'sessions#new', as: "/sign_in"
-  match '/sign_out', to: 'sessions#destroy'
+  root to: 'sessions#new'
+ match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
+  match '/token_sign_in', to: 'sessions#new', as: "sign_in"
+  match '/token_sign_out', to: 'sessions#abort_token_session', as: "token_sign_out"
   match '/pdf_gen', to: 'static_pages#home'
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
-  match '/admin', to: 'pagina_administrator#pagAdmin'
-  match '/profesor', to: 'pagina_profesor#pagProfesor'
-  match '/student', to: 'pagina_student#pagStudent'
+  match '/admin', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
+  match '/profesor', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
+  match '/student', to: 'pagina_student#pagStudent', as: "homepage_student"
  #match '/signup', to: 'users#new'
 
 

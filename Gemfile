@@ -5,6 +5,8 @@ gem 'bootstrap-sass', '2.0.0'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'execjs'
 gem 'therubyracer'
+gem 'json'
+
 
 # gem for pdf generate
 
@@ -14,7 +16,7 @@ gem 'prawn'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development do
+group :development, :test do
 	gem 'sqlite3'
 end
 

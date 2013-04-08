@@ -149,6 +149,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   execjs
   jquery-rails
+  json
   omniauth
   omniauth-oauth2
   pg
