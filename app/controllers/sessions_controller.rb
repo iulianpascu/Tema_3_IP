@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
   def new
   end
 
-  def create_incognito
+  def create
     if IncognitoUser.find_by_token(params[:sessions][:token])
       session[:user_token] = params[:sessions][:token]
 
@@ -91,7 +91,7 @@ class SessionsController < ApplicationController
   end
 
   def create_signed
-    #raise env["omniauth.auth"].to_yam
+    # raise env["omniauth.auth"].to_yam
     user = { uid: env["omniauth.auth"]["uid"],
              first_name: env["omniauth.auth"]["extra"]["first_name"],
              last_name: env["omniauth.auth"]["extra"]["last_name"]
