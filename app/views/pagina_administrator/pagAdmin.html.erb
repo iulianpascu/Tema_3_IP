@@ -68,12 +68,13 @@
       </tr>
       <% i=0%>
 
-      <% @valori_admin.each_slice(3) do |slice| %>
+      <% @cursuri.each do |curs| %>
 
       <tr>
-      <% slice.each do |value| %>
-        <td><%=value%></td>
-      <% end %>
+
+        <td><%= curs.an %></td>
+        <td><%= curs.nume %></td>
+        <td><%= "#{curs.profesor.nume} #{curs.profesor.prenume}" %></td>
 
          <td><input type="button" class="btn btn-success modalButton"
         id="<%= i+=1 %>" value="Detalii"/></td>
