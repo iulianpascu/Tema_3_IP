@@ -1,6 +1,10 @@
-class PaginaStudentController < ApplicationController
+class StudentController < ApplicationController
 
-def pagStudent
+	def listare
+
+	end
+
+  def pagStudent
 				cursuri = Curs.all
 
 		@valori_student =Array.new
@@ -18,4 +22,9 @@ def pagStudent
 			end
 
   end
+
+  def completare
+  end
+
+
 end

@@ -21,21 +21,25 @@ class SessionsController < ApplicationController
 
     case session[:user_signed]["role"]
     when "student"
-      redirect_to homepage_student_path
+      #redirect_to homepage_student_path
+			render :template => 'pagina_student/pagStudent'
     when "profesor"
-      redirect_to homepage_profesor_path
+      #redirect_to homepage_profesor_path
+			render :template => 'pagina_profesor/pagProfesor'
     when "administrator"
-      redirect_to homepage_admin_path
+      #redirect_to homepage_admin_path
+			render :template => 'pagina_administrator/pagAdmin'
     else
       flash[:notice] = session[:user_signed]["role"].to_s
       #abort_signed_session
     end
+		#render :template => 'sessions/new'
   end
 
   def new
   end
 
-  def create_incognito
+  def create
     if IncognitoUser.find_by_token(params[:sessions][:token])
       session[:user_token] = params[:sessions][:token]
 
@@ -54,12 +58,12 @@ class SessionsController < ApplicationController
           #SesiuneActiva.create(incognito_user_token: params[:sessions][:token], incepere_data: Time.now)
 
           sesiune.update_attributes(incepere_data: Time.now)
-          redirect_to verificare_path
+          redirect_to homepage_student_path
         end
 
       else
        SesiuneActiva.create(incognito_user_token: params[:sessions][:token], incepere_data: Time.now)
-       redirect_to verificare_path
+       redirect_to homepage_student_path
       end
 
       #flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"

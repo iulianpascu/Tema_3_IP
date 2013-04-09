@@ -169,7 +169,7 @@
     <div class="masthead">
         <div id="navbar-example" class="navbar navbar-static">
             <div class="navbar-inner">
-              <a class="brand" href="">Student</a>
+              <a class="brand" href="">Student</a> <a class="brand" href="/verificare">Evaluare</a>
               <div class="container" style="width: auto;">
                 <ul class="nav" role="navigation">
                     <li class="dropdown">
@@ -204,53 +204,39 @@
           </div>
     </div>
 
-    <div class="well">
+       <div class="well" style="overflow-x:hidden" >
 	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
       <tr>
         <th>An</th>
         <th>Curs</th>
+        <th>profesor</th>
         <th>Arata statistici</th>
+
       </tr>
+      <% i=0%>
+
+      <% @valori_student.each_slice(3) do |slice| %>
+
       <tr>
-        <td>1</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success modalButton" id="1" value="Detalii"/></td>
-      </tr>
-       <tr>
-        <td>1</td>
-        <td>Analiza</td>
-        <td><input type="button" class="btn btn-success modalButton" id="2" value="Detalii"/></td>
-      </tr>
-         <tr>
-        <td>1</td>
-        <td>Programare logica</td>
-        <td><input type="button" class="btn btn-success modalButton" id="3" value="Detalii"/></td>
-      </tr>
-           <tr>
-        <td>2</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success modalButton" id="4" value="Detalii"/></td>
-      </tr>
-       <tr>
-        <td>2</td>
-        <td>Algebra</td>
-        <td><input type="button" class="btn btn-success modalButton" id="5" value="Detalii"/></td>
-      </tr>
+      <% slice.each do |value| %>
+        <td><%=value%></td>
+      <% end %>
+
+         <td><input type="button" class="btn btn-success modalButton"
+        id="<%= i+=1 %>" value="Detalii"/></td>
+
+			</tr>
+
+      <% end %>
+
+
     </table>
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
     </div>
 
-
-
-
-
-	</div>
-	<div class="bottom-logo">
-		<img src="assets/logo.png" width="150px" height="150px"/>
-		</div>
-
-
-    <div class="modal hide fade" id="modal1">
+<!-- lightbox -->
+		 <%(1..i).each do |k| %>
+    <div class="modal hide fade" id="modal<%=k%>">
       <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Detalii</h3>
@@ -277,6 +263,28 @@
 
       </div>
     </div>
+		<%end%>
+     <script type="text/javascript">
+     $("#wizard").bwizard();
+
+   $(".modalButton").click(function(){
+    var id = this.id;
+    var modalNou = '#modal' + id;
+    $(modalNou).modal('show');
+   });
+  </script>
+
+
+
+
+	</div>
+	</div>
+	<div class="bottom-logo">
+		<img src="assets/logo.png" width="150px" height="150px"/>
+		</div>
+
+
+
 
 
     <script type="text/javascript">

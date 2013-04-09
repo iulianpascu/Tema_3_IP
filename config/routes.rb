@@ -1,7 +1,7 @@
 GossipLogin::Application.routes.draw do
 
-  get 'pagina_setare/create'
-  post 'pagina_setare/create'
+  get 'pagina_setare/create_incognito'
+  post 'pagina_setare/create_incognito'
 
   #get "evaluarea_cursurilor/verificare"
 
@@ -35,6 +35,7 @@ GossipLogin::Application.routes.draw do
   match '/admin', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
   match '/profesor', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
   match '/student', to: 'pagina_student#pagStudent', as: "homepage_student"
+	match '/sign_out', to: 'sessions#abort_token_session', as: "sign_out"
  #match '/signup', to: 'users#new'
 
 

@@ -13,7 +13,7 @@ class PaginaAdministratorController < ApplicationController
 						@valori_admin << c.an
 						@valori_admin << c.nume
 						profesor = Profesor.find_by_id(c.profesor_id)
-						@valori_admin << profesor
+						@valori_admin << profesor.nume
 					end
 			end
 

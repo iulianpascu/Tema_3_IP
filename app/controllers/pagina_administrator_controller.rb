@@ -16,6 +16,5 @@ class PaginaAdministratorController < ApplicationController
 						@valori_admin << profesor.nume
 					end
 			end
-
 	end
 end
