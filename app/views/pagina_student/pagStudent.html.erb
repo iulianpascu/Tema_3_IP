@@ -1,285 +1,120 @@
-<!--<!doctype html>
-<html lang="en">
 
-<body>
+<div class="container-narrow">
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-        	<a class="brand" href="index.html">Cursuri</a>
-        	<div class ="nav-collapse collapse nav-bar-inverse-collapse">
-        	        		<ul class="nav pull-right">
-
-        	        		<li><%= link_to "Iesire", '/sign_out' %></li>
-        	        		</ul>
-        	        	</div>
-        	        </div>
-        	      </div>
-        	    </div>
-
-        	    <div class="container-narrow">
-
-        	    <div class="masthead">
-        	        <div id="navbar-example" class="navbar navbar-static">
-        	            <div class="navbar-inner">
-        	              <a class="brand" href="">Student</a>
-        	              <div class="container" style="width: auto;">
-        	                <ul class="nav" role="navigation">
-        	                    <li class="dropdown">
-        	                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
-        	                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Matematica</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Informatica</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">TI</a></li>
-        	                    </ul>
-        	                  </li>
-        	                     <li class="dropdown">
-        	                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
-        	                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">I</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">II</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">III</a></li>
-        	                    </ul>
-        	                  </li>
-        	                  <li class="dropdown">
-        	                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
-        	                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">OOP</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare logica</a></li>
-        	                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare declarativa</a></li>
-        	                    </ul>
-        	                  </li>
-
-        	                </ul>
-
-        	              </div>
-        	            </div>
-        	          </div>
-        	    </div>
-
-        	    <div class="well">
-        		   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
-        	      <tr>
-        	        <th>An</th>
-        	        <th>Curs</th>
-        	        <th>Arata statistici</th>
-        	      </tr>
-        	      <tr>
-        	        <td>1</td>
-        	        <td>Programare declarativa</td>
-        	        <td><input type="button" class="btn btn-success modalButton" id="1" value="Detalii"/></td>
-        	      </tr>
-        	       <tr>
-        	        <td>1</td>
-        	        <td>Analiza</td>
-        	        <td><input type="button" class="btn btn-success modalButton" id="2" value="Detalii"/></td>
-        	      </tr>
-        	         <tr>
-        	        <td>1</td>
-        	        <td>Programare logica</td>
-        	        <td><input type="button" class="btn btn-success modalButton" id="3" value="Detalii"/></td>
-        	      </tr>
-        	           <tr>
-        	        <td>2</td>
-        	        <td>Programare declarativa</td>
-        	        <td><input type="button" class="btn btn-success modalButton" id="4" value="Detalii"/></td>
-        	      </tr>
-        	       <tr>
-        	        <td>2</td>
-        	        <td>Algebra</td>
-        	        <td><input type="button" class="btn btn-success modalButton" id="5" value="Detalii"/></td>
-        	      </tr>
-        	    </table>
-        	    <div class="clearfix"></div>
-        	    </div>
-
-
-
-
-
-        		</div>
-        		<div class="bottom-logo">
-        			<img src="assets/logo.png" width="150px" height="150px"/>
-        			</div>
-
-
-        	    <div class="modal hide fade" id="modal1">
-        	      <div class="modal-header">
-        	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        	      <h3>Detalii</h3>
-        	      </div>
-        	        <div class="modal-body">
-        	        <h4>Alte informatii aici.</h4>
-        	        <table class="table table-striped">
-        	        <tr>
-        	        <th>Curs</th>
-        	        <th>Profesor</th>
-        	        <th>Statistici</th>
-        	      </tr>
-        	        <tr>
-        	       <td>Programare declarativa</td>
-        	       <td>Cazanescu</td>
-        	       <td><div class="progress progress-success">
-        	                <div class="bar" style="width: 70%;"></div>
-        	              </div></td>
-        	      </tr>
-        	        </table>
-        	        </div>
-        	      <div class="modal-footer">
-        	      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
-
-        	      </div>
-        	    </div>
-
-
-        	    <script type="text/javascript">
-        	     $("#wizard").bwizard();
-
-        	   $(".modalButton").click(function(){
-        	    var id = this.id;
-        	    var modalNou = '#modal' + id;
-        	    $(modalNou).modal('show');
-        	   });
-        	  </script>
-        	</body>
-        	</html>-->
-
-
-<!doctype html>
-<html lang="en">
-
-<body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-        	<a class="brand" href="index.html">Cursuri</a>
-        	<div class="nav-collapse collapse nav-bar-inverse-collapse">
-        		<ul class="nav pull-right">
-
-        		<li><a href="#">Iesire</a></li>
-        		</ul>
-        	</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-narrow">
-
-    <div class="masthead">
-        <div id="navbar-example" class="navbar navbar-static">
-            <div class="navbar-inner">
-              <a class="brand" href="">Student</a>
-              <div class="container" style="width: auto;">
-                <ul class="nav" role="navigation">
-                    <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Matematica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Informatica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">TI</a></li>
-                    </ul>
-                  </li>
-                     <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">I</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">II</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">III</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">OOP</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare logica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare declarativa</a></li>
-                    </ul>
-                  </li>
-
+<div class="masthead">
+    <div id="navbar-example" class="navbar navbar-static">
+        <div class="navbar-inner">
+          <a class="brand" href="">Student</a>
+          <div class="container" style="width: auto;">
+            <ul class="nav" role="navigation">
+                <li class="dropdown">
+                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Matematica</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Informatica</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">TI</a></li>
                 </ul>
+              </li>
+                 <li class="dropdown">
+                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">I</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">II</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">III</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">OOP</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare logica</a></li>
+                  <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare declarativa</a></li>
+                </ul>
+              </li>
 
-              </div>
-            </div>
+            </ul>
+
           </div>
-    </div>
-
-    <div class="well">
-	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
-      <tr>
-        <th>An</th>
-        <th>Curs</th>
-        <th>Arata statistici</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success modalButton" id="1" value="Detalii"/></td>
-      </tr>
-       <tr>
-        <td>1</td>
-        <td>Analiza</td>
-        <td><input type="button" class="btn btn-success modalButton" id="2" value="Detalii"/></td>
-      </tr>
-         <tr>
-        <td>1</td>
-        <td>Programare logica</td>
-        <td><input type="button" class="btn btn-success modalButton" id="3" value="Detalii"/></td>
-      </tr>
-           <tr>
-        <td>2</td>
-        <td>Programare declarativa</td>
-        <td><input type="button" class="btn btn-success modalButton" id="4" value="Detalii"/></td>
-      </tr>
-       <tr>
-        <td>2</td>
-        <td>Algebra</td>
-        <td><input type="button" class="btn btn-success modalButton" id="5" value="Detalii"/></td>
-      </tr>
-    </table>
-    <div class="clearfix"></div>
-    </div>
-
-
-
-
-
-	</div>
-	<div class="bottom-logo">
-		<img src="assets/logo.png" width="150px" height="150px"/>
-		</div>
-
-
-    <div class="modal hide fade" id="modal1">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Detalii</h3>
-      </div>
-        <div class="modal-body">
-        <h4>Alte informatii aici.</h4>
-        <table class="table table-striped">
-        <tr>
-        <th>Curs</th>
-        <th>Profesor</th>
-        <th>Statistici</th>
-      </tr>
-        <tr>
-       <td>Programare declarativa</td>
-       <td>Cazanescu</td>
-       <td><div class="progress progress-success">
-                <div class="bar" style="width: 70%;"></div>
-              </div></td>
-      </tr>
-        </table>
         </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
-
       </div>
+</div>
+
+<div class="well">
+   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
+  <tr>
+    <th>An</th>
+    <th>Curs</th>
+    <th>Arata statistici</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Programare declarativa</td>
+    <td><input type="button" class="btn btn-success modalButton" id="1" value="Detalii"/></td>
+  </tr>
+   <tr>
+    <td>1</td>
+    <td>Analiza</td>
+    <td><input type="button" class="btn btn-success modalButton" id="2" value="Detalii"/></td>
+  </tr>
+     <tr>
+    <td>1</td>
+    <td>Programare logica</td>
+    <td><input type="button" class="btn btn-success modalButton" id="3" value="Detalii"/></td>
+  </tr>
+       <tr>
+    <td>2</td>
+    <td>Programare declarativa</td>
+    <td><input type="button" class="btn btn-success modalButton" id="4" value="Detalii"/></td>
+  </tr>
+   <tr>
+    <td>2</td>
+    <td>Algebra</td>
+    <td><input type="button" class="btn btn-success modalButton" id="5" value="Detalii"/></td>
+  </tr>
+</table>
+<div class="clearfix"></div>
+</div>
+
+
+
+
+
+</div>
+<div class="bottom-logo">
+    <img src="assets/logo.png" width="150px" height="150px"/>
     </div>
 
 
-    <script type="text/javascript">
+<div class="modal hide fade" id="modal1">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3>Detalii</h3>
+  </div>
+    <div class="modal-body">
+    <h4>Alte informatii aici.</h4>
+    <table class="table table-striped">
+    <tr>
+    <th>Curs</th>
+    <th>Profesor</th>
+    <th>Statistici</th>
+  </tr>
+    <tr>
+   <td>Programare declarativa</td>
+   <td>Cazanescu</td>
+   <td><div class="progress progress-success">
+            <div class="bar" style="width: 70%;"></div>
+          </div></td>
+  </tr>
+    </table>
+    </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
      $("#wizard").bwizard();
 
    $(".modalButton").click(function(){
@@ -287,6 +122,4 @@
     var modalNou = '#modal' + id;
     $(modalNou).modal('show');
    });
-  </script>
-</body>
-</html>
+</script>
