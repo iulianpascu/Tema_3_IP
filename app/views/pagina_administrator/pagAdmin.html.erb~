@@ -1,47 +1,4 @@
-
-
-    <div class="container-narrow">
-
-    <div class="masthead">
-        <div id="navbar-example" class="navbar navbar-static">
-            <div class="navbar-inner">
-              <a class="brand" href="">Administrator</a>
-              <div class="container" style="width: auto;">
-                <ul class="nav" role="navigation">
-                    <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @specializare.each do |s| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= s %></a></li>
-                     <% end %>
-                    </ul>
-                  </li>
-                     <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @an.each do |a| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= a %></a></li>
-                     <% end %>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @cursuri.each do |c| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= c.nume %></a></li>
-                      <% end %>
-                    </ul>
-                  </li>
-
-                </ul>
-
-              </div>
-            </div>
-          </div>
-    </div>
-
-    <div class="well" style="overflow-x:hidden" >
-	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
+ <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
       <tr>
         <th>An</th>
         <th>Curs</th>
@@ -112,11 +69,3 @@
     $(modalNou).modal('show');
    });
   </script>
-
-
-
-
-	</div>
-	<div class="bottom-logo">
-		<img src="assets/logo.png" width="150px" height="150px"/>
-		</div>

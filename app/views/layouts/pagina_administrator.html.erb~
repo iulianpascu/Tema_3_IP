@@ -1,4 +1,13 @@
+<head>
 
+  <%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+<link href="/assets/bootstrap.css" rel="stylesheet" />
+<script src="/assets/bootstrap.js" type="text/javascript"></script>
+	<script src="/assets/jasny-bootstrap.js" type="text/javascript"></script>
+	<script src="/assets/bwizard.js" type="text/javascript"></script>
+
+</head>
 
   <div class="container-narrow">
     <div class="masthead">
@@ -40,83 +49,9 @@
     </div>
 
     <div class="well" style="overflow-x:hidden" >
+<%= yield %>
 
 
 
 
-
-
-
- <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
-      <tr>
-        <th>An</th>
-        <th>Curs</th>
-        <th>profesor</th>
-        <th>Arata statistici</th>
-        <th>Descarca PDF</th>
-      </tr>
-      <% i=0%>
-
-      <% @cursuri.each do |curs| %>
-
-      <tr>
-
-        <td><%= curs.an %></td>
-        <td><%= curs.nume %></td>
-        <td><%= "#{curs.profesor.nume} #{curs.profesor.prenume}" %></td>
-
-         <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-        <td><input type="button" class="btn btn-primary" value="Descarca"/></td>
-			</tr>
-
-      <% end %>
-
-
-    </table>
-        <div class="clearfix"></div>
-    </div>
-
-<!-- lightbox -->
-			<% k=0 %>
-		 <%@cursuri.each do |curs| %>
-			<% k+=1%>
-    <div class="modal hide fade" id="modal<%=k%>">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Detalii</h3>
-      </div>
-        <div class="modal-body">
-        <h4>Alte informatii aici.</h4>
-        <table class="table table-striped">
-        <tr>
-        <th>Curs</th>
-        <th>Profesor</th>
-        <th>Statistici</th>
-      </tr>
-        <tr>
-       <td><%= curs.nume %></td>
-       <td><%= "#{curs.profesor.nume}" %></td>
-       <td><div class="progress progress-success">
-                <div class="bar" style="width: 70%;"></div>
-              </div></td>
-      </tr>
-        </table>
-        </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
-
-      </div>
-    </div>
-		<%end%>
-     <script type="text/javascript">
-     $("#wizard").bwizard();
-
-   $(".modalButton").click(function(){
-    var id = this.id;
-    var modalNou = '#modal' + id;
-    $(modalNou).modal('show');
-   });
-  </script>
-
-</div>
+	</div>

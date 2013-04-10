@@ -27,14 +27,24 @@ GossipLogin::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   root to: 'sessions#new'
- match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
+
+ 	match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
+
   match '/token_sign_in', to: 'sessions#new', as: "sign_in"
+
   match '/token_sign_out', to: 'sessions#abort_token_session', as: "token_sign_out"
+
   match '/pdf_gen', to: 'static_pages#home'
+
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
-  match '/admin', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
+
+  match '/admin/:spec', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
+
   match '/profesor', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
+
   match '/student', to: 'pagina_student#pagStudent', as: "homepage_student"
+
+
  #match '/signup', to: 'users#new'
 
 
