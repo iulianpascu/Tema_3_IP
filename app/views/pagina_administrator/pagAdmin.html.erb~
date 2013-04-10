@@ -1,20 +1,4 @@
-<!doctype html>
-<html lang="en">
-<body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-        	<a class="brand" href="index.html">Evaluare cursuri</a>
-        	<div class="nav-collapse collapse nav-bar-inverse-collapse">
-        		<ul class="nav pull-right">
-
-        		<li><%= link_to "Iesire", '/sign_out' %></li>
-        		</ul>
-        	</div>
-        </div>
-      </div>
-    </div>
 
     <div class="container-narrow">
 
@@ -27,28 +11,27 @@
                     <li class="dropdown">
                     <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Matematica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Informatica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">TI</a></li>
+										<% @specializare.each do |s| %>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= s %></a></li>
+                     <% end %>
                     </ul>
                   </li>
                      <li class="dropdown">
                     <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">I</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">II</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">III</a></li>
+										<% @an.each do |a| %>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= a %></a></li>
+                     <% end %>
                     </ul>
                   </li>
                   <li class="dropdown">
                     <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">OOP</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare logica</a></li>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;">Programare declarativa</a></li>
+										<% @cursuri.each do |c| %>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= c.nume %></a></li>
+                      <% end %>
                     </ul>
                   </li>
-                  <li><a href="parametri.html">Setare parametri</a></li>
 
                 </ul>
 
@@ -68,12 +51,13 @@
       </tr>
       <% i=0%>
 
-      <% @valori_admin.each_slice(3) do |slice| %>
+      <% @cursuri.each do |curs| %>
 
       <tr>
-      <% slice.each do |value| %>
-        <td><%=value%></td>
-      <% end %>
+
+        <td><%= curs.an %></td>
+        <td><%= curs.nume %></td>
+        <td><%= "#{curs.profesor.nume} #{curs.profesor.prenume}" %></td>
 
          <td><input type="button" class="btn btn-success modalButton"
         id="<%= i+=1 %>" value="Detalii"/></td>
@@ -88,8 +72,10 @@
     </div>
 
 <!-- lightbox -->
-
-    <div class="modal hide fade" id="modal<%=i%>">
+			<% k=0 %>
+		 <%@cursuri.each do |curs| %>
+			<% k+=1%>
+    <div class="modal hide fade" id="modal<%=k%>">
       <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Detalii</h3>
@@ -103,8 +89,8 @@
         <th>Statistici</th>
       </tr>
         <tr>
-       <td>Programare declarativa</td>
-       <td>Cazanescu</td>
+       <td><%= curs.nume %></td>
+       <td><%= "#{curs.profesor.nume}" %></td>
        <td><div class="progress progress-success">
                 <div class="bar" style="width: 70%;"></div>
               </div></td>
@@ -116,7 +102,7 @@
 
       </div>
     </div>
-
+		<%end%>
      <script type="text/javascript">
      $("#wizard").bwizard();
 
@@ -134,9 +120,3 @@
 	<div class="bottom-logo">
 		<img src="assets/logo.png" width="150px" height="150px"/>
 		</div>
-
-
-
-
-</body>
-</html>

@@ -87,6 +87,19 @@
   </div>
 <% end %>
 
+ <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+        	<a class="brand" href="index.html">Evaluare cursuri</a>
+        	<div class="nav-collapse collapse nav-bar-inverse-collapse">
+        		<ul class="nav pull-right">
+
+        		<li><%= link_to "Iesire", '/sign_out' %></li>
+        		</ul>
+        	</div>
+        </div>
+      </div>
+    </div>
 <!-- <div class="nav">
   <p>
       <% if token_logged %>
@@ -99,6 +112,8 @@
 </div>-->
 
 <%= yield %>
-
+<div class="bottom-logo">
+		<img src="assets/logo.png" width="150px" height="150px"/>
+		</div>
 </body>
 </html>

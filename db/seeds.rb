@@ -54,7 +54,7 @@ Curs.create(nume: "Programare declarativa", tip: "curs", profesor_id: 2, an: 1,
 Curs.create(nume: "Programare logica", 			tip: "curs", profesor_id: 2, an: 1,
 						specializare: "Informatica"
 )
-Curs.create(nume: "Programare declarativa", tip: "lab",  profesor_id: 3, an: 1,
+Curs.create(nume: "Programare declarativa", tip: "lab",  profesor_id: 3, an: 3,
 						specializare: "Matematica"
 )
 Curs.create(nume: "POO",										tip: "curs", profesor_id: 1, an: 1,

@@ -1,0 +1,5 @@
+class PaginaStudentController < ApplicationController
+  def pagStudent
+
+  end
+end

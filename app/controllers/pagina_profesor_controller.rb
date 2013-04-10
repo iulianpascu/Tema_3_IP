@@ -4,24 +4,20 @@ class PaginaProfesorController < ApplicationController
 
 			profesor = Profesor.find_by_id(2)
 			@nume_profesor = profesor.nume
-			cursuri = Curs.find(:all, :conditions => {:profesor_id => profesor.id})
-			if cursuri
-					@valori_profesor = Array.new
+			@cursuri = Curs.find(:all, :conditions => {:profesor_id => profesor.id})
+			@specializare =Array.new
+			@an = Array.new
 
-					cursuri.each do |c|
-
-					evaluare_disponibila = EvaluareDisponibila.find_by_curs_id(c.id)
-					evaluare_completata =
-					EvaluareCompletata.find(:all, :conditions =>
-					{:evaluare_disponibila_id => evaluare_disponibila.id })
-						if evaluare_completata
-							@valori_profesor << c.an
-							@valori_profesor << c.nume
-						end
-
-					end
-
+			@cursuri.each do |c|
+				@specializare << c.specializare
 			end
+			@specializare = @specializare.uniq
+
+
+			@cursuri.each do |c|
+				@an << c.an
+			end
+			@an = @an.uniq
 	end
 
 end

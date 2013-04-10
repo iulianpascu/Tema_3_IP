@@ -1,6 +1,11 @@
-class PaginaAdministratorController < ApplicationController
+class StudentController < ApplicationController
+  def listare
+  end
 
-	def pagAdmin
+  def completare
+  end
+
+	def pagStudent
 		@cursuri = Curs.all
 		@specializare =Array.new
 		@an = Array.new
@@ -15,5 +20,9 @@ class PaginaAdministratorController < ApplicationController
 			@an << c.an
 		end
 		@an = @an.uniq
+	end
+
+	def cucu
+		@cucu = "string"
 	end
 end

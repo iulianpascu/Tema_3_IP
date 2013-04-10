@@ -1,21 +1,39 @@
 class PaginaAdministratorController < ApplicationController
 
 	def pagAdmin
-		cursuri = Curs.all
+		@cursuri = Curs.all
+		@specializare =Array.new
+		@an = Array.new
 
-		@valori_admin =Array.new
-			cursuri.each do |c|
-				evaluare_disponibila = EvaluareDisponibila.find_by_curs_id(c.id)
-				evaluare_completata =
-				EvaluareCompletata.find(:all, :conditions =>
-				{:evaluare_disponibila_id => evaluare_disponibila.id })
-					if evaluare_completata
-						@valori_admin << c.an
-						@valori_admin << c.nume
-						profesor = Profesor.find_by_id(c.profesor_id)
-						@valori_admin << profesor
-					end
-			end
+		@cursuri.each do |c|
+			@specializare << c.specializare
+		end
+		@specializare = @specializare.uniq
+		c=Curs.find_by_specializare("Matematica")
+		if c
+			@specializare << c.specializare
+		end
+		c=Curs.find_by_specializare("Matematica aplicata")
+		if c
+			@specializare << c.specializare
+		end
+		c=Curs.find_by_specializare("Matematica informatica")
+		if c
+			@specializare << c.specializare
+		end
+		c=Curs.find_by_specializare("Informatica")
+		if c
+			@specializare << c.specializare
+		end
+		c=Curs.find_by_specializare("CTI")
+		if c
+			@specializare << c.specializare
+		end
 
+
+		@cursuri.each do |c|
+			@an << c.an
+		end
+		@an = @an.uniq
 	end
 end
