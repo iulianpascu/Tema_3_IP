@@ -1,12 +1,10 @@
-<!doctype html>
-<html lang="en">
 
-<body>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-        	<a class="brand" href="index.html">Logare</a>
+
+            <%= link_to "Login semnat", homepage_path, class:  "brand" %>
         	<div class="nav-collapse collapse nav-bar-inverse-collapse">
         		<ul class="nav pull-right">
 
@@ -23,14 +21,8 @@
 		<form class="form-signin" accept-charset="UTF-8" action="/sessions" method="post">
         <h3 class="form-signin-heading">Logare</h3>
         <input  id="sessions_token" name="sessions[token]" type="password" class="input-block-level" placeholder="Token">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Ţine-mă minte </label>
+<!--         <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Ţine-mă minte </label>-->
         <button class="btn btn-large btn-primary" name="commit" type="submit">Logare</button>
       </form>
 	</div>
-	<div class="bottom-logo">
-		<img src="assets/logo.png" width="150px" height="150px"/>
-		</div>
-
-</body>
-</html>
