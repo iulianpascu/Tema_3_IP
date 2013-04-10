@@ -33,6 +33,7 @@ GossipLogin::Application.routes.draw do
   match '/token_sign_in', to: 'sessions#new', as: "sign_in"
 
   match '/token_sign_out', to: 'sessions#abort_token_session', as: "token_sign_out"
+  match '/sign_out', to: 'sessions#abort_signed_session', as: "sign_out"
 
   match '/pdf_gen', to: 'static_pages#home'
 

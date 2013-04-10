@@ -74,8 +74,8 @@ class SessionsController < ApplicationController
   def abort_token_session
 
     # mai bine lasam in baza, nu incurca pe nimeni
-    #sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
-    #sesiune.destroy
+    sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
+    sesiune.destroy
 
     session[:user_token] = nil
 
