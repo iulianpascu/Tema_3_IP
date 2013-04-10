@@ -5,36 +5,28 @@
     <div id="navbar-example" class="navbar navbar-static">
         <div class="navbar-inner">
           <a class="brand" href="">Student</a>
-          <div class="container" style="width: auto;">
-            <ul class="nav" role="navigation">
-                <li class="dropdown">
-                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                 <% @specializare.each do |s| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= s %></a></li>
+         <div class="container" style="width: auto;">
+                <ul class="nav" role="navigation">
+                    <li class="dropdown">
+                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+										<% @specializare.each do |s| %>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/student/<%= s %>/<%= params[:anul]%>" style="text-align: left;"><%= s %></a></li>
                      <% end %>
-                </ul>
-              </li>
-                 <li class="dropdown">
-                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                 <% @an.each do |a| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= a %></a></li>
+                    </ul>
+                  </li>
+                     <li class="dropdown">
+                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+										<% @an.each do |a| %>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/student/<%= params[:spec] %>/<%= a %>" style="text-align: left;"><%= a %></a></li>
                      <% end %>
+                    </ul>
+                  </li>
+							<li><a href="/student/all/all">Resetare parametri</a></li>
                 </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                 <% @cursuri.each do |c| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= c.nume %></a></li>
-                      <% end %>
-                </ul>
-              </li>
 
-            </ul>
-
-          </div>
+              </div>
         </div>
       </div>
 </div>

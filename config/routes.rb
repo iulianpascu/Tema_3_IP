@@ -38,11 +38,11 @@ GossipLogin::Application.routes.draw do
 
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
 
-  match '/admin/:spec', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
+  match '/admin/:spec/:anul', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
 
-  match '/profesor', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
+  match '/profesor/:spec/:anul', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
 
-  match '/student', to: 'pagina_student#pagStudent', as: "homepage_student"
+  match '/student/:spec/:anul', to: 'pagina_student#pagStudent', as: "homepage_student"
 
 
  #match '/signup', to: 'users#new'

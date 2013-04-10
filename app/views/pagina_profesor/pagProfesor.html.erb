@@ -1,7 +1,4 @@
-<!doctype html>
-<html lang="en">
 
-<body>
 
     <div class="container-narrow">
 
@@ -9,13 +6,13 @@
         <div id="navbar-example" class="navbar navbar-static">
             <div class="navbar-inner">
               <a class="brand" href="">Profesor</a>
-              <div class="container" style="width: auto;">
+             <div class="container" style="width: auto;">
                 <ul class="nav" role="navigation">
                     <li class="dropdown">
                     <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
 										<% @specializare.each do |s| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= s %></a></li>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/profesor/<%= s %>/<%= params[:anul]%>" style="text-align: left;"><%= s %></a></li>
                      <% end %>
                     </ul>
                   </li>
@@ -23,19 +20,12 @@
                     <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
 										<% @an.each do |a| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= a %></a></li>
+                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/profesor/<%= params[:spec] %>/<%= a %>" style="text-align: left;"><%= a %></a></li>
                      <% end %>
                     </ul>
                   </li>
-                  <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Curs<b class="caret"></b></a>
-                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @cursuri.each do |c| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="#" style="text-align: left;"><%= c.nume %></a></li>
-                      <% end %>
-                    </ul>
-                  </li>
 
+<li><a href="/profesor/all/all">Resetare parametri</a></li>
                 </ul>
 
               </div>
@@ -43,7 +33,7 @@
           </div>
     </div>
 
-    <div class="well">
+    <div class="well" style="overflow-x:hidden" >
 	   <table class="table table-striped" style="margin-top:15px; float:left; position: absolute">
       <tr>
         <th>An</th>
@@ -69,13 +59,47 @@
         <div class="clearfix"></div>
     </div>
 
+			<% k=0 %>
+		 <%@cursuri.each do |curs| %>
+			<% k+=1%>
+    <div class="modal hide fade" id="modal<%=k%>">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Detalii</h3>
+      </div>
+        <div class="modal-body">
+        <h4>Alte informatii aici.</h4>
+        <table class="table table-striped">
+        <tr>
+				<th>An</th>
+        <th>Curs</th>
+        <th>Statistici</th>
+      </tr>
+        <tr>
+				<td><%= curs.an %></td>
+       <td><%= curs.nume %></td>
+
+       <td><div class="progress progress-success">
+                <div class="bar" style="width: 70%;"></div>
+              </div></td>
+      </tr>
+        </table>
+        </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
+
+      </div>
+    </div>
+		<%end%>
+     <script type="text/javascript">
+     $("#wizard").bwizard();
+
+   $(".modalButton").click(function(){
+    var id = this.id;
+    var modalNou = '#modal' + id;
+    $(modalNou).modal('show');
+   });
+  </script>
+
+
 	</div>
-
-
-	<script src="../bootstrap/js/jquery.min.js" type="text/javascript"></script>
-	<script src="../bootstrap/js/bootstrap.js" type="text/javascript"></script>
-	<script src="../bootstrap/js/jasny-bootstrap.js" type="text/javascript"></script>
-	<script src="../bootstrap/js/bwizard.js" type="text/javascript"></script>
-
-</body>
-</html>

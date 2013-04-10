@@ -68,34 +68,37 @@
 <div class="clearfix"></div>
 </div>
 
+			<% k=0 %>
+		 <%@cursuri.each do |curs| %>
+			<% k+=1%>
+    <div class="modal hide fade" id="modal<%=k%>">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Detalii</h3>
+      </div>
+        <div class="modal-body">
+        <h4>Alte informatii aici.</h4>
+        <table class="table table-striped">
+        <tr>
+        <th>Curs</th>
+        <th>Profesor</th>
+        <th>Statistici</th>
+      </tr>
+        <tr>
+       <td><%= curs.nume %></td>
+       <td><%= "#{curs.profesor.nume}" %></td>
+       <td><div class="progress progress-success">
+                <div class="bar" style="width: 70%;"></div>
+              </div></td>
+      </tr>
+        </table>
+        </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
 
-<div class="modal hide fade" id="modal1">
-  <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3>Detalii</h3>
-  </div>
-    <div class="modal-body">
-    <h4>Alte informatii aici.</h4>
-    <table class="table table-striped">
-    <tr>
-    <th>Curs</th>
-    <th>Profesor</th>
-    <th>Statistici</th>
-  </tr>
-    <tr>
-   <td>Programare declarativa</td>
-   <td>Cazanescu</td>
-   <td><div class="progress progress-success">
-            <div class="bar" style="width: 70%;"></div>
-          </div></td>
-  </tr>
-    </table>
+      </div>
     </div>
-  <div class="modal-footer">
-  <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
-
-  </div>
-</div>
+		<%end%>
 
 
 <script type="text/javascript">
