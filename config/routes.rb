@@ -28,24 +28,20 @@ GossipLogin::Application.routes.draw do
 
   root to: 'sessions#new'
 
- 	match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
 
   match '/token_sign_in', to: 'sessions#new', as: "sign_in"
-
   match '/token_sign_out', to: 'sessions#abort_token_session', as: "token_sign_out"
   match '/sign_out', to: 'sessions#abort_signed_session', as: "sign_out"
 
   match '/pdf_gen', to: 'static_pages#home'
 
+
+  match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
-
   match '/admin/:spec/:anul', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
-
+  match '/params', to: 'pagina_administrator#setare_resetare', as: 'update_params'
   match '/profesor/:spec/:anul', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
-
   match '/student/:spec/:anul', to: 'pagina_student#pagStudent', as: "homepage_student"
-
-
  #match '/signup', to: 'users#new'
 
 

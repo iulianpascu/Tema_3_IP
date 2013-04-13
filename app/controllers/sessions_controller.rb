@@ -91,7 +91,8 @@ class SessionsController < ApplicationController
   end
 
   def create_signed
-    # raise env["omniauth.auth"].to_yam
+    # raise env["omniauth.auth"].to_yaml
+    logger.info ">>>>>>>>>>>>>>>> #{env["omniauth.auth"]["credentials"]["token"]} <<<<<<<<<<<<<<"
     user = { uid: env["omniauth.auth"]["uid"],
              first_name: env["omniauth.auth"]["extra"]["first_name"],
              last_name: env["omniauth.auth"]["extra"]["last_name"]
