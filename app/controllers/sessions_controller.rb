@@ -48,7 +48,7 @@ class SessionsController < ApplicationController
       session[:user_token] = {token: i_user.token, grupa: i_user.grupa_nume}
 
 
-      sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
+      sesiune = SesiuneActiva.find_by_incognito_user_token(i_user.token)
       if sesiune
         if sesiune.incepere_data > Time.now-600
           flash[:error] = "Ne pare rau dar proprietarul token-ului este deja logat :D"
@@ -58,7 +58,7 @@ class SessionsController < ApplicationController
           redirect_to verificare_path
         end
       else
-       SesiuneActiva.create(incognito_user_token: token, incepere_data: Time.now)
+       SesiuneActiva.create(incognito_user_token: i_user.token, incepere_data: Time.now)
        redirect_to verificare_path
       end
 
@@ -73,8 +73,8 @@ class SessionsController < ApplicationController
   def abort_token_session
 
     # mai bine lasam in baza, nu incurca pe nimeni
-    sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
-    sesiune.destroy
+    sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token][:token])
+    sesiune.destroy if sesiune
 
     session[:user_token] = nil
 
@@ -96,7 +96,7 @@ class SessionsController < ApplicationController
     #          first_name: env["omniauth.auth"]["extra"]["first_name"],
     #          last_name: env["omniauth.auth"]["extra"]["last_name"]
     # }
-    # session[:user_signed] = user
+    session[:user_signed] = user
     # redirect_to homepage_path
   end
 
@@ -104,5 +104,5 @@ class SessionsController < ApplicationController
     flash[:notice] = params[:message]
   end
 
-# end
+end
 # 
