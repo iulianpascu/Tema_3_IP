@@ -69,7 +69,7 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def setare_resetare
-    @exista_formular = Formular.last
+    @formular = Formular.last
     submit_method if request.method == "POST"
   end
 
@@ -87,7 +87,7 @@ class PaginaAdministratorController < ApplicationController
       flash[:error] = validare_si_mapare
     else
       if @chestionar
-        @exista_formular = Formular.create continut: @chestionar
+        @formular = Formular.create continut: @chestionar
       end
 
       # epurez baza
@@ -103,7 +103,7 @@ class PaginaAdministratorController < ApplicationController
     mesaje_validare = []
     
     # fisier chestionar
-    mesaje_validare << "Va rugam specificati un formular" unless @exista_formular or params[:chestionar]
+    mesaje_validare << "Va rugam specificati un formular" unless @formular or params[:chestionar]
     if params[:chestionar]
       @chestionar = convert_as_hash params[:chestionar]
       mesaje_validare << "Fisierul furnizat nu respecta formatul" unless @chestionar
@@ -212,8 +212,9 @@ class PaginaAdministratorController < ApplicationController
         csuri += 1
       end
       EvaluareDisponibila.create(curs_id: cr.id,
-       formular_id: @id_formular,
-       grupa_nume: c["group"].to_i)
+                                 formular_id: @id_formular,
+                                 grupa_nume: c["group"].to_i,
+                                 formular_id: @formular.id)
       evals += 1
     end
 

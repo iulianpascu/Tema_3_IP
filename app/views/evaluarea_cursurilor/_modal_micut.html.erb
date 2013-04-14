@@ -1,0 +1,29 @@
+<% @continuturi.each_with_index do |parent, qindex| %>
+  
+  <% if parent["label"] %>
+  
+    <h4><%= parent["label"] %></h4><hr>
+  
+  <% elsif parent["intrebare"] %>
+  
+    <% if parent["intrebare"].first["enunt"] %>
+  
+      <h5><%= parent["intrebare"].first["enunt"] %><h5>
+      <% r = parent["intrebare"].drop 1 %>
+  
+    <% else %>
+  
+      <% r = parent["intrebare"] %>
+  
+    <% end %>
+  
+    <div class="btn-group" data-toggle-name="is_private" data-toggle="buttons-radio" >
+  
+    <% r.each_with_index do |rasp, i| %>
+      <button type="button" value="<%= i+1 %>" class="btn btn-info" data-toggle="button"><%= rasp["raspuns"] %></button>
+    <% end %>
+  
+    </div>
+    <input type="hidden" name="<%= qindex+1 %>" value="0" />
+  <% end %>
+<% end %>

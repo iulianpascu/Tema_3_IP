@@ -1,12 +1,9 @@
 class EvaluareaCursurilorController < ApplicationController
 
-  require "rexml/document"
-  include REXML
-
   def verificare
 
     if request.method == "POST"
-      flash[:notice] = "Aleluia"
+      flash[:notice] = "Aleluiaa!"
     end
 
     user = IncognitoUser.find_by_token(session[:user_token][:token])
@@ -29,4 +26,30 @@ class EvaluareaCursurilorController < ApplicationController
     end # each
   end
 
+  def get_chestionar
+    require 'json'
+    eval = EvaluareDisponibila.find_by_id(params[:id_eval].to_i)
+    if eval
+      formular = JSON.parse eval.formular.continut 
+      @continuturi = formular["chestionar"]
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def post_chestionar
+    eval = EvaluareDisponibila.find(params[:id_eval].to_i)
+    require 'json'
+    if eval
+      formular = JSON.load eval.formular.continut 
+      @continuturi = formular["chestionar"]
+      user = IncognitoUser.find_by_token(session[:user_token][:token])
+    else
+      flash[:error] = "no eval :("
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
 end

@@ -1,0 +1,23 @@
+{"chestionar" : [
+    {"label" : "text intre tagurile label"},
+    {"intrebare": [ {"enunt": "text intre tagurile enunt"},
+                    {"raspuns": "text intre tagurile raspuns"},
+                    {"raspuns": "text intre tagurile raspuns"}
+                  ]
+    },
+    {"intrebare": [ {"enunt": "text intre tagurile enunt"},
+                    {"raspuns": "text intre tagurile raspuns"},
+                    {"raspuns": "text intre tagurile raspuns"}
+                  ]
+    },
+    {"label" : "text intre tagurile label"},
+    {"intrebare": [ {"enunt": "text intre tagurile enunt"}
+      
+                  ]
+    },
+    {"intrebare": [ {"enunt": "text intre tagurile enunt"}
+      
+                  ]
+    }
+  ]
+}
