@@ -35,16 +35,20 @@
         <th>Tip</th>
         <th>Evalueaza</th>
       </tr>
-      <% i=0 %>
 
-      <% @curs.each_slice(3) do |slice| %>
+      <% @curs.each do |c| %>
 
       <tr>
-        <% slice.each do |value| %>
-        <td><%=value%></td>
-        <% end %>
-
-        <td><button class="modalButton btn btn-primary span2 " id="<%= i+=1 %>">Evalueaza!</button></td>
+        <td><%= c[:nume] %></td>
+        <td><%= c[:prof] %></td>
+        <td><%= c[:tip] %></td>
+        <td>
+          <% if c[:disabled] %>
+            <button class="disabled btn btn-primary" id="<%= c[:id] %>">Evaluat</button>
+          <% else %>
+            <button class="modalButton btn btn-primary" id="<%= c[:id] %>">Evalueaza!</button>
+          <% end %>
+        </td>
       </tr>
 
       <% end %>
@@ -60,50 +64,16 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3>Evaluare curs</h3>
   </div>
+
+  <%= form_tag '/verificare', method: :post do%>
   <div class="modal-body">
 
-   <%contor1=1%>
-   <%contor2=0 %>
-   <%i=0%>
-
-   <h4> <%= contor1%> . <%= @intrebari_alegeri[0] %></h4>
-   <%@texte_intrebari.each do |texte|%>
-   <%contor2=0 %>
-
-   <% texte.elements.each do |enunt| %>
-   <%contor2+=1 %>
-
-   <%if contor1!=1%>
-   <h5><%=contor1%>.<%=contor2%>. <%=enunt.text%></h5>
-   <%end%>
-
-   <% @categorii[i].elements.each do |catenunt| %>
-   <label class="radio">
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-    <%=catenunt.text%>
-  </label>
-
-
-  <%end%> <!-- do |catenunt| -->
-  <%end%> <!-- do |enunt|-->
-
-  <%contor1+=1%>
-  <%i+=1%>
-  <%if contor1<=@intrebari_alegeri.length%>
-  <h4> <%=contor1%>. <%= @intrebari_alegeri[i] %>    </h4>
-  <%end%>
-  <%end%> <!-- do |texte| -->
-
-  <%@intrebari_libere.each do |num|%>
-  <h4><%=contor1%>. <%= num %></h4>
-  <%contor1+=1%>
-  <input type="textarea" placeholder="Raspunde aici!" rows="5" style="width:440px;">
-  <%end%> <!-- do |num| -->
-
+   hahahah
 </div> <!-- modal-body -->
 <div class="modal-footer">
-  <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Trimite</button>
+  <input type="submit" class="btn btn-success" data-dismiss="modal" aria-hidden="true" value="Trimite"></input>
 </div>
+<% end %>
 </div>
 
 

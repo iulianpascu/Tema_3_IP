@@ -174,7 +174,7 @@ ALTER SEQUENCE evaluare_disponibile_id_seq OWNED BY evaluare_disponibile.id;
 
 CREATE TABLE formulare (
     id integer NOT NULL,
-    continut hstore
+    continut text
 );
 
 
@@ -513,3 +513,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130412182042');
 INSERT INTO schema_migrations (version) VALUES ('20130412204509');
 
 INSERT INTO schema_migrations (version) VALUES ('20130412204552');
+
+INSERT INTO schema_migrations (version) VALUES ('20130414152009');
+
+INSERT INTO schema_migrations (version) VALUES ('20130414153338');
