@@ -33,38 +33,37 @@ class SessionsController < ApplicationController
   end
 
   def new
+    redirect_to verificare_path if session[:user_token]
   end
 
   def create
-    if IncognitoUser.find_by_token(params[:sessions][:token])
-      session[:user_token] = params[:sessions][:token]
+    if params[:sessions][:token].blank?
+      flash[:error] = "Nu te poti loga cu un camp gol!"
+      render 'new' and return
+    end
+
+    i_user = IncognitoUser.find_by_token params[:sessions][:token].strip
+    if i_user
+      # mentinem utilizatorul
+      session[:user_token] = {token: i_user.token, grupa: i_user.grupa_nume}
+
 
       sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
       if sesiune
-
         if sesiune.incepere_data > Time.now-600
-            #redirect_to verificare_path
-          flash[:alert] = "Ne pare rau dar proprietarul token-ului este deja logat :D"
+          flash[:error] = "Ne pare rau dar proprietarul token-ului este deja logat :D"
           render 'new'
         else
-
-          # redundant
-          #sesiune = SesiuneActiva.find_by_incognito_user_token(session[:user_token])
-          #sesiune.destroy
-          #SesiuneActiva.create(incognito_user_token: params[:sessions][:token], incepere_data: Time.now)
-
           sesiune.update_attributes(incepere_data: Time.now)
           redirect_to verificare_path
         end
-
       else
-       SesiuneActiva.create(incognito_user_token: params[:sessions][:token], incepere_data: Time.now)
+       SesiuneActiva.create(incognito_user_token: token, incepere_data: Time.now)
        redirect_to verificare_path
       end
 
-      #flash[:notice] = "Logatu-te-ai in ceapa ta11!!!!1"
     else
-      flash[:notice] = "An account associated with this token doesn't exist"
+      flash[:error] = "Acel token e invalid.... si eu ma plictisesc"
       render 'new'
     end
 
@@ -91,18 +90,19 @@ class SessionsController < ApplicationController
   end
 
   def create_signed
-    # raise env["omniauth.auth"].to_yaml
-    logger.info ">>>>>>>>>>>>>>>> #{env["omniauth.auth"]["credentials"]["token"]} <<<<<<<<<<<<<<"
-    user = { uid: env["omniauth.auth"]["uid"],
-             first_name: env["omniauth.auth"]["extra"]["first_name"],
-             last_name: env["omniauth.auth"]["extra"]["last_name"]
-    }
-    session[:user_signed] = user
-    redirect_to homepage_path
+    raise env["omniauth.auth"].to_yaml
+    # logger.info ">>>>>>>>>>>>>>>> #{env["omniauth.auth"]["credentials"]["token"]} <<<<<<<<<<<<<<"
+    # user = { uid: env["omniauth.auth"]["uid"],
+    #          first_name: env["omniauth.auth"]["extra"]["first_name"],
+    #          last_name: env["omniauth.auth"]["extra"]["last_name"]
+    # }
+    # session[:user_signed] = user
+    # redirect_to homepage_path
   end
 
   def failure
     flash[:notice] = params[:message]
   end
 
-end
+# end
+# 

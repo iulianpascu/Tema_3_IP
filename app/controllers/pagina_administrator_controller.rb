@@ -24,8 +24,8 @@ class PaginaAdministratorController < ApplicationController
     if @param_an == "1"
       tmp=1
           #@cursuri = Curs.find(:all, :conditions => {:an => 1})
-    elsif  @param_an == "2"
-      tmp=2
+        elsif  @param_an == "2"
+          tmp=2
       #@cursuri = Curs.find(:all, :conditions => {:an => 2})
     elsif  @param_an == "3"
       tmp=3
@@ -69,57 +69,119 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def setare_resetare
-
-    if request.method == "POST"
-      
-      reset_db   = params[:resetare] 
-      chestionar = params["chestionar"]
-      data_norm  = params[:datepicker]
-      data_term  = params[:datepicker2]
-
-      if chestionar
-        Formular.create continut: convert_as_hash(chestionar)
-      end
-
-      if reset_db
-        Profesor.destroy_all
-        Curs.destroy_all
-        EvaluareDisponibila.destroy_all
-      end
-
-      # mai tb verificat daca exista un ultim formular si aruncat msg custom de err
-      @id_formular = Formular.last.id
-      
-      retrive_and_load_groups
-      retrive_and_load_courses
-    end
-
+    @exista_formular = Formular.last
+    submit_method if request.method == "POST"
   end
 
   private
+  require 'date'
 
+  def submit_method
+    flash[:notice] = []
+    flash[:error] = []
+
+    reset_db   = params[:resetare] 
+    erori = validare_si_mapare 
+    
+    if erori.any?
+      flash[:error] = validare_si_mapare
+    else
+      if @chestionar
+        @exista_formular = Formular.create continut: @chestionar
+      end
+
+      # epurez baza
+      reset_db ? hard_reset : soft_refresh
+      
+      set_start_time
+      retrive_and_load_groups
+      retrive_and_load_courses
+    end
+  end
+
+  def validare_si_mapare
+    mesaje_validare = []
+    
+    # fisier chestionar
+    mesaje_validare << "Va rugam specificati un formular" unless @exista_formular or params[:chestionar]
+    if params[:chestionar]
+      @chestionar = convert_as_hash params[:chestionar]
+      mesaje_validare << "Fisierul furnizat nu respecta formatul" unless @chestionar
+    end
+
+    # data 1
+    if params[:datepicker].blank?
+      mesaje_validare << "Data incepere ani neterminali este necesara" 
+    else
+      @data_norm  = parsare_data params[:datepicker]
+      mesaje_validare << "Data incepere ani neterminali este gresit formatata" unless @data_norm
+    end
+
+    # data 2
+    if params[:datepicker2].blank?
+      @data_term = @data_norm
+    else
+      @data_term  = parsare_data params[:datepicker2]
+      mesaje_validare << "Data incepere ani terminali este gresit formatata" unless @data_term
+    end
+
+    return mesaje_validare
+  end
+
+  def parsare_data(data)
+    Date.strptime data, '%m/%d/%Y'
+  rescue
+    nil
+  end
+
+  # Incarca noii profesori & grupe fara a sterge pe cei de sem trecut
+  def soft_refresh
+    EvaluareDisponibila.destroy_all
+    IncognitoUser.destroy_all
+    DataEvaluare.destroy_all
+    SesiuneActiva.destroy_all
+  end
+
+  # Suprascrie profesorii & grupele (sterge tot ce apartinea trecutului)
+  def hard_reset
+    EvaluareDisponibila.destroy_all
+    Profesor.destroy_all
+    Curs.destroy_all  
+    Grupa.destroy_all
+    IncognitoUser.destroy_all
+    DataEvaluare.destroy_all
+    SesiuneActiva.destroy_all
+  end
 
   def convert_as_hash(chestionar)
     file = chestionar.read
     j = JSON.load file
+  rescue
+    nil
   end
 
   def retrive_and_load_groups
     require 'net/http'
+    require 'securerandom'
     url = URI.parse("http://coursemanager.herokuapp.com/api/groups/students_number.json")
     response = Net::HTTP.post_form(url, {})
     grupe = JSON.load response.body
     terminal = %w(3 5 8)
 
     grupe.each do |g|
-      Grupa.create(nume:     g["group"].to_s,
-                   studenti: g["number"].to_i,
-                   terminal: g["group"].at(0).in?(terminal))
+      Grupa.create(nume:     g["group"].to_i,
+       studenti: g["number"].to_i,
+       terminal: g["group"].at(0).in?(terminal))
+      (1..(g["number"].to_i)).each do
+        rand = SecureRandom.base64(16)
+        IncognitoUser.create(grupa_nume: g["group"].to_i,
+         token: rand)
+      end
     end
   rescue JSON::ParserError
-    flash[:error] = "eroare parsare JSON grupe"
+    flash[:error] << "eroare parsare JSON grupe"
   rescue => e
-    flash[:error] = "eroare grupe: #{e}"
+    flash[:error] << "eroare grupe: #{e}"
   end
 
   def retrive_and_load_courses
@@ -150,17 +212,22 @@ class PaginaAdministratorController < ApplicationController
         csuri += 1
       end
       EvaluareDisponibila.create(curs_id: cr.id,
-                                 formular_id: @id_formular,
-                                 grupa_nume: c["group"].to_i)
+       formular_id: @id_formular,
+       grupa_nume: c["group"].to_i)
       evals += 1
     end
 
     a = "au fost bagate in baza #{profi} profi #{csuri} cursuri si #{evals} eval noi"
-    flash[:notice] = a
+    flash[:notice] << "#{profi} profesori noi"
+    flash[:notice] << "#{csuri} cursuri noi"
   rescue JSON::ParserError
     flash[:error] = "eroare parsare JSON cursuri"
   # rescue => e
   #   flash[:error] = "eroare cursuri: #{e}"
   end
 
+  def set_start_time
+    DataEvaluare.create data: @data_norm, grupa_terminal: false
+    DataEvaluare.create data: @data_term, grupa_terminal: true
+  end
 end

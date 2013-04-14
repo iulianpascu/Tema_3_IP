@@ -31,7 +31,11 @@
 
       
       <div class="control-group">
-        <label class="control-label">Alege fisier</label>  
+        <label class="control-label">Alege fisier
+          <%  unless @exista_formular %>
+          <b style='color: red'>*</b>
+          <% end %>
+        </label>  
         <div>
           <div class="fileupload fileupload-new" data-provides="fileupload">
             <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span>
@@ -42,15 +46,16 @@
         </div>
       </div>
     </div>
+    <legend>Alege data start</legend>
     <div class="control-group">
-      <label class="control-label">Alege data start ani neterminali</label> 
+      <label class="control-label">ani neterminali<b style='color: red'>*</b></label> 
       <div class="controls"> 
         <input type="text" id="datepicker" name="datepicker"/> 
       </div>
 
     </div>
     <div class="control-group">
-      <label class="control-label">Alege data start ani terminali</label> 
+      <label class="control-label">ani terminali</label> 
       <div class="controls"> 
         <input type="text" id="datepicker2" name="datepicker2"/> 
         </div

@@ -99,9 +99,21 @@
   <div class="content-narrow">
 
     <% flash.each do |key, msg| %>
-    <div class="alert <%= key == :notice ? 'alert-success' : 'alert-error'%>">
-      <%= msg %>
-    </div>
+      
+      <% if msg.class != Array%>
+      <div class="alert <%= key == :notice ? 'alert-success' : 'alert-error'%>">
+        <%= msg %>
+        </div>
+      <% elsif msg.any? %>
+        <div class="alert <%= key == :notice ? 'alert-success' : 'alert-error'%>">
+        <ul>
+        <% msg.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+      </div>
+      <% end %>
+      
     <% end %>
   </div>
 

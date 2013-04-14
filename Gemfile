@@ -11,6 +11,7 @@ gem 'json'
 # gem for pdf generate
 
 gem 'prawn'
+gem 'nori'
 
 
 # Bundle edge Rails instead:
