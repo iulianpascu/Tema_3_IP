@@ -64,7 +64,7 @@ class PaginaAdministratorController < ApplicationController
         @cursuri = Curs.find(:all, :conditions => {:an => tmp})
       end
     end
-
+xml_to_json('ver.xml')
 
   end
 
@@ -80,9 +80,9 @@ class PaginaAdministratorController < ApplicationController
     flash[:notice] = []
     flash[:error] = []
 
-    reset_db   = params[:resetare] 
-    erori = validare_si_mapare 
-    
+    reset_db   = params[:resetare]
+    erori = validare_si_mapare
+
     if erori.any?
       flash[:error] = validare_si_mapare
     else
@@ -92,7 +92,7 @@ class PaginaAdministratorController < ApplicationController
 
       # epurez baza
       reset_db ? hard_reset : soft_refresh
-      
+
       set_start_time
       retrive_and_load_groups
       retrive_and_load_courses
@@ -101,7 +101,7 @@ class PaginaAdministratorController < ApplicationController
 
   def validare_si_mapare
     mesaje_validare = []
-    
+
     # fisier chestionar
     mesaje_validare << "Va rugam specificati un formular" unless @formular or params[:chestionar]
     if params[:chestionar]
@@ -111,7 +111,7 @@ class PaginaAdministratorController < ApplicationController
 
     # data 1
     if params[:datepicker].blank?
-      mesaje_validare << "Data incepere ani neterminali este necesara" 
+      mesaje_validare << "Data incepere ani neterminali este necesara"
     else
       @data_norm  = parsare_data params[:datepicker]
       mesaje_validare << "Data incepere ani neterminali este gresit formatata" unless @data_norm
@@ -146,7 +146,7 @@ class PaginaAdministratorController < ApplicationController
   def hard_reset
     EvaluareDisponibila.destroy_all
     Profesor.destroy_all
-    Curs.destroy_all  
+    Curs.destroy_all
     Grupa.destroy_all
     IncognitoUser.destroy_all
     DataEvaluare.destroy_all
@@ -205,7 +205,7 @@ class PaginaAdministratorController < ApplicationController
       unless cr
         cr = Curs.new
         cr.nume         = c["course_name"]
-        cr.profesor_id  = c["teacher_id"].to_i  
+        cr.profesor_id  = c["teacher_id"].to_i
         cr.tip          = c["course_type"]
         cr.an           = c["group"].at(0).to_i
         cr.save
@@ -231,4 +231,88 @@ class PaginaAdministratorController < ApplicationController
     DataEvaluare.create data: @data_norm, grupa_terminal: false
     DataEvaluare.create data: @data_term, grupa_terminal: true
   end
+
+def xml_to_json(fisier)
+		require 'json'
+		if not FileTest.exists?(Rails.root + fisier)
+			flash[:error] = "Fisierul xml nu a fost gasit"
+			return nil
+		end
+
+		xml = File.open(fisier).read
+		json = Hash.from_xml(xml).as_json
+		flag_error = false
+		chestionar=json["chestionar"]
+		obiect = Array.new
+
+		if chestionar.class == Hash
+		chestionar.each_pair do |chestionar_key,chestionar_value|
+			if chestionar_key == "label"
+				obiect << {"label" => chestionar_value}
+			elsif chestionar_key == "intrebare"
+					chestionar_value.each do |intrebare|
+						temp = Array.new
+							flag =false
+							count = 1
+					if intrebare.class == Hash
+						intrebare.each_pair do |intrebare_key,intrebare_value|
+
+							if count >2
+								flash[:error] = "Aveti o eroare in xml#{count}"
+								return nil
+							end
+							if intrebare_key == "enunt"
+								flag = true
+								if intrebare_value.class == Array
+									flash[:error] = "Aveti o eroare in xml"
+									return nil
+								else
+									temp << {"enunt" => intrebare_value}
+								end
+							else
+
+									if intrebare_key == "rasp" && flag == true
+										if intrebare_value.class == Array
+											intrebare_value.each do |i|
+												temp << {"rasp" => i}
+											end
+										elsif intrebare_value.class == String
+												temp << {"rasp" => intrebare_value}
+										else
+											flash[:error] = "Aveti o eroare in xml"
+											return nil
+
+										end #if intrebare_value
+									else
+										flash[:error] = "Aveti o eroare in xml"
+										return nil
+
+									end # if intrebare_key && flag
+							end # if intrebare_key
+						end #intrebare
+						obiect << {"intrebare" => temp}
+					else
+						flash[:error] = "Aveti o eroare in xml"
+						return nil
+
+ 					end #if intrebare
+					end #chestionar_value
+			else
+				flash[:error] = "Aveti o eroare in xml"
+				return nil
+
+			end #if chestionar_key
+
+		end #chestionar
+		else
+			flash[:error] = "Aveti o eroare in xml. Chestionarul este gol."
+			return nil
+
+		end #if chestionar
+
+				obiect = {"chestionar" => obiect}
+				@obiect1 = obiect.to_json
+		return @obiect1
+	end
+
 end
