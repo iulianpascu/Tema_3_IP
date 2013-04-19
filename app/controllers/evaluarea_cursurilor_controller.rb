@@ -28,10 +28,16 @@ class EvaluareaCursurilorController < ApplicationController
 
   def get_chestionar
     require 'json'
-    eval = EvaluareDisponibila.find_by_id(params[:id_eval].to_i)
-    if eval
+    # vefic ca evaluarea sa existe si sa fie diponibila grupei utilizatorului
+    eval = EvaluareDisponibila.find_by_id_and_grupa_nume(params[:id_eval].to_i, session[:user_token][:grupa])
+
+    # verific daca a completat deja aceasta evaluare
+    if eval && !EvaluareCompletata.find_by_token_and_evaluare_disponibila_id(session[:user_token][:token], params[:id_eval].to_i)
       formular = JSON.parse eval.formular.continut 
       @continuturi = formular["chestionar"]
+      @eval_id = params[:id_eval].to_i
+    else
+      flash[:error] = "Acea evaluare nu iti este disponibila"
     end
     respond_to do |format|
       format.js
@@ -39,12 +45,10 @@ class EvaluareaCursurilorController < ApplicationController
   end
 
   def post_chestionar
-    eval = EvaluareDisponibila.find(params[:id_eval].to_i)
-    require 'json'
+    eval = EvaluareDisponibila.find_by_id(params[:id_eval].to_i)
+    
     if eval
-      formular = JSON.load eval.formular.continut 
-      @continuturi = formular["chestionar"]
-      user = IncognitoUser.find_by_token(session[:user_token][:token])
+      
     else
       flash[:error] = "no eval :("
     end

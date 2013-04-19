@@ -21,7 +21,7 @@
       <div class="btn-group" data-toggle-name="<%= qindex+1 %>" data-toggle="buttons-radio" >
       
       <% r.each_with_index do |rasp, i| %>
-        <button type="button" value="<%= i+1 %>" class="btn btn-info" data-toggle="button"><%= rasp["raspuns"] %></button>
+        <button type="button" value="<%= i+1 %>" class="btn btn-info" data-toggle="button"><%= rasp["rasp"] %></button>
       <% end %>
     
       </div>
@@ -31,3 +31,4 @@
     <% end %>
   <% end %>
 <% end %>
+<div style="display:none" id="id_eval"><%= @eval_id %></div>

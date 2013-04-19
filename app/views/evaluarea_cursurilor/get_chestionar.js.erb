@@ -25,7 +25,6 @@ $('div.btn-group[data-toggle-name]').each(function(){
   });
 
 <% else %>
-  $("#error-div").empty();
-  $("#error-div").append('<div class="alert alert-error"><%= flash[:error] %></div>');
+  $('#error-div').replaceWith("<%=j render template: 'layouts/_error_and_alert_div' %> ")
 
 <% end %>

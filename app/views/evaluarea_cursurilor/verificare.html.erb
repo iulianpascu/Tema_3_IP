@@ -110,7 +110,8 @@ $(".modalButton").click(function(){
 });
 
 $("#charlie").submit(function(){
-  $.post("/post_chestionar/1279" + '.js', $(this).serialize(), null, "script");
+  var id_eval = $("#id_eval").text();
+  $.post("/post_chestionar/" + id_eval + '.js', $(this).serialize(), null, "script");
   return false;  
 });
 
