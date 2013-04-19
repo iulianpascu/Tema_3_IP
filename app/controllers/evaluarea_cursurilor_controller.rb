@@ -32,12 +32,12 @@ class EvaluareaCursurilorController < ApplicationController
     eval = EvaluareDisponibila.find_by_id_and_grupa_nume(params[:id_eval].to_i, session[:user_token][:grupa])
 
     # verific daca a completat deja aceasta evaluare
-    if eval && !EvaluareCompletata.find_by_token_and_evaluare_disponibila_id(session[:user_token][:token], params[:id_eval].to_i)
+    if eval && !EvaluareCompletata.find_by_incognito_user_token_and_evaluare_disponibila_id(session[:user_token][:token], params[:id_eval].to_i)
       formular = JSON.parse eval.formular.continut 
       @continuturi = formular["chestionar"]
       @eval_id = params[:id_eval].to_i
     else
-      flash[:error] = "Acea evaluare nu iti este disponibila"
+      flash[:error] = "Acea evaluare nu iti este disponibila, poate ai completat-o deja"
     end
     respond_to do |format|
       format.js
@@ -45,12 +45,25 @@ class EvaluareaCursurilorController < ApplicationController
   end
 
   def post_chestionar
-    eval = EvaluareDisponibila.find_by_id(params[:id_eval].to_i)
-    
-    if eval
-      
+    eval = EvaluareDisponibila.find_by_id_and_grupa_nume(params[:id_eval].to_i, session[:user_token][:grupa])
+    comp = EvaluareCompletata.find_by_incognito_user_token_and_evaluare_disponibila_id(session[:user_token][:token], params[:id_eval].to_i)
+    # verific daca a completat deja aceasta evaluare
+    if eval && !comp
+      formular = JSON.parse eval.formular.continut 
+      continuturi = formular["chestionar"]
+      indecsi_raspunsuri = []
+      continuturi.each_with_index do |parent, qindex|
+        indecsi_raspunsuri << qindex + 1 if parent["intrebare"]
+      end
+      raspunsuri = {}
+      indecsi_raspunsuri.each {|i| raspunsuri[i.to_s] = params[i.to_s]}
+      EvaluareCompletata.create(incognito_user_token: session[:user_token][:token],
+                                evaluare_disponibila_id: params[:id_eval],
+                                continut: raspunsuri,
+                                timp: params[:tpcp])
+
     else
-      flash[:error] = "no eval :("
+      flash[:error] = "Acea evaluare nu iti este disponibila, poate ai completat-o deja"
     end
     respond_to do |format|
       format.js

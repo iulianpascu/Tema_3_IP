@@ -212,9 +212,9 @@ class PaginaAdministratorController < ApplicationController
         csuri += 1
       end
       EvaluareDisponibila.create(curs_id: cr.id,
-       formular_id: @id_formular,
-       grupa_nume: c["group"].to_i,
-       formular_id: @formular.id)
+                                 formular_id: @id_formular,
+                                 grupa_nume: c["group"].to_i,
+                                 formular_id: @formular.id)
       evals += 1
     end
 

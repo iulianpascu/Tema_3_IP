@@ -1,6 +1,7 @@
 
 <% if @continuturi %>
-  
+$('#error-div').empty();
+
 $(".modal-body").empty();
   
 $(".modal-body").append("<%=j render "modal_micut" %>");
@@ -24,7 +25,10 @@ $('div.btn-group[data-toggle-name]').each(function(){
     });
   });
 
+timp_sesiune = jQuery.now();
+
 <% else %>
-  $('#error-div').replaceWith("<%=j render template: 'layouts/_error_and_alert_div' %> ")
+  $('#error-div').empty();
+  $('#error-div').append("<%=j render template: 'layouts/_error_and_alert_div' %> ");
 
 <% end %>

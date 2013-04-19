@@ -67,17 +67,10 @@
 
   <%= form_tag '/verificare', method: :post, id: "charlie" do%>
   <div class="modal-body">
-    <label>Prezenta</label>
-    <div class="btn-group" data-toggle-name="is_private" data-toggle="buttons-radio" >
-      <button type="button" value="1" class="btn btn-info" data-toggle="button">0-25%</button>
-      <button type="button" value="2" class="btn btn-info" data-toggle="button">25-50%</button>
-      <button type="button" value="3" class="btn btn-info" data-toggle="button">50-75%</button>
-      <button type="button" value="4" class="btn btn-info" data-toggle="button">75-100%</button>
-    </div>
-    <input type="hidden" name="is_private" value="0" />
-</div> <!-- modal-body -->
+      
+  </div> <!-- modal-body -->
 <div class="modal-footer">
-  
+  <input type="hidden"  id="tpcp" name="tpcp" />
   <%= submit_tag "Login", {"class" => "btn btn-success"}%>
 </div>
 <% end %>
@@ -111,9 +104,11 @@ $(".modalButton").click(function(){
 
 $("#charlie").submit(function(){
   var id_eval = $("#id_eval").text();
+  var diff = ($.now() - timp_sesiune)/1000;
+  $('#tpcp').val(diff);
   $.post("/post_chestionar/" + id_eval + '.js', $(this).serialize(), null, "script");
   return false;  
 });
 
-
+var timp_sesiune = 0;
 </script>
