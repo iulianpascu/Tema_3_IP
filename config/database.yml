@@ -3,15 +3,17 @@ development:
   encoding: UTF8
   database: evaluari_development
   pool: 5
-  port: 5433
-  username: nailui
-  password:
+  port: 5432
+  username: dev
+  password: 1
+  host: localhost
 
 test:
   adapter: postgresql
   encoding: UTF8
   database: evaluari_test
   pool: 5
-  port: 5433
-  username: nailui
-  password:
+  port: 5432
+  username: dev
+  password: 1
+  host: localhost
