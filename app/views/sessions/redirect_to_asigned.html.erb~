@@ -1,8 +1,0 @@
-
-<div class="container-narrow">
-  <div class="well">
-    <%= link_to "Admin", '/admin/all/all', class: "btn btn-primary span2 modalButton" %>
-    <%= link_to "Prof", homepage_profesor_path, class: "btn btn-primary span2 modalButton" %>
-    <%= link_to "Student", homepage_student_path, class: "btn btn-primary span2 modalButton" %>
-  </div>
-</div>

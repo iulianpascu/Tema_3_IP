@@ -1,5 +1,0 @@
-<h1>StaticPages#home</h1>
-
-<div class="pdf_link">
-	<%= link_to "Generate", pdf_path(:format => "pdf"),class: "btn btn-large btn-primary" %>
-</div>
