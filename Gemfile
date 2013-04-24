@@ -19,6 +19,7 @@ gem 'nori'
 
 group :development do
   gem 'seed_dump'
+  gem 'railroady'
 end
 
 gem 'pg'

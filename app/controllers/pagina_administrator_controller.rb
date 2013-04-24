@@ -64,7 +64,7 @@ class PaginaAdministratorController < ApplicationController
         @cursuri = Curs.find(:all, :conditions => {:an => tmp})
       end
     end
-    xml_to_json('ver.xml')
+    # xml_to_json('ver.xml')
 
   end
 
@@ -225,95 +225,93 @@ class PaginaAdministratorController < ApplicationController
     flash[:error] = "eroare parsare JSON cursuri"
   # rescue => e
   #   flash[:error] = "eroare cursuri: #{e}"
-end
+  end
 
-def set_start_time
-  DataEvaluare.create data: @data_norm, grupa_terminal: false
-  DataEvaluare.create data: @data_term, grupa_terminal: true
-end
+  def set_start_time
+    DataEvaluare.create data: @data_norm, grupa_terminal: false
+    DataEvaluare.create data: @data_term, grupa_terminal: true
+  end
 
-def xml_file_to_json_string(fisier)
-  # require 'json'
+  def xml_file_to_json_string(fisier)
+    # require 'json'
 
-  # if not FileTest.exists?(Rails.root + fisier)
-  #   flash[:error] = "Fisierul xml nu a fost gasit"
-  #   return nil
-  # end
+    # if not FileTest.exists?(Rails.root + fisier)
+    #   flash[:error] = "Fisierul xml nu a fost gasit"
+    #   return nil
+    # end
 
-  xml = fisier.read
-  json = Hash.from_xml(xml).as_json
-  flag_error = false
-  chestionar=json["chestionar"]
-  obiect = Array.new
+    xml = fisier.read
+    json = Hash.from_xml(xml).as_json
+    flag_error = false
+    chestionar=json["chestionar"]
+    obiect = Array.new
 
-  if chestionar.class == Hash
-    chestionar.each_pair do |chestionar_key,chestionar_value|
-      if chestionar_key == "label"
-        obiect << {"label" => chestionar_value}
-      elsif chestionar_key == "intrebare"
-        chestionar_value.each do |intrebare|
-          temp = Array.new
-          flag =false
-          count = 1
-          if intrebare.class == Hash
-            intrebare.each_pair do |intrebare_key,intrebare_value|
+    if chestionar.class == Hash
+      chestionar.each_pair do |chestionar_key,chestionar_value|
+        if chestionar_key == "label"
+          obiect << {"label" => chestionar_value}
+        elsif chestionar_key == "intrebare"
+          chestionar_value.each do |intrebare|
+            temp = Array.new
+            flag =false
+            count = 1
+            if intrebare.class == Hash
+              intrebare.each_pair do |intrebare_key,intrebare_value|
 
-              if count >2
-                flash[:error] = "Aveti o eroare in xml#{count}"
-                return nil
-              end
-              if intrebare_key == "enunt"
-                flag = true
-                if intrebare_value.class == Array
-                  flash[:error] = "Aveti o eroare in xml"
+                if count >2
+                  flash[:error] = "Aveti o eroare in xml#{count}"
                   return nil
-                else
-                  temp << {"enunt" => intrebare_value}
                 end
-              else
 
-                if intrebare_key == "rasp" && flag == true
+                if intrebare_key == "enunt"
+                  flag = true
+                
                   if intrebare_value.class == Array
-                    intrebare_value.each do |i|
-                      temp << {"rasp" => i}
-                    end
+                    flash[:error] = "Aveti o eroare in xml"
+                    return nil
+                  else
+                    temp << {"enunt" => intrebare_value}
+                  end
+                elsif intrebare_key == "rasp" && flag == true
+                  if intrebare_value.class == Array
+                    intrebare_value.each { |i| temp << {"rasp" => i} }
                   elsif intrebare_value.class == String
                     temp << {"rasp" => intrebare_value}
                   else
                     flash[:error] = "Aveti o eroare in xml"
                     return nil
+                  end #if intrebare_value
+                else
+                  flash[:error] = "Aveti o eroare in xml"
+                  return nil
+                 
+                end # if intrebare_key
 
-end #if intrebare_value
-else
-  flash[:error] = "Aveti o eroare in xml"
-  return nil
+              end #intrebare.each_pair
 
-end # if intrebare_key && flag
-end # if intrebare_key
-end #intrebare
-obiect << {"intrebare" => temp}
-else
-  flash[:error] = "Aveti o eroare in xml"
-  return nil
+            obiect << {"intrebare" => temp}
+            else
+              flash[:error] = "Aveti o eroare in xml"
+              return nil
+            end #if intrebare
+          end #chestionar_value.each
 
-end #if intrebare
-end #chestionar_value
-else
-  flash[:error] = "Aveti o eroare in xml"
-  return nil
+        else
+          flash[:error] = "Aveti o eroare in xml"
+          return nil
 
-end #if chestionar_key
+        end #if chestionar_key
 
-end #chestionar
-else
-  flash[:error] = "Aveti o eroare in xml. Chestionarul este gol."
-  return nil
+      end #chestionar.each_pair
 
-end #if chestionar
+    else
+      flash[:error] = "Aveti o eroare in xml. Chestionarul este gol."
+      return nil
+    end #if chestionar
 
-obiect = {"chestionar" => obiect}
-@obiect1 = obiect.to_json
-return @obiect1
-end
+    obiect = {"chestionar" => obiect}
+    @obiect1 = obiect.to_json
+    return @obiect1
+  end
 
 end

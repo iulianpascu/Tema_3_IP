@@ -13,16 +13,21 @@ module OmniAuth
 
       uid { raw_info['id'] }
 
-      info do
-        {
-            :email => raw_info['email']
-        }
-      end
+      # info do
+      #   {
+      #       :email => raw_info['email']
+      #   }
+      # end
 
       extra do
         {
             :first_name => raw_info['extra']['first_name'],
-            :last_name  => raw_info['extra']['last_name']
+            :last_name  => raw_info['extra']['last_name'],
+            :email => raw_info['extra']['email'],
+            :student  => raw_info['extra']['student'],
+            :teacher => raw_info['extra']['teacher'],
+            :management  => raw_info['extra']['management'],
+            :admin => raw_info['extra']['admin']
         }
       end
 

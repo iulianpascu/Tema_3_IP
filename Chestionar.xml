@@ -1,177 +1,197 @@
 <?xml version="1.0"?>
 <chestionar>
-	<intrebari_alegeri>
-		<intrebare_alegeri id = "intrebare1">
-			<enunt_intrebare>
-				Prezenta mea la curs se incadreaza in intervalul:
-			</enunt_intrebare>
-			<categorii>
-				<categorie id = "cat1">
-					0-25%
-				</categorie>
-				<categorie id = "cat1">
-					25-50%
-				</categorie>
-				<categorie id = "cat1">
-					50-75%
-				</categorie>
-				<categorie id = "cat1">
-					75-100%
-				</categorie>
-			</categorii>
-			<texte_intrebari>  
-                                <text_intrebare id = "intr2.1">
-				</text_intrebare>
-			</texte_intrebari>
-		</intrebare_alegeri>
-		<intrebare_alegeri id = "intrebare2">
-			<enunt_intrebare>
-				Cum apreciati materia cursului:
-			</enunt_intrebare>
-			<categorii>
-				<categorie id = "cat2">
-					Prea scazut(a)
-				</categorie>
-				<categorie id = "cat2">
-					Scazut(a)
-				</categorie>
-				<categorie id = "cat2">
-					Bun(a)
-				</categorie>
-				<categorie id = "cat2">
-					Ridicat(a)
-				</categorie>
-				<categorie id = "cat2">
-					Prea ridicat(a)
-				</categorie>
-			</categorii>
-			<texte_intrebari>
-				<text_intrebare id = "intr2.1">
-					Nivelul de dificultate al materiei a fost
-				</text_intrebare>
-				<text_intrebare id = "intr2.2">
-					Densitatea materiei a fost
-				</text_intrebare>
-			</texte_intrebari>
-		</intrebare_alegeri>
-		<intrebare_alegeri id = "intrebare3">
-			<enunt_intrebare>
-				In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra cursului:
-			</enunt_intrebare>
-			<categorii>
-				<categorie id = "cat3">
-					Dezacord total
-				</categorie>
-				<categorie id = "cat3">
-					Dezacord partial
-				</categorie>
-				<categorie id = "cat3">
-					Neutru
-				</categorie>
-				<categorie id = "cat3">
-					Acord partial
-				</categorie>
-				<categorie id = "cat3">
-					Acord total
-				</categorie>
-			</categorii>
-			<texte_intrebari>
-				<text_intrebare id = "intr3.1">
-					La inceputul semestrului, am fost informat asupra obiectivelor si cerintelor (prezenta, note)
-				</text_intrebare>
-				<text_intrebare id = "intr3.2">
-					Cursul a fost bine structurat
-				</text_intrebare>
-				<text_intrebare id = "intr3.3">
-					Gradul de dificultate a fost adecvat cu pregatirea mea anterioara
-				</text_intrebare>
-				<text_intrebare id = "intr3.4">
-					Cunostiintele dobandite au fost in concordanta cu obiectivele anuntate la inceputul cursului
-				</text_intrebare>
-				<text_intrebare id = "intr3.5">
-					Bibliografia recomandata a fost disponibila
-				</text_intrebare>
-				<text_intrebare id = "intr3.6">
-					Bibliografia recomandata a fost utila
-				</text_intrebare>
-			</texte_intrebari>
-		</intrebare_alegeri>
-		<intrebare_alegeri id = "intrebare4">
-			<enunt_intrebare>
-				In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra modului de predare al profesorului:
-			</enunt_intrebare>
-			<categorii>
-				<categorie id = "cat4">
-					Dezacord total
-				</categorie>
-				<categorie id = "cat4">
-					Dezacord partial
-				</categorie>
-				<categorie id = "cat4">
-					Neutru
-				</categorie>
-				<categorie id = "cat4">
-					Acord partial
-				</categorie>
-				<categorie id = "cat4">
-					Acord total
-				</categorie>
-			</categorii>
-			<texte_intrebari>
-				<text_intrebare id = "intr4.1">
-					A respectat materia din programa
-				</text_intrebare>
-				<text_intrebare id = "intr4.2">
-					Expunerea sa a fost riguroasa si inteligibila
-				</text_intrebare>
-				<text_intrebare id = "intr4.3">
-					A fost explicata utilitatea / importanta cursului in pregatirea profesionala
-				</text_intrebare>
-				<text_intrebare id = "intr4.4">
-					Mi-a dat impresia ca stapaneste materia predata
-				</text_intrebare>
-				<text_intrebare id = "intr4.5">
-					A transmis cunostiintele intr-o maniera pe care am inteles-o, inclusiv notiunile pe care le-am considerat dificile
-				</text_intrebare>
-				<text_intrebare id = "intr4.6">
-					Consider ca ritmul predarii a fost satisfacator
-				</text_intrebare>
-				<text_intrebare id = "intr4.7">
-					S-a exprimat coerent si clar
-				</text_intrebare>
-				<text_intrebare id = "intr4.8">
-					A prezentat materia intr-o maniera interesanta
-				</text_intrebare>
-				<text_intrebare id = "intr4.9">
-					A fost punctual si a utilizat corespunzator timpul programat activitatii didactice
-				</text_intrebare>
-				<text_intrebare id = "intr4.10">
-					A fost usor abordabil, disponibil si a tratat studentii cu respect
-				</text_intrebare>
-			</texte_intrebari>
-		</intrebare_alegeri>
-	</intrebari_alegeri>
-		
-	<intrebari_libere>
-		<intrebare_libere id = "intr1">
-			<enunt_intrebare>
-				Ce mi-a placut:
-			</enunt_intrebare>
-		</intrebare_libere>
-		<intrebare_libere id = "intr2">
-			<enunt_intrebare>
-				Cum consider ca va putea fi imbunatatit:
-			</enunt_intrebare>
-		</intrebare_libere>
-		<intrebare_libere id = "intr3">
-			<enunt_intrebare>
-				Alte comentarii:
-			</enunt_intrebare>
-		</intrebare_libere>
-		<intrebare_libere id = "intr4">
-			<enunt_intrebare>
-				Consider ca forma si continutul acestui formular sunt corespunzatoare cursului evaluat (DA/NU):
-			</enunt_intrebare>
-		</intrebare_libere>
-	</intrebari_libere>
+	
+	<intrebare>
+		<enunt>1. Prezenta mea la curs se incadreaza in intervalul:</enunt>
+
+		<rasp>0-25%</rasp>
+		<rasp>25-50%</rasp>
+		<rasp>50-75%</rasp>
+		<rasp>75-100%</rasp>
+	</intrebare>
+
+	<label>2. Cum apreciati materia cursului:</label>
+	<intrebare>
+		<enunt>2.1 Nivelul de dificultate al materiei a fost</enunt>
+
+		<rasp>Prea scazut(a)</rasp>
+		<rasp>Scazut(a)</rasp>
+		<rasp>Bun(a)</rasp>
+		<rasp>Ridicat(a)</rasp>
+		<rasp>Prea ridicat(a)</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>2.2 Densitatea materiei a fost</enunt>
+		<rasp>Prea scazut(a)</rasp>
+		<rasp>Scazut(a)</rasp>
+		<rasp>Bun(a)</rasp>
+		<rasp>Ridicat(a)</rasp>
+		<rasp>Prea ridicat(a)</rasp>
+	</intrebare>
+
+	<label>3. In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra cursului:</label>
+	<intrebare>
+		<enunt>3.1 La inceputul semestrului, am fost informat asupra obiectivelor si cerintelor (prezenta, note)</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>3.2 Cursul a fost bine structurat</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>3.3 Gradul de dificultate a fost adecvat cu pregatirea mea anterioara</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>3.4 Cunostiintele dobandite au fost in concordanta cu obiectivele anuntate la inceputul cursului</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>3.5 Bibliografia recomandata a fost disponibila</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>3.6 Bibliografia recomandata a fost utila</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<label>4. In ce masura sunteti de acord sau nu, cu urmatoarele aprecieri asupra modului de predare al profesorului:</label>
+	<intrebare>
+		<enunt>4.1 A respectat materia din programa</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.2 Expunerea sa a fost riguroasa si inteligibila</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.3 A fost explicata utilitatea / importanta cursului in pregatirea profesionala</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.4 Mi-a dat impresia ca stapaneste materia predata</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.5 A transmis cunostiintele intr-o maniera pe care am inteles-o, inclusiv notiunile pe care le-am considerat dificile</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.6 Consider ca ritmul predarii a fost satisfacator</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.7 S-a exprimat coerent si clar</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.8 A prezentat materia intr-o maniera interesanta</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+
+	<intrebare>
+		<enunt>4.9 A fost punctual si a utilizat corespunzator timpul programat activitatii didactice</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>4.10 A fost usor abordabil, disponibil si a tratat studentii cu respect</enunt>
+		<rasp>Dezacord total</rasp>
+		<rasp>Dezacord partial</rasp>
+		<rasp>Neutru</rasp>
+		<rasp>Acord partial</rasp>
+		<rasp>Acord total</rasp>
+	</intrebare>
+
+	<intrebare>
+		<enunt>5. Ce mi-a placut:</enunt>
+	</intrebare>
+
+	<intrebare>
+		<enunt>6. Cum consider ca va putea fi imbunatatit:</enunt>
+	</intrebare>
+
+	<intrebare>
+		<enunt>7. Alte comentarii:</enunt>
+	</intrebare>
+
+	<intrebare>
+		<enunt>8. Consider ca forma si continutul acestui formular sunt corespunzatoare cursului evaluat (DA/NU):</enunt>
+	</intrebare>
+
+
 </chestionar>

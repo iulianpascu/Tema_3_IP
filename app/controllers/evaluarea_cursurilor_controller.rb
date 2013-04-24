@@ -7,6 +7,10 @@ class EvaluareaCursurilorController < ApplicationController
     end
 
     user = IncognitoUser.find_by_token(session[:user_token][:token])
+    redirect_to token_sign_out_path unless user != nil
+
+
+
     eval = EvaluareDisponibila.find_all_by_grupa_nume(user.grupa_nume)
     
     @curs = Array.new

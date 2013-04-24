@@ -40,10 +40,10 @@ GossipLogin::Application.routes.draw do
 
   match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
-  match '/admin/:spec/:anul', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
+  match '/admin/(:spec/(:anul))', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
   match '/params', to: 'pagina_administrator#setare_resetare', as: 'update_params'
-  match '/profesor/:spec/:anul', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
-  match '/student/:spec/:anul', to: 'pagina_student#pagStudent', as: "homepage_student"
+  match '/profesor/(:spec/(:anul))', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
+  match '/student/(:spec/(:anul))', to: 'pagina_student#pagStudent', as: "homepage_student"
  #match '/signup', to: 'users#new'
 
 
