@@ -23,7 +23,7 @@ DataEvaluare.create([
 
 
 
-EvaluareCompletata.create([
+EvalCompletata.create([
   { :evaluare_disponibila_id => 1, :incognito_user_token => "1234", :timp => nil, :continut => {} },
   { :evaluare_disponibila_id => 2, :incognito_user_token => "1234", :timp => nil, :continut => {} },
   { :evaluare_disponibila_id => 3, :incognito_user_token => "1234", :timp => nil, :continut => {} },
@@ -57,7 +57,7 @@ EvaluareCompletata.create([
 
 
 
-EvaluareDisponibila.create([
+EvalDisponibila.create([
   { :curs_id => 195, :grupa_nume => 134, :formular_id => 15 },
   { :curs_id => 196, :grupa_nume => 134, :formular_id => 15 },
   { :curs_id => 197, :grupa_nume => 131, :formular_id => 15 },

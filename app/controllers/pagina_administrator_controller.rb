@@ -136,7 +136,7 @@ class PaginaAdministratorController < ApplicationController
 
   # Incarca noii profesori & grupe fara a sterge pe cei de sem trecut
   def soft_refresh
-    EvaluareDisponibila.destroy_all
+    EvalDisponibila.destroy_all
     IncognitoUser.destroy_all
     DataEvaluare.destroy_all
     SesiuneActiva.destroy_all
@@ -144,7 +144,7 @@ class PaginaAdministratorController < ApplicationController
 
   # Suprascrie profesorii & grupele (sterge tot ce apartinea trecutului)
   def hard_reset
-    EvaluareDisponibila.destroy_all
+    EvalDisponibila.destroy_all
     Profesor.destroy_all
     Curs.destroy_all
     Grupa.destroy_all
@@ -211,7 +211,7 @@ class PaginaAdministratorController < ApplicationController
         cr.save
         csuri += 1
       end
-      EvaluareDisponibila.create(curs_id: cr.id,
+      EvalDisponibila.create(curs_id: cr.id,
                                  formular_id: @id_formular,
                                  grupa_nume: c["group"].to_i,
                                  formular_id: @formular.id)

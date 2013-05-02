@@ -51,8 +51,7 @@ CREATE TABLE cursuri (
     nume character varying(255),
     tip character varying(255),
     profesor_id integer,
-    specializare character varying(255),
-    an integer
+    an_universitar integer
 );
 
 
@@ -106,23 +105,24 @@ ALTER SEQUENCE data_evaluari_id_seq OWNED BY data_evaluari.id;
 
 
 --
--- Name: evaluare_completate; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: eval_completate; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE evaluare_completate (
+CREATE TABLE eval_completate (
     id integer NOT NULL,
-    evaluare_disponibila_id integer,
+    eval_disponibila_id integer,
     incognito_user_token character varying(255),
     timp integer,
-    continut hstore
+    continut hstore,
+    data date
 );
 
 
 --
--- Name: evaluare_completate_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: eval_completate_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE evaluare_completate_id_seq
+CREATE SEQUENCE eval_completate_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -131,29 +131,30 @@ CREATE SEQUENCE evaluare_completate_id_seq
 
 
 --
--- Name: evaluare_completate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: eval_completate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE evaluare_completate_id_seq OWNED BY evaluare_completate.id;
+ALTER SEQUENCE eval_completate_id_seq OWNED BY eval_completate.id;
 
 
 --
--- Name: evaluare_disponibile; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: eval_disponibile; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE evaluare_disponibile (
+CREATE TABLE eval_disponibile (
     id integer NOT NULL,
     curs_id integer,
     grupa_nume integer,
-    formular_id integer
+    formular_id integer,
+    semestru integer
 );
 
 
 --
--- Name: evaluare_disponibile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: eval_disponibile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE evaluare_disponibile_id_seq
+CREATE SEQUENCE eval_disponibile_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -162,10 +163,10 @@ CREATE SEQUENCE evaluare_disponibile_id_seq
 
 
 --
--- Name: evaluare_disponibile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: eval_disponibile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE evaluare_disponibile_id_seq OWNED BY evaluare_disponibile.id;
+ALTER SEQUENCE eval_disponibile_id_seq OWNED BY eval_disponibile.id;
 
 
 --
@@ -205,7 +206,9 @@ CREATE TABLE grupe (
     id integer NOT NULL,
     nume integer,
     studenti integer,
-    terminal boolean
+    terminal boolean,
+    an integer,
+    serie integer
 );
 
 
@@ -265,7 +268,8 @@ ALTER SEQUENCE incognito_users_id_seq OWNED BY incognito_users.id;
 CREATE TABLE profesori (
     id integer NOT NULL,
     nume character varying(255),
-    prenume character varying(255)
+    prenume character varying(255),
+    departament character varying(255)
 );
 
 
@@ -345,14 +349,14 @@ ALTER TABLE ONLY data_evaluari ALTER COLUMN id SET DEFAULT nextval('data_evaluar
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY evaluare_completate ALTER COLUMN id SET DEFAULT nextval('evaluare_completate_id_seq'::regclass);
+ALTER TABLE ONLY eval_completate ALTER COLUMN id SET DEFAULT nextval('eval_completate_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY evaluare_disponibile ALTER COLUMN id SET DEFAULT nextval('evaluare_disponibile_id_seq'::regclass);
+ALTER TABLE ONLY eval_disponibile ALTER COLUMN id SET DEFAULT nextval('eval_disponibile_id_seq'::regclass);
 
 
 --
@@ -410,7 +414,7 @@ ALTER TABLE ONLY data_evaluari
 -- Name: evaluare_completate_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY evaluare_completate
+ALTER TABLE ONLY eval_completate
     ADD CONSTRAINT evaluare_completate_pkey PRIMARY KEY (id);
 
 
@@ -418,7 +422,7 @@ ALTER TABLE ONLY evaluare_completate
 -- Name: evaluare_disponibile_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY evaluare_disponibile
+ALTER TABLE ONLY eval_disponibile
     ADD CONSTRAINT evaluare_disponibile_pkey PRIMARY KEY (id);
 
 
@@ -466,7 +470,7 @@ ALTER TABLE ONLY sesiune_active
 -- Name: eval_comp_continut; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX eval_comp_continut ON evaluare_completate USING gin (continut);
+CREATE INDEX eval_comp_continut ON eval_completate USING gin (continut);
 
 
 --
@@ -517,3 +521,19 @@ INSERT INTO schema_migrations (version) VALUES ('20130412204552');
 INSERT INTO schema_migrations (version) VALUES ('20130414152009');
 
 INSERT INTO schema_migrations (version) VALUES ('20130414153338');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428195326');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428195714');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428195922');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428201019');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428201656');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428202648');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428205855');
+
+INSERT INTO schema_migrations (version) VALUES ('20130428221820');

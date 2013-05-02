@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<chestionar>
+  <label></label>
+  <intrebare>
+    <enunt>Prezenta mea la curs se incadreaza in intervalul:</enunt>
+    <rasp>0 - 25%</rasp>
+    <rasp>25 - 50%</rasp>
+    <rasp>50 - 75%</rasp>
+    <rasp>75 - 100%</rasp>
+  </intrebare>
+  <intrebare>
+    <enunt>Prezenta mea la curs se incadreaza in intervalul:</enunt>
+    <rasp>0 - 25%</rasp>
+    <rasp>25 - 50%</rasp>
+    <rasp>50 - 75%</rasp>
+    <rasp>75 - 100%</rasp>
+  </intrebare>
+</chestionar>
