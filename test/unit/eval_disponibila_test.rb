@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EvaluareDisponibilaTest < ActiveSupport::TestCase
+class EvalDisponibilaTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

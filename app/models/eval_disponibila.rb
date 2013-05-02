@@ -1,4 +1,4 @@
-class EvaluareDisponibila < ActiveRecord::Base
+class EvalDisponibila < ActiveRecord::Base
   attr_accessible :curs_id, :formular_id, :grupa_nume
   belongs_to :curs
   belongs_to :formular
