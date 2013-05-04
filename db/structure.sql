@@ -43,6 +43,38 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: asocieri; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE asocieri (
+    id integer NOT NULL,
+    curs_id integer,
+    grupa_id integer,
+    an integer,
+    semestru integer
+);
+
+
+--
+-- Name: asocieri_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE asocieri_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: asocieri_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE asocieri_id_seq OWNED BY asocieri.id;
+
+
+--
 -- Name: cursuri; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -50,8 +82,7 @@ CREATE TABLE cursuri (
     id integer NOT NULL,
     nume character varying(255),
     tip character varying(255),
-    profesor_id integer,
-    an_universitar integer
+    profesor_id integer
 );
 
 
@@ -110,7 +141,7 @@ ALTER SEQUENCE data_evaluari_id_seq OWNED BY data_evaluari.id;
 
 CREATE TABLE eval_completate (
     id integer NOT NULL,
-    eval_disponibila_id integer,
+    curs_id integer,
     incognito_user_token character varying(255),
     timp integer,
     continut hstore,
@@ -208,7 +239,10 @@ CREATE TABLE grupe (
     studenti integer,
     terminal boolean,
     an integer,
-    serie integer
+    serie integer,
+    specializare character varying(255),
+    formular_id integer,
+    domeniu character varying(255)
 );
 
 
@@ -335,6 +369,13 @@ ALTER SEQUENCE sesiune_active_id_seq OWNED BY sesiune_active.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY asocieri ALTER COLUMN id SET DEFAULT nextval('asocieri_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY cursuri ALTER COLUMN id SET DEFAULT nextval('cursuri_id_seq'::regclass);
 
 
@@ -392,6 +433,14 @@ ALTER TABLE ONLY profesori ALTER COLUMN id SET DEFAULT nextval('profesori_id_seq
 --
 
 ALTER TABLE ONLY sesiune_active ALTER COLUMN id SET DEFAULT nextval('sesiune_active_id_seq'::regclass);
+
+
+--
+-- Name: asocieri_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY asocieri
+    ADD CONSTRAINT asocieri_pkey PRIMARY KEY (id);
 
 
 --
@@ -474,6 +523,20 @@ CREATE INDEX eval_comp_continut ON eval_completate USING gin (continut);
 
 
 --
+-- Name: idx_grupe_nume; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_grupe_nume ON grupe USING btree (nume);
+
+
+--
+-- Name: idx_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX idx_token ON incognito_users USING btree (token);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -537,3 +600,15 @@ INSERT INTO schema_migrations (version) VALUES ('20130428202648');
 INSERT INTO schema_migrations (version) VALUES ('20130428205855');
 
 INSERT INTO schema_migrations (version) VALUES ('20130428221820');
+
+INSERT INTO schema_migrations (version) VALUES ('20130503140357');
+
+INSERT INTO schema_migrations (version) VALUES ('20130503154501');
+
+INSERT INTO schema_migrations (version) VALUES ('20130504124114');
+
+INSERT INTO schema_migrations (version) VALUES ('20130504130222');
+
+INSERT INTO schema_migrations (version) VALUES ('20130504180205');
+
+INSERT INTO schema_migrations (version) VALUES ('20130504180315');

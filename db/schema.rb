@@ -11,14 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404213017) do
+ActiveRecord::Schema.define(:version => 20130504124114) do
 
   create_table "cursuri", :force => true do |t|
     t.string  "nume"
     t.string  "tip"
     t.integer "profesor_id"
-    t.string  "specializare"
-    t.integer "an"
+    t.integer "an_universitar"
+    t.integer "formular_id"
+    t.integer "grupa_id"
+    t.integer "semestru"
   end
 
   create_table "data_evaluari", :force => true do |t|
@@ -26,17 +28,21 @@ ActiveRecord::Schema.define(:version => 20130404213017) do
     t.date    "data"
   end
 
-  create_table "evaluare_completate", :force => true do |t|
-    t.integer "evaluare_disponibila_id"
+  create_table "eval_completate", :force => true do |t|
+    t.integer "eval_disponibila_id"
     t.string  "incognito_user_token"
-    t.text    "continut"
     t.integer "timp"
+    t.hstore  "continut"
+    t.date    "data"
   end
 
-  create_table "evaluare_disponibile", :force => true do |t|
+  add_index "eval_completate", ["continut"], :name => "eval_comp_continut"
+
+  create_table "eval_disponibile", :force => true do |t|
     t.integer "curs_id"
     t.integer "grupa_nume"
     t.integer "formular_id"
+    t.integer "semestru"
   end
 
   create_table "formulare", :force => true do |t|
@@ -47,16 +53,24 @@ ActiveRecord::Schema.define(:version => 20130404213017) do
     t.integer "nume"
     t.integer "studenti"
     t.boolean "terminal"
+    t.integer "an"
+    t.integer "serie"
+    t.string  "specializare"
   end
+
+  add_index "grupe", ["nume"], :name => "idx_grupe_nume"
 
   create_table "incognito_users", :force => true do |t|
     t.string  "token"
     t.integer "grupa_nume"
   end
 
+  add_index "incognito_users", ["token"], :name => "idx_token"
+
   create_table "profesori", :force => true do |t|
     t.string "nume"
     t.string "prenume"
+    t.string "departament"
   end
 
   create_table "sesiune_active", :force => true do |t|

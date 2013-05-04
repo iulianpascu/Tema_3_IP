@@ -1,11 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  nume: MyString
-  tip: MyString
-  profesor_id: 1
+# one:
+#   nume: MyString
+#   tip: MyString
+#   profesor_id: 1
 
-two:
-  nume: MyString
-  tip: MyString
-  profesor_id: 1
+# two:
+#   nume: MyString
+#   tip: MyString
+#   profesor_id: 1

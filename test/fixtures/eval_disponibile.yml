@@ -1,11 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  curs_id: 1
-  grupa_nume: 1
-  formular_id: 1
+# one:
+#   curs_id: 1
+#   grupa_nume: 1
+#   formular_id: 1
 
-two:
-  curs_id: 1
-  grupa_nume: 1
-  formular_id: 1
+# two:
+#   curs_id: 1
+#   grupa_nume: 1
+#   formular_id: 1

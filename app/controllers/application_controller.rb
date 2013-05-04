@@ -8,16 +8,18 @@ class ApplicationController < ActionController::Base
 
   def token_login_required
     session[:user_signed] = nil if fmi_logged
-    redirect_to 'token_sign_out' unless token_logged
+    redirect_to root_path unless token_logged
   end
 
   def profesor_required
-    flash[:notice] = "Doar profesorii au acces la aceasta pagina" unless session[:user_signed]["profesor"]
+    unless session[:user_signed][:role] == 'teacher'
+      flash[:notice] = "Doar profesorii au acces la aceasta pagina" 
+      redirect_to
+    end
   end
 
   helper_method :token_logged
   helper_method :fmi_logged
-
 
   private
 
@@ -29,9 +31,4 @@ class ApplicationController < ActionController::Base
     session[:user_signed]
   end
 
-  def retrive_user_role
-    require 'net/http'
-    require 'json'
-
-  end
 end

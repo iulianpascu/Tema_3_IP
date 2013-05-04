@@ -14,30 +14,17 @@
   body{padding-top: 60px;}
   </style>
   <link href="/assets/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="/assets/bwizard.min.css" rel="stylesheet" />
-  <script src="/assets/jquery.min.js"></script>
-  <script src="/assets/bootstrap.min.js"></script>
-
-  <!--script pentru pagAdmin -->
-
-  <script src="/assets/jquery.min.js" type="text/javascript"></script>
-  <script src="/assets/bootstrap.js" type="text/javascript"></script>
-  <script src="/assets/jasny-bootstrap.js" type="text/javascript"></script>
-
-  <!-- script pentru pagStudent-->
-
-
   <link href="/assets/bootstrap.css" rel="stylesheet" />
   <style>body{padding-top: 60px;}
   </style>
   <link href="/assets/bootstrap-responsive.css" rel="stylesheet" />
-  <link href="/assets/bwizard.min.css" rel="stylesheet" />
+
   <link href="/assets/jasny-bootstrap.css" rel="stylesheet" />
 
   <script src="/assets/jquery.min.js" type="text/javascript"></script>
   <script src="/assets/bootstrap.js" type="text/javascript"></script>
   <script src="/assets/jasny-bootstrap.js" type="text/javascript"></script>
-  <script src="/assets/bwizard.js" type="text/javascript"></script>
+
   
   <style type="text/css">
   body {
@@ -82,11 +69,11 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-       <a class="brand" href="index.html">Evaluare cursuri</a>
+       <div class="brand"><%= yield :brand %></div>
        <div class="nav-collapse collapse nav-bar-inverse-collapse">
         <ul class="nav pull-right">
 
-          <li><%= link_to "Iesire", '/sign_out' %></li>
+          <li><%= yield :iesire %></li>
         </ul>
       </div>
     </div>

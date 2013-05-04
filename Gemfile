@@ -17,9 +17,9 @@ gem 'nori'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development do
+group :development, :test do
   gem 'seed_dump'
-  gem 'railroady'
+  gem 'rspec-rails', '~> 2.0'
 end
 
 gem 'pg'

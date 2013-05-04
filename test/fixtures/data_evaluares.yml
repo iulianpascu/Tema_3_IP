@@ -1,9 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  grupa_terminal: false
-  data: 2013-03-31
+# one:
+#   grupa_terminal: false
+#   data: 2013-03-31
 
-two:
-  grupa_terminal: false
-  data: 2013-03-31
+# two:
+#   grupa_terminal: false
+#   data: 2013-03-31

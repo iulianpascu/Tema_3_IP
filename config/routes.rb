@@ -1,26 +1,17 @@
 GossipLogin::Application.routes.draw do
 
+  
+  match '/get_stats/:id', to: 'coments_and_stats#get_stats', via: :get
+  match '/get_coments/:id', to: 'coments_and_stats#get_coments', via: :get
+
+  
+
   get 'pagina_setare/create'
   post 'pagina_setare/create'
 
-  #get "evaluarea_cursurilor/verificare"
-
-  #get "student/listare"
-  #
-  #get "student/completare"
-  #
-  #get "administrare/listare"
-  #
-  #get "administrare/adaugare"
-  #
-  #get "administrare/generare"
-  #
-  #get "autentificare/autentifica"
-  #
-  #get "static_pages/home"
-
   match 'auth/:provider/callback' => 'sessions#create_signed'
   match 'auth/failure' => 'sessions#failure'
+  
   
   match '/get_chestionar/:id_eval', to: 'evaluarea_cursurilor#get_chestionar', via: [:post,:get]
   match '/post_chestionar/:id_eval', to: 'evaluarea_cursurilor#post_chestionar', via: :post

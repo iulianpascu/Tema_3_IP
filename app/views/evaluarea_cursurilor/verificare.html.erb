@@ -1,113 +1,113 @@
 
 <div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-     <a class="brand" href="index.html">Cursuri</a>
-     <div class="nav-collapse collapse nav-bar-inverse-collapse">
-      <ul class="nav pull-right">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="index.html">Cursuri</a>
+            <div class="nav-collapse collapse nav-bar-inverse-collapse">
+                <ul class="nav pull-right">
 
-        <li><%= link_to "Iesire", token_sign_out_path %></li>
-      </ul>
+                    <li><%= link_to "Iesire", token_sign_out_path %></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </div>
 
 <div class="container-narrow">
 
-  <div class="masthead">
-    <div id="navbar-example" class="navbar navbar-static">
-      <div class="navbar-inner">
-        <div class="brand" href="">Grupa <%= session[:user_token][:grupa]%></div>
-        
-      </div>
+    <div class="masthead">
+        <div id="navbar-example" class="navbar navbar-static">
+            <div class="navbar-inner">
+                <div class="brand" href="">Grupa <%= session[:user_token][:grupa]%></div>
+
+            </div>
+        </div>
     </div>
-  </div>
 
 
 
-  <div class="well" >
-    <table class="table table-striped">
+    <div class="well" >
+        <table class="table table-striped">
 
-      <tr>
-        <th>Curs</th>
-        <th>Profesor</th>
-        <th>Tip</th>
-        <th>Evalueaza</th>
-      </tr>
+            <tr>
+                <th>Curs</th>
+                <th>Profesor</th>
+                <th>Tip</th>
+                <th>Evalueaza</th>
+            </tr>
 
-      <% @curs.each do |c| %>
+            <% @curs.each do |c| %>
 
-      <tr>
-        <td><%= c[:nume] %></td>
-        <td><%= c[:prof] %></td>
-        <td><%= c[:tip] %></td>
-        <td>
-          <% if c[:disabled] %>
-            <button class="disabled btn btn-primary">Evaluat</button>
-          <% else %>
-            <button class="modalButton btn btn-primary" id="<%= c[:id] %>">Evalueaza!</button>
-          <% end %>
-        </td>
-      </tr>
+            <tr>
+                <td><%= c[:nume] %></td>
+                <td><%= c[:prof] %></td>
+                <td><%= c[:tip] %></td>
+                <td>
+                    <% if c[:disabled] %>
+                    <button class="disabled btn btn-primary">Evaluat</button>
+                    <% else %>
+                    <button class="modalButton btn btn-primary" id="<%= c[:id] %>">Evalueaza!</button>
+                    <% end %>
+                </td>
+            </tr>
 
-      <% end %>
-    </table>
-    <div class="clearfix"></div>
-  </div>
+            <% end %>
+        </table>
+        <div class="clearfix"></div>
+    </div>
 </div>
 
 
 <div class="modal hide fade" id="modal">
 
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Evaluare curs</h3>
-  </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Evaluare curs</h3>
+    </div>
 
-  <%= form_tag '/verificare', method: :post, id: "charlie" do%>
-  <div class="modal-body">
-      
-  </div> <!-- modal-body -->
-<div class="modal-footer">
-  <input type="hidden"  id="tpcp" name="tpcp" />
-  <%= submit_tag "Trimite", {"class" => "btn btn-info"}%>
-</div>
-<% end %>
+    <%= form_tag '/verificare', method: :post, id: "charlie" do%>
+    <div class="modal-body">
+
+    </div> <!-- modal-body -->
+    <div class="modal-footer">
+        <input type="hidden"  id="tpcp" name="tpcp" />
+        <%= submit_tag "Trimite", {"class" => "btn btn-info"}%>
+    </div>
+    <% end %>
 </div>
 
 
 
 <script src="/assets/jquery.min.js" type="text/javascript"></script>
 
-  
-  <script src="/assets/bootstrap.js" type="text/javascript"></script>
+
+<script src="/assets/bootstrap.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 $.ajaxSetup({
-  beforeSend: function(xhr) {
-    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-  }
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    }
 }); 
 
 $(document).ajaxSend(function(e, xhr, options) {
-  var token = $("meta[name='csrf-token']").attr("content");
-  xhr.setRequestHeader("X-CSRF-Token", token);
+    var token = $("meta[name='csrf-token']").attr("content");
+    xhr.setRequestHeader("X-CSRF-Token", token);
 });
 
 //sa fie AJAX
 $(".modalButton").click(function(){
-  var id = this.id;
-  var action_link = "/get_chestionar/" + id + '.js';
-  $.post(action_link, $(this).serialize(), null, "script");
+    var id = this.id;
+    var action_link = "/get_chestionar/" + id + '.js';
+    $.post(action_link, $(this).serialize(), null, "script");
 });
 
 $("#charlie").submit(function(){
-  var id_eval = $("#id_eval").text();
-  var diff = ($.now() - timp_sesiune)/1000;
-  $('#tpcp').val(diff);
-  $.post("/post_chestionar/" + id_eval + '.js', $(this).serialize(), null, "script");
-  return false;  
+    var id_eval = $("#id_eval").text();
+    var diff = ($.now() - timp_sesiune)/1000;
+    $('#tpcp').val(diff);
+    $.post("/post_chestionar/" + id_eval + '.js', $(this).serialize(), null, "script");
+    return false;  
 });
 
 var timp_sesiune = 0;

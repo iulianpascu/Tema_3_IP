@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  token: MyString
-  grupa_nume: 1
+# one:
+#   token: MyString
+#   grupa_nume: 1
 
-two:
-  token: MyString
-  grupa_nume: 1
+# two:
+#   token: MyString
+#   grupa_nume: 1

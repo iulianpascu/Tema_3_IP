@@ -1,13 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  evaluare_disponibila_id: 1
-  incognito_user_token: MyString
-  continut: 
-  timp: 1
+# one:
+#   eval_disponibila_id: 1
+#   incognito_user_token: MyString
+#   continut: 
+#   timp: 1
 
-two:
-  evaluare_disponibila_id: 1
-  incognito_user_token: MyString
-  continut: 
-  timp: 1
+# two:
+#   eval_disponibila_id: 1
+#   incognito_user_token: MyString
+#   continut: 
+#   timp: 1

@@ -13,6 +13,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'disponibila', 'disponibile'
   inflect.irregular 'formular', 'formulare'
   inflect.irregular 'completata', 'completate'
+  inflect.irregular 'asociere', 'asocieri'
 #   inflect.uncountable %w( fish sheep )
 end
 #

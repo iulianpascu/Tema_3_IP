@@ -1,51 +1,49 @@
 
-
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-
-      <%= link_to "Login semnat", homepage_path, class:  "brand" %>
-      <div class="nav-collapse collapse nav-bar-inverse-collapse">
-        <ul class="nav pull-right">
-
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
 <div class="container-narrow">
 
   <form class="form-signin" accept-charset="UTF-8" action="/sessions" method="post">
-    <h3 class="form-signin-heading">Logare</h3>
+    <legend>Logare</legend>
     <input  id="sessions_token" name="sessions[token]" type="text" class="input-block-level" placeholder="Token" maxlength="35">
 <!--         <label class="checkbox">
   <input type="checkbox" value="remember-me"> Ţine-mă minte </label>-->
+  
   <button class="btn btn-large btn-block btn-primary" name="commit" type="submit">Logare</button>
+  <hr/>
+  <a href="<%= homepage_path %>" class="btn btn-danger" style="letter-spacing: 1px;"><i class="icon-user icon-white"></i> FMI-Connect</a>
 </form>
 </div>
 
-<div class="modal hide fade" id="modal">
+<div class="modal hide fade" id="modal" style="width: 200px;">
 
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>;)</h3>
+    <h3><i class="icon-gift"></i></h3>
   </div>
 
   
   <div class="modal-body">
-    Iata-amurguri, iata stele.
-    Pe masura ce le vad
-    lucrurile-s ale mele.
+    Iata-amurguri, iata stele.<br/>
+    Pe masura ce le vad<br/>
+    lucrurile-s ale mele.<br/><br/>
 
-    Lucrurile-s ale mele.
-    Sunt stapan al lor si domn.
-    Pierd o lume cand adorm.
+    Lucrurile-s ale mele.<br/>
+    Sunt stapan al lor si domn.<br/>
+    Pierd o lume cand adorm.<br/><br/>
 
-    Cand trec puntile de somn
-    imi ramane numai visul
+    Cand trec puntile de somn<br/>
+    imi ramane numai visul<br/>
     si abisul, si abisul. 
   </div>
 </div>
+
+<div id="trigger-modal" style="position: fixed;bottom: 0;right: 0;">
+  <i class="icon-gift"></i>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('#trigger-modal').click(function(){
+      $('#modal').modal('show');
+    })
+  })
+</script>

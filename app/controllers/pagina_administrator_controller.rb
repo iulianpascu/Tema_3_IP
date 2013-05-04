@@ -1,71 +1,28 @@
 class PaginaAdministratorController < ApplicationController
+  before_filter :signed_login_required
 
   def pagAdmin
+    @acces_pdf = true
+    @specializari = []
+    Grupa.select(:specializare).uniq.each { |s| @specializari << s.specializare }
+    @serii = []
+    Grupa.select(:serie).uniq.each { |s| @serii << s.serie }
+    @ani = []
+    Asociere.select(:an).uniq.each { |a| @ani << a.an }
 
-    @param_specializare = params[:spec]
-    @param_an = params[:anul]
-    @cursuri= Curs.all
-    @specializare =Array.new
-    @an = Array.new
-    @cursuri.each do |c|
-      @specializare << c.specializare
-    end
-    @specializare = @specializare.uniq
+    ops = { specializare: params[:spec], 
+            an: params[:anul], 
+            serie: params[:serie] }
 
-
-    @cursuri.each do |c|
-      @an << c.an
-    end
-    @an = @an.uniq
-
-
-
-    tmp=0
-    if @param_an == "1"
-      tmp=1
-          #@cursuri = Curs.find(:all, :conditions => {:an => 1})
-        elsif  @param_an == "2"
-          tmp=2
-      #@cursuri = Curs.find(:all, :conditions => {:an => 2})
-    elsif  @param_an == "3"
-      tmp=3
-      #@cursuri = Curs.find(:all, :conditions => {:an => 3})
-    elsif @param_an == "4"
-      tmp=4
-      #@cursuri = Curs.find(:all, :conditions => {:an => 4})
-    elsif @param_an == "5"
-      tmp=5
-      #@cursuri = Curs.find(:all, :conditions => {:an => 5})
-    end
-    if tmp == 0
-      if @param_specializare.eql? "Matematica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica"})
-      elsif @param_specializare.eql? "Matematica aplicata"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata"})
-      elsif @param_specializare.eql? "Matematica informatica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica"})
-      elsif @param_specializare.eql? "Informatica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica"})
-      elsif @param_specializare.eql? "CTI"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI"})
-      end
-    else
-      if @param_specializare.eql? "Matematica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica", :an => tmp})
-      elsif @param_specializare.eql? "Matematica aplicata"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata", :an => tmp})
-      elsif @param_specializare.eql? "Matematica informatica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica", :an => tmp})
-      elsif @param_specializare.eql? "Informatica"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica", :an => tmp})
-      elsif @param_specializare.eql? "CTI"
-        @cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI", :an => tmp})
-      else
-        @cursuri = Curs.find(:all, :conditions => {:an => tmp})
-      end
-    end
-    # xml_to_json('ver.xml')
-
+    where_args = Grupa.where_arguments ops
+    where_string = "where #{ where_args }" unless where_args.empty?
+    select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id" 
+                 FROM cursuri LEFT JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
+                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" 
+                 INNER JOIN grupe on "asocieri"."grupa_id" = "grupe"."id" }
+    query = "#{select} #{where_string};"
+    @cursuri = Curs.connection.execute query
   end
 
   def setare_resetare
@@ -91,11 +48,17 @@ class PaginaAdministratorController < ApplicationController
       end
 
       # epurez baza
-      reset_db ? hard_reset : soft_refresh
-
-      set_start_time
-      retrive_and_load_groups
-      retrive_and_load_courses
+      if reset_db
+        hard_reset
+        set_start_time
+        retrive_and_load_groups
+        retrive_and_load_courses
+      else
+        soft_refresh
+        set_start_time
+        retrive_and_load_groups
+      end
+      
     end
   end
 
@@ -104,7 +67,7 @@ class PaginaAdministratorController < ApplicationController
 
     # fisier chestionar
     mesaje_validare << "Va rugam specificati un formular" unless @formular or params[:chestionar]
-    if params[:chestionar]
+    unless params[:chestionar].nil? || params[:chestionar].empty?
       @chestionar = xml_file_to_json_string params[:chestionar]
       mesaje_validare << "Fisierul furnizat nu respecta formatul" unless @chestionar
     end
@@ -134,50 +97,58 @@ class PaginaAdministratorController < ApplicationController
     nil
   end
 
-  # Incarca noii profesori & grupe fara a sterge pe cei de sem trecut
+  # Reseteaza Token-uri
   def soft_refresh
-    EvalDisponibila.destroy_all
-    IncognitoUser.destroy_all
-    DataEvaluare.destroy_all
-    SesiuneActiva.destroy_all
+    ActiveRecord::Base.transaction do
+      IncognitoUser.delete_all
+      SesiuneActiva.delete_all
+      DataEvaluare.delete_all
+      Grupa.delete_all
+    end
   end
 
-  # Suprascrie profesorii & grupele (sterge tot ce apartinea trecutului)
+  # Reseteaza
+  # - grupele + token-uri
+  # - asocierile grupa-curs-profesor din semestrul curent
   def hard_reset
-    EvalDisponibila.destroy_all
-    Profesor.destroy_all
-    Curs.destroy_all
-    Grupa.destroy_all
-    IncognitoUser.destroy_all
-    DataEvaluare.destroy_all
-    SesiuneActiva.destroy_all
-  end
-
-  def convert_as_hash(chestionar)
-    file = chestionar.read
-    j = JSON.load file
-  rescue
-    nil
+    ActiveRecord::Base.transaction do
+      IncognitoUser.delete_all
+      SesiuneActiva.delete_all
+      DataEvaluare.delete_all
+      Grupa.delete_all
+      Asociere.delete_all semestru_curent_hash
+    end
   end
 
   def retrive_and_load_groups
     require 'net/http'
     require 'securerandom'
+    
     url = URI.parse("http://coursemanager.herokuapp.com/api/groups/students_number.json")
     response = Net::HTTP.post_form(url, {})
-    grupe = JSON.load response.body
+    grupe = Set.new JSON.load response.body
     terminal = %w(3 5 8)
 
-    grupe.each do |g|
-      Grupa.create(nume:     g["group"].to_i,
-       studenti: g["number"].to_i,
-       terminal: g["group"].at(0).in?(terminal))
-      (1..(g["number"].to_i)).each do
-        rand = SecureRandom.base64(16)
-        IncognitoUser.create(grupa_nume: g["group"].to_i,
-         token: rand)
+    ActiveRecord::Base.transaction do
+      grupe.each do |g|
+        
+        gr = Grupa.new
+        gr.id          = g["group"].to_i
+        gr.nume        = g["group"].to_i
+        gr.studenti    = g["number"].to_i
+        gr.terminal    = g["group"].at(0).in?(terminal)
+        # TODO formular dinamic!!!!!
+        gr.formular_id = 1
+        gr.save
+
+        (1..(g["number"].to_i)).each do
+          rand = SecureRandom.base64(16)
+          IncognitoUser.create(grupa_nume: g["group"].to_i,
+           token: rand)
+        end
       end
     end
+
   rescue JSON::ParserError
     flash[:error] << "eroare parsare JSON grupe"
   rescue => e
@@ -188,37 +159,42 @@ class PaginaAdministratorController < ApplicationController
     require 'net/http'
     url = URI.parse("http://coursemanager.herokuapp.com/api/teachers/groups.json")
     response = Net::HTTP.post_form(url, {})
-    cursuri = JSON.load response.body
+    cursuri = Set.new JSON.load response.body
     terminal = %w(3 5 8)
     profi = csuri = evals = 0
 
-    cursuri.each do |c|
-      unless Profesor.find_by_id c["teacher_id"].to_i
-        p         = Profesor.new
-        p.nume    = c["teacher_lastname"]
-        p.prenume = c["teacher_firstname"]
-        p.id      = c["teacher_id"].to_i
-        p.save
-        profi += 1
+    ActiveRecord::Base.transaction do
+      cursuri.each do |c|
+        unless Profesor.find_by_id c["teacher_id"].to_i
+          p         = Profesor.new
+          p.nume    = c["teacher_lastname"]
+          p.prenume = c["teacher_firstname"]
+          p.id      = c["teacher_id"].to_i
+          p.save
+          profi += 1
+        end
+
+        cr = Curs.find_by_nume_and_profesor_id_and_tip(c["course_name"], c["teacher_id"].to_i, c["course_type"])
+        unless cr
+          cr = Curs.new
+          cr.nume           = c["course_name"]
+          cr.profesor_id    = c["teacher_id"].to_i
+          cr.tip            = c["course_type"]
+          cr.save
+          csuri += 1
+        end
+
+        assoc = Asociere.new
+        assoc.curs_id  = cr.id
+        assoc.grupa_id = c["group"].to_i
+        assoc.an       = Utile
+        assoc.semestru = Date.today.month > 6 ? 1 : 2
+        assoc.save
+  
       end
-      cr = Curs.find_by_nume_and_profesor_id_and_tip(c["course_name"], c["teacher_id"].to_i, c["course_type"])
-      unless cr
-        cr = Curs.new
-        cr.nume         = c["course_name"]
-        cr.profesor_id  = c["teacher_id"].to_i
-        cr.tip          = c["course_type"]
-        cr.an           = c["group"].at(0).to_i
-        cr.save
-        csuri += 1
-      end
-      EvalDisponibila.create(curs_id: cr.id,
-                                 formular_id: @id_formular,
-                                 grupa_nume: c["group"].to_i,
-                                 formular_id: @formular.id)
-      evals += 1
     end
 
-    a = "au fost bagate in baza #{profi} profi #{csuri} cursuri si #{evals} eval noi"
+    
     flash[:notice] << "#{profi} profesori noi"
     flash[:notice] << "#{csuri} cursuri noi"
   rescue JSON::ParserError
