@@ -6,12 +6,8 @@ gem 'bcrypt-ruby'
 gem 'execjs'
 gem 'therubyracer'
 gem 'json'
-# gem 'thin'
-
-# gem for pdf generate
-
 gem 'prawn'
-gem 'nori'
+gem 'nokogiri'
 
 
 # Bundle edge Rails instead:

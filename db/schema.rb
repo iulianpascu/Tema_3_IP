@@ -11,16 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504124114) do
+ActiveRecord::Schema.define(:version => 20130504180315) do
+
+  create_table "asocieri", :force => true do |t|
+    t.integer "curs_id"
+    t.integer "grupa_id"
+    t.integer "an"
+    t.integer "semestru"
+  end
 
   create_table "cursuri", :force => true do |t|
     t.string  "nume"
     t.string  "tip"
     t.integer "profesor_id"
-    t.integer "an_universitar"
-    t.integer "formular_id"
-    t.integer "grupa_id"
-    t.integer "semestru"
   end
 
   create_table "data_evaluari", :force => true do |t|
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20130504124114) do
   end
 
   create_table "eval_completate", :force => true do |t|
-    t.integer "eval_disponibila_id"
+    t.integer "curs_id"
     t.string  "incognito_user_token"
     t.integer "timp"
     t.hstore  "continut"
@@ -37,13 +40,6 @@ ActiveRecord::Schema.define(:version => 20130504124114) do
   end
 
   add_index "eval_completate", ["continut"], :name => "eval_comp_continut"
-
-  create_table "eval_disponibile", :force => true do |t|
-    t.integer "curs_id"
-    t.integer "grupa_nume"
-    t.integer "formular_id"
-    t.integer "semestru"
-  end
 
   create_table "formulare", :force => true do |t|
     t.text "continut"
@@ -56,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20130504124114) do
     t.integer "an"
     t.integer "serie"
     t.string  "specializare"
+    t.integer "formular_id"
+    t.string  "domeniu"
   end
 
   add_index "grupe", ["nume"], :name => "idx_grupe_nume"

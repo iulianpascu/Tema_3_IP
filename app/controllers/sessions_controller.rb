@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  before_filter :signed_login_required, only: [:abort_signed_session, :redirect_to_asigned]
+  before_filter :signed_login_required, only: [:abort_signed_session]
   before_filter :token_login_required, only: [:abort_token_session]
 
   # pagina de login
@@ -64,6 +64,7 @@ class SessionsController < ApplicationController
   # logare prin FMI-Connect
   def create_signed
     # raise env["omniauth.auth"].to_yaml
+
     session[:user_signed] = { uid: env["omniauth.auth"]["uid"],
                               token: env["omniauth.auth"]['credentials']['token'],
                               first_name: env["omniauth.auth"]["extra"]["first_name"],
@@ -74,16 +75,22 @@ class SessionsController < ApplicationController
 
   # titlu bine ales
   def redirect_to_asigned
-    case session[:user_signed][:role]
-    when "student" then
-      redirect_to homepage_student_path
-    when "profesor" then
-      redirect_to homepage_profesor_path
-    when "admin" then
-      redirect_to homepage_admin_path
+    if token_logged
+      redirect_to verificare_path
+    elsif fmi_logged
+      case session[:user_signed][:role]
+      when "student" then
+        redirect_to homepage_student_path
+      when "profesor" then
+        redirect_to homepage_profesor_path
+      when "admin" then
+        redirect_to homepage_admin_path
+      else
+        flash[:error] = "Rol nesuportat de aplicatie"
+        redirect_to sign_out_path
+      end
     else
-      flash[:error] = "Rol nesuportat de aplicatie"
-      redirect_to sign_out_path
+      redirect_to root_path
     end
   end
 

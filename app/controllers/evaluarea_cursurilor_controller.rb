@@ -1,12 +1,9 @@
 class EvaluareaCursurilorController < ApplicationController
   before_filter :token_login_required
-  
+  before_filter do |controller|
+
+  end
   def verificare
-
-    # if request.method == "POST"
-    #   flash[:notice] = "Aleluiaa!"
-    # end
-
     user = IncognitoUser.find_by_token(session[:user_token][:token])
     unless user
       redirect_to token_sign_out_path and return
@@ -16,36 +13,38 @@ class EvaluareaCursurilorController < ApplicationController
     unless gr
       redirect_to token_sign_out_path and return
     end
-    eval = gr.asocieri
+    cursuri = Curs.joins(:grupe).where( asocieri: semestru_curent_hash, grupe: {id: gr.id})
     
-    @curs = Array.new
+    @curs = []
 
-    eval.each do |e|
-      @curs << {nume: e.curs.nume, 
-                prof: "#{e.curs.profesor.nume} #{e.curs.profesor.prenume}",
-                tip: e.curs.tip,
-                id: e.curs.id,
-                disabled: if EvalCompletata.find_by_incognito_user_token_and_curs_id(user.token, e.curs.id)
+    cursuri.each do |e|
+      @curs << {nume: e.nume, 
+                prof: "#{e.profesor.nume} #{e.profesor.prenume}",
+                tip: e.tip,
+                id: e.id,
+                disabled: if EvalCompletata.find_by_incognito_user_token_and_curs_id(user.token, e.id)
                            true
                          else 
                            false
                          end }
-    end # each
+    end
   end
 
   def get_chestionar
     require 'json'
     # vefic ca evaluarea sa existe si sa fie diponibila grupei utilizatorului
-    eval = Curs.joins(:grupa).where( "grupe.nume" => session[:user_token][:grupa], 
-                                     "cursuri.id" => params[:id_eval].to_i).first
+    gr = Grupa.find_by_nume session[:user_token][:grupa].to_i
 
-    # eval = EvalDisponibila.find_by_id_and_grupa_nume(params[:id_eval].to_i, session[:user_token][:grupa])
+    asoc = Asociere.where( an: an_universitar_curent,
+                           semestru: semestru_curent,
+                           grupa_id: gr.id,
+                           curs_id: params[:id_curs].to_i ).first if gr
 
     # verific daca a completat deja aceasta evaluare
-    if eval && !EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_eval].to_i)
-      formular = JSON.parse eval.formular.continut 
+    if asoc && !EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_curs].to_i)
+      formular = JSON.parse gr.formular.continut 
       @continuturi = formular["chestionar"]
-      @eval_id = params[:id_eval].to_i
+      @id_curs = params[:id_curs].to_i
     else
       flash[:error] = "Acea evaluare nu iti este disponibila, poate ai completat-o deja"
     end
@@ -55,25 +54,46 @@ class EvaluareaCursurilorController < ApplicationController
   end
 
   def post_chestionar
-    # eval = EvalDisponibila.find_by_id_and_grupa_nume(params[:id_eval].to_i, session[:user_token][:grupa])
-    eval = Curs.joins(:grupa).where( "grupe.nume" => session[:user_token][:grupa], 
-                                     "cursuri.id" => params[:id_eval].to_i).first
-    comp = EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_eval].to_i)
-    # verific daca a completat deja aceasta evaluare
-    if eval && !comp
-      formular = JSON.parse eval.formular.continut 
-      continuturi = formular["chestionar"]
-      indecsi_raspunsuri = []
-      continuturi.each_with_index do |parent, qindex|
-        indecsi_raspunsuri << qindex + 1 if parent["intrebare"]
-      end
-      raspunsuri = {}
-      indecsi_raspunsuri.each {|i| raspunsuri[i.to_s] = params[i.to_s]}
-      EvalCompletata.create(incognito_user_token: session[:user_token][:token],
-                                curs_id: params[:id_eval],
-                                continut: raspunsuri,
-                                timp: params[:tpcp])
+    # eval = EvalDisponibila.find_by_id_and_grupa_nume(params[:id_curs].to_i, session[:user_token][:grupa])
+    gr = Grupa.find_by_nume session[:user_token][:grupa].to_i
 
+    asoc = Asociere.where( an: an_universitar_curent,
+                           semestru: semestru_curent,
+                           grupa_id: gr.id,
+                           curs_id: params[:id_curs].to_i ).first if gr
+
+    comp = EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_curs].to_i)
+    # verific daca a completat deja aceasta evaluare
+    if asoc && !comp
+      formular = JSON.parse gr.formular.continut 
+      continuturi = formular["chestionar"]
+      @necompletate = false
+      nc = []
+      raspunsuri = {}
+      continuturi.each_with_index do |parent, qindex|
+        intrebare = parent["intrebare"]
+        if intrebare
+          key = "#{ qindex + 1 }"
+          if params[key] == '0' and intrebare.count > 1
+            logger.info "#{qindex} #{intrebare.count} #{intrebare}"
+            @necompletate = true 
+            nc << {(qindex).to_s => "EMPTY"}
+          else
+            raspunsuri[key] = params[key]   
+          end
+        else
+          nc << {(qindex).to_s => "label"}
+        end
+      end
+      
+      logger.info nc
+
+
+
+      EvalCompletata.create(incognito_user_token: session[:user_token][:token],
+                                curs_id: params[:id_curs],
+                                continut: raspunsuri,
+                                timp: params[:tpcp]) unless @necompletate
     else
       flash[:error] = "Acea evaluare nu iti este disponibila, poate ai completat-o deja"
     end
@@ -81,4 +101,6 @@ class EvaluareaCursurilorController < ApplicationController
       format.js
     end
   end
+
+
 end

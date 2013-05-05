@@ -13,8 +13,8 @@ GossipLogin::Application.routes.draw do
   match 'auth/failure' => 'sessions#failure'
   
   
-  match '/get_chestionar/:id_eval', to: 'evaluarea_cursurilor#get_chestionar', via: [:post,:get]
-  match '/post_chestionar/:id_eval', to: 'evaluarea_cursurilor#post_chestionar', via: :post
+  match '/get_chestionar/:id_curs', to: 'evaluarea_cursurilor#get_chestionar', via: [:post,:get]
+  match '/post_chestionar/:id_curs', to: 'evaluarea_cursurilor#post_chestionar', via: :post
 
 
   resources :sessions, only: [:new, :create]

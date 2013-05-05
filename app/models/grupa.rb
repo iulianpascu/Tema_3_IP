@@ -1,5 +1,5 @@
 class Grupa < ActiveRecord::Base
-  attr_accessible :nume, :studenti, :terminal, :an, :serie, :specializare
+  attr_accessible :nume, :studenti, :terminal, :an, :serie, :specializare, :formular_id, :domeniu
   belongs_to :data_evaluare, { :primary_key => 'grupa_terminal',
                                :foreign_key => 'terminal' }
   has_many :incognito_users, { :primary_key => 'nume',
@@ -7,7 +7,7 @@ class Grupa < ActiveRecord::Base
                                :inverse_of => :grupa }
   has_many :asocieri, :inverse_of => :grupa
   has_many :cursuri, :through => :asocieri
-
+  belongs_to :formular
 
   def self.cauta(options = {})
     self.where self.where_arguments options

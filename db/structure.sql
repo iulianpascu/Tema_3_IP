@@ -239,10 +239,14 @@ CREATE TABLE grupe (
     studenti integer,
     terminal boolean,
     an integer,
+<<<<<<< Updated upstream
     serie integer,
     specializare character varying(255),
     formular_id integer,
     domeniu character varying(255)
+=======
+    serie integer
+>>>>>>> Stashed changes
 );
 
 
@@ -591,6 +595,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130428195714');
 
 INSERT INTO schema_migrations (version) VALUES ('20130428195922');
 
+<<<<<<< Updated upstream
 INSERT INTO schema_migrations (version) VALUES ('20130428201019');
 
 INSERT INTO schema_migrations (version) VALUES ('20130428201656');
@@ -612,3 +617,6 @@ INSERT INTO schema_migrations (version) VALUES ('20130504130222');
 INSERT INTO schema_migrations (version) VALUES ('20130504180205');
 
 INSERT INTO schema_migrations (version) VALUES ('20130504180315');
+=======
+INSERT INTO schema_migrations (version) VALUES ('20130428201019');
+>>>>>>> Stashed changes

@@ -44,9 +44,9 @@
                 <td><%= c[:tip] %></td>
                 <td>
                     <% if c[:disabled] %>
-                    <button class="disabled btn btn-primary">Evaluat</button>
+                    <button class="disabled btn btn-primary" style="width:96px">Evaluat</button>
                     <% else %>
-                    <button class="modalButton btn btn-primary" id="<%= c[:id] %>">Evalueaza!</button>
+                    <button class="modalButton btn btn-primary" style="width:96px" id="<%= c[:id] %>">Evalueaza!</button>
                     <% end %>
                 </td>
             </tr>
@@ -70,7 +70,9 @@
 
     </div> <!-- modal-body -->
     <div class="modal-footer">
+
         <input type="hidden"  id="tpcp" name="tpcp" />
+        <div id="modal-warn" class="span"></div>
         <%= submit_tag "Trimite", {"class" => "btn btn-info"}%>
     </div>
     <% end %>

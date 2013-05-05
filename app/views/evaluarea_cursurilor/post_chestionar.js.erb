@@ -1,8 +1,12 @@
-
+<% if @necompletate %>
+  $('#modal-warn').empty();
+  $('#modal-warn').append('<div class="alert alert-error">Intrebarile cu variante de raspuns sunt obligatorii!</div>')
+<% else %>
   $("#modal").modal("hide");
   $('#error-div').empty();
   $('#error-div').append("<%=j render template: 'layouts/_error_and_alert_div' %> ");
-  $('#<%= params[:id_eval] %>').removeClass('modalButton');
-  $('#<%= params[:id_eval] %>').addClass('disabled');
-  $('#<%= params[:id_eval] %>').text('Evaluat');
-  $('#<%= params[:id_eval] %>').removeAttr('id');
+  $('#<%= params[:id_curs] %>').removeClass('modalButton');
+  $('#<%= params[:id_curs] %>').addClass('disabled');
+  $('#<%= params[:id_curs] %>').text('Evaluat');
+  $('#<%= params[:id_curs] %>').removeAttr('id');
+<% end %>

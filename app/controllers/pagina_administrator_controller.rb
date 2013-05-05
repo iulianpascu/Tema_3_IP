@@ -41,12 +41,9 @@ class PaginaAdministratorController < ApplicationController
     erori = validare_si_mapare
 
     if erori.any?
-      flash[:error] = validare_si_mapare
+      flash[:error] = erori
     else
-      if @chestionar
-        @formular = Formular.create continut: @chestionar
-      end
-
+      @formular = Formular.create continut: @chestionar if @chestionar
       # epurez baza
       if reset_db
         hard_reset
@@ -68,8 +65,11 @@ class PaginaAdministratorController < ApplicationController
     # fisier chestionar
     mesaje_validare << "Va rugam specificati un formular" unless @formular or params[:chestionar]
     unless params[:chestionar].nil? || params[:chestionar].empty?
-      @chestionar = xml_file_to_json_string params[:chestionar]
-      mesaje_validare << "Fisierul furnizat nu respecta formatul" unless @chestionar
+      begin
+        @chestionar = xml_file_to_json_string params[:chestionar]
+      ensure
+        mesaje_validare << "Fisierul furnizat nu respecta formatul" unless @chestionar
+      end
     end
 
     # data 1
@@ -185,10 +185,10 @@ class PaginaAdministratorController < ApplicationController
         end
 
         assoc = Asociere.new
-        assoc.curs_id  = cr.id
-        assoc.grupa_id = c["group"].to_i
-        assoc.an       = Utile
-        assoc.semestru = Date.today.month > 6 ? 1 : 2
+          assoc.curs_id  = cr.id
+          assoc.grupa_id = c["group"].to_i
+          assoc.an       = an_universitar_curent 
+          assoc.semestru = semestru_curent
         assoc.save
   
       end
@@ -208,86 +208,36 @@ class PaginaAdministratorController < ApplicationController
     DataEvaluare.create data: @data_term, grupa_terminal: true
   end
 
-  def xml_file_to_json_string(fisier)
-    # require 'json'
+  require 'nokogiri'
+  require 'json'
 
-    # if not FileTest.exists?(Rails.root + fisier)
-    #   flash[:error] = "Fisierul xml nu a fost gasit"
-    #   return nil
-    # end
-
-    xml = fisier.read
-    json = Hash.from_xml(xml).as_json
-    flag_error = false
-    chestionar=json["chestionar"]
-    obiect = Array.new
-
-    if chestionar.class == Hash
-      chestionar.each_pair do |chestionar_key,chestionar_value|
-        if chestionar_key == "label"
-          obiect << {"label" => chestionar_value}
-        elsif chestionar_key == "intrebare"
-          chestionar_value.each do |intrebare|
-            temp = Array.new
-            flag =false
-            count = 1
-            if intrebare.class == Hash
-              intrebare.each_pair do |intrebare_key,intrebare_value|
-
-                if count >2
-                  flash[:error] = "Aveti o eroare in xml#{count}"
-                  return nil
-                end
-
-                if intrebare_key == "enunt"
-                  flag = true
-                
-                  if intrebare_value.class == Array
-                    flash[:error] = "Aveti o eroare in xml"
-                    return nil
-                  else
-                    temp << {"enunt" => intrebare_value}
-                  end
-                elsif intrebare_key == "rasp" && flag == true
-                  if intrebare_value.class == Array
-                    intrebare_value.each { |i| temp << {"rasp" => i} }
-                  elsif intrebare_value.class == String
-                    temp << {"rasp" => intrebare_value}
-                  else
-                    flash[:error] = "Aveti o eroare in xml"
-                    return nil
-                  end #if intrebare_value
-                else
-                  flash[:error] = "Aveti o eroare in xml"
-                  return nil
-                 
-                end # if intrebare_key
-
-              end #intrebare.each_pair
-
-            obiect << {"intrebare" => temp}
-            else
-              flash[:error] = "Aveti o eroare in xml"
-              return nil
-            end #if intrebare
-          end #chestionar_value.each
-
-        else
-          flash[:error] = "Aveti o eroare in xml"
-          return nil
-
-        end #if chestionar_key
-
-      end #chestionar.each_pair
-
-    else
-      flash[:error] = "Aveti o eroare in xml. Chestionarul este gol."
-      return nil
-    end #if chestionar
-
-    obiect = {"chestionar" => obiect}
-    @obiect1 = obiect.to_json
-    return @obiect1
+  def xml_file_to_json_string(file)
+    doc = Nokogiri::XML file.read
+    raise 'Tag-ul chestionar nu-i la locul lui' unless doc.child.node_name == 'chestionar'
+    chestionar = []
+    doc.child.element_children.each do |elem1|
+      if elem1.node_name == "label"
+        chestionar << { "label" => elem1.content }
+      elsif elem1.node_name == "intrebare"
+        intrebare = []
+        elem1.element_children.each do |elem2|
+          case elem2.node_name 
+          when "enunt"
+            intrebare << { "enunt" => elem2.content }
+          when "rasp"
+            intrebare << { "rasp" => elem2.content }
+          else
+            raise 'Tag necunoscut'
+          end
+        end
+        chestionar << { "intrebare" => intrebare }
+      else
+        raise 'Tag necunoscut'
+      end
+    end
+    return { 'chestionar' => chestionar }.to_json
+  rescue 
+    raise 'Eroare parsare fisier'
   end
 
 end
