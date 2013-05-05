@@ -1,84 +1,41 @@
 class PaginaProfesorController < ApplicationController
-
-	def pagProfesor
-
-
-			profesor = Profesor.find_by_id(2)
-			@nume_profesor = profesor.nume
-			@cursuri = Curs.find(:all, :conditions => {:profesor_id => profesor.id})
-			@param_specializare = params[:spec]
-		@param_an = params[:anul]
-
-		@specializare =Array.new
-		@an = Array.new
-		@cursuri.each do |c|
-			@specializare << c.specializare
-		end
-		@specializare = @specializare.uniq
+  before_filter :signed_login_required
+  before_filter :proffesor_required
+  before_filter :load_selection_from_cookie
+  after_filter :update_cookie
 
 
-		@cursuri.each do |c|
-			@an << c.an
-		end
-		@an = @an.uniq
+  def pagProfesor
+  
+    
 
+    @acces_pdf = true
+    @specializari = []
+    Grupa.select(:specializare).uniq.each { |s| @specializari << s.specializare }
+    @serii = []
+    Grupa.select(:serie).uniq.each { |s| @serii << s.serie }
+    @ani = []
+    Asociere.select(:an).uniq.each { |a| @ani << a.an }
 
+    ops = { specializare: params[:spec], 
+            an: params[:anul], 
+            serie: params[:serie] }
 
-					tmp=0
-				if @param_an == "1"
-					tmp=1
-					#@cursuri = Curs.find(:all, :conditions => {:an => 1})
-				elsif  @param_an == "2"
-					tmp=2
-					#@cursuri = Curs.find(:all, :conditions => {:an => 2})
-				elsif  @param_an == "3"
-					tmp=3
-					#@cursuri = Curs.find(:all, :conditions => {:an => 3})
-				elsif @param_an == "4"
-					tmp=4
-					#@cursuri = Curs.find(:all, :conditions => {:an => 4})
-				elsif @param_an == "5"
-					tmp=5
-					#@cursuri = Curs.find(:all, :conditions => {:an => 5})
-				end
-				if tmp == 0
-					if @param_specializare.eql? "Matematica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica",
-								:profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Matematica aplicata"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata",
-								:profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Matematica informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica",
-								:profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica",
-								:profesor_id => profesor.id})
-					elsif @param_specializare.eql? "CTI"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI",
-								:profesor_id => profesor.id})
-					end
-				else
-					if @param_specializare.eql? "Matematica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica",
-								:an => tmp, :profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Matematica aplicata"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata",
-								:an => tmp, :profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Matematica informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica",
-								:an => tmp, :profesor_id => profesor.id})
-					elsif @param_specializare.eql? "Informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica",
-								:an => tmp, :profesor_id => profesor.id})
-					elsif @param_specializare.eql? "CTI"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI",
-								:an => tmp, :profesor_id => profesor.id})
-					else
-						@cursuri = Curs.find(:all, :conditions => {:an => tmp, :profesor_id => profesor.id})
-					end
-				end
+    where_args = Grupa.where_arguments ops
+    where_string = "where #{ where_args }" unless where_args.empty?
+    select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id" 
+                 FROM cursuri LEFT JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
+                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" 
+                 INNER JOIN grupe on "asocieri"."grupa_id" = "grupe"."id" }
+    query = "#{select} #{where_string};"
+    @cursuri = Curs.connection.execute query
 
+    if request.method == "POST"
+      logger.info '----------POST--'
+      render 'shared/_lista_cursuri_evaluate', :handler => :erb, :layout => false
+
+    end
 	end
 
 end

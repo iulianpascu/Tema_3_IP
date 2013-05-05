@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
     redirect_to homepage_path unless token_logged
   end
 
-  def profesor_required
-    unless session[:user_signed][:role] == 'teacher'
+  def proffesor_required
+    unless session[:user_signed][:role] == 'profesor'
       flash[:notice] = "Doar profesorii au acces la acea pagina" 
       redirect_to homepage_path
     end
@@ -28,8 +28,6 @@ class ApplicationController < ActionController::Base
     session[:user_token] and IncognitoUser.find_by_token session[:user_token][:token]
   end
 
-  # protected
-
   def fmi_logged
     session[:user_signed]
   end
@@ -39,11 +37,25 @@ class ApplicationController < ActionController::Base
       semestru: ((Date.today.month > 6) ? 1 : 2) }
   end
 
+  helper_method :an_universitar_curent
   def an_universitar_curent 
     Date.today.year - (Date.today.month > 6 ? 0 : 1)
   end
 
+  helper_method :semestru_curent
   def semestru_curent
     Date.today.month > 6 ? 1 : 2
+  end
+
+  def load_selection_from_cookie
+    if cookies[:selection].blank?
+      @selection = {}
+    else
+      @selection = JSON.load cookies[:selection]
+    end
+  end
+
+  def update_cookie
+    cookies[:selection] = @selection.to_json
   end
 end

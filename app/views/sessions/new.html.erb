@@ -1,15 +1,15 @@
 
 <div class="container-narrow">
 
-  <form class="form-signin" accept-charset="UTF-8" action="/sessions" method="post">
+  <form class="form-signin" accept-charset="UTF-8" method="post">
     <legend>Logare</legend>
-    <input  id="sessions_token" name="sessions[token]" type="text" class="input-block-level" placeholder="Token" maxlength="35">
-<!--         <label class="checkbox">
-  <input type="checkbox" value="remember-me"> Ţine-mă minte </label>-->
+
+    <input id="inputIcon" name="token" type="text" class="input-block-level" placeholder="Token" maxlength="35">
+    
   
   <button class="btn btn-large btn-block btn-primary" name="commit" type="submit">Logare</button>
   <hr/>
-  <a href="<%= homepage_path %>" class="btn btn-danger" style="letter-spacing: 1px;"><i class="icon-user icon-white"></i> FMI-Connect</a>
+  <a href="/auth/autentificare" class="btn btn-danger" style="letter-spacing: 1px;"><i class="icon-user icon-white"></i> FMI-Connect</a>
 </form>
 </div>
 

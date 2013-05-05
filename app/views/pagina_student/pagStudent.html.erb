@@ -1,104 +1,42 @@
+<% content_for :head do %>
+  
+<% end %>
+
+<% content_for :brand do %>
+  <%= "#{session[:user_signed][:last_name]} #{session[:user_signed][:first_name]}" %>
+<% end %>
+
+<% content_for :iesire do %>
+  <a href="<%= sign_out_path %>">
+    <i class="icon-off icon-white"></i> Iesire
+  </a>
+<% end %>
 
 <div class="container-narrow">
-
-<div class="masthead">
-    <div id="navbar-example" class="navbar navbar-static">
-        <div class="navbar-inner">
-          <a class="brand" href="">Student</a>
-         <div class="container" style="width: auto;">
-                <ul class="nav" role="navigation">
-                    <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Specializare<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @specializare.each do |s| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/student/<%= s %>/<%= params[:anul]%>" style="text-align: left;"><%= s %></a></li>
-                     <% end %>
-                    </ul>
-                  </li>
-                     <li class="dropdown">
-                    <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">An<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-										<% @an.each do |a| %>
-                      <li role="presentation" ><a role="menuitem" tabindex="-1" href="/student/<%= params[:spec] %>/<%= a %>" style="text-align: left;"><%= a %></a></li>
-                     <% end %>
-                    </ul>
-                  </li>
-							<li><a href="/student/all/all">Resetare parametri</a></li>
-                </ul>
-
-              </div>
-        </div>
-      </div>
+  <%= render 'shared/selector_cursuri' %>
+  <%= render 'shared/lista_cursuri_evaluate' %>
 </div>
 
-<div class="well" >
-   <table class="table table-striped" >
-  <tr>
-    <th>An</th>
-    <th>Curs</th>
-		<th>Profesor</th>
-    <th>Arata statistici</th>
-  </tr>
-  <% i=0%>
+<div class="modal hide fade" id="modal">
 
-      <% @cursuri.each do |curs| %>
-
-      <tr>
-
-        <td><%= curs.an %></td>
-        <td><%= curs.nume %></td>
-        <td><%= "#{curs.profesor.nume} #{curs.profesor.prenume}" %></td>
-
-         <td><input type="button" class="btn btn-success modalButton"
-        id="<%= i+=1 %>" value="Detalii"/></td>
-
-			</tr>
-
-      <% end %>
-
-</table>
-<div class="clearfix"></div>
-</div>
-
-			<% k=0 %>
-		 <%@cursuri.each do |curs| %>
-			<% k+=1%>
-    <div class="modal hide fade" id="modal<%=k%>">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Detalii</h3>
-      </div>
-        <div class="modal-body">
-        <h4>Alte informatii aici.</h4>
-        <table class="table table-striped">
-        <tr>
-        <th>Curs</th>
-        <th>Profesor</th>
-        <th>Statistici</th>
-      </tr>
-        <tr>
-       <td><%= curs.nume %></td>
-       <td><%= "#{curs.profesor.nume}" %></td>
-       <td><div class="progress progress-success">
-                <div class="bar" style="width: 70%;"></div>
-              </div></td>
-      </tr>
-        </table>
-        </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Finalizare</button>
-
-      </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Blalala</h3>
     </div>
-		<%end%>
 
+
+    <div class="modal-body">
+
+    </div> <!-- modal-body -->
+</div>
 
 <script type="text/javascript">
-     $("#wizard").bwizard();
-
-   $(".modalButton").click(function(){
+$(function(){
+  //sa fie AJAX
+  $(".modalButton").click(function(){
     var id = this.id;
-    var modalNou = '#modal' + id;
-    $(modalNou).modal('show');
-   });
+    var action_link = "/get_stats/" + id + '.js';
+    $.get(action_link, $(this).serialize(), null, "script");
+  });
+});
 </script>

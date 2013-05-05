@@ -88,6 +88,18 @@
 
 <%= yield %>
 
+<script type="text/javascript">
+  $.ajaxSetup({
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+      }
+  }); 
+
+  $(document).ajaxSend(function(e, xhr, options) {
+      var token = $("meta[name='csrf-token']").attr("content");
+      xhr.setRequestHeader("X-CSRF-Token", token);
+});
+</script>
 
 <div class="bottom-logo">
   <img src="/assets/logo.png" width="150px" height="150px"/>

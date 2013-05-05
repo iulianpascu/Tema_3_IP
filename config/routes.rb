@@ -4,23 +4,14 @@ GossipLogin::Application.routes.draw do
   match '/get_stats/:id', to: 'coments_and_stats#get_stats', via: :get
   match '/get_coments/:id', to: 'coments_and_stats#get_coments', via: :get
 
-  
-
-  get 'pagina_setare/create'
-  post 'pagina_setare/create'
-
   match 'auth/:provider/callback' => 'sessions#create_signed'
   match 'auth/failure' => 'sessions#failure'
-  
-  
+    
   match '/get_chestionar/:id_curs', to: 'evaluarea_cursurilor#get_chestionar', via: [:post,:get]
   match '/post_chestionar/:id_curs', to: 'evaluarea_cursurilor#post_chestionar', via: :post
 
-
-  resources :sessions, only: [:new, :create]
-
-  root to: 'sessions#new'
-
+  root to: 'sessions#new', via: [:get]
+  root to: 'sessions#create', via: [:post]
 
   match '/token_sign_in', to: 'sessions#new', as: "sign_in"
   match '/token_sign_out', to: 'sessions#abort_token_session', as: "token_sign_out"
@@ -28,15 +19,12 @@ GossipLogin::Application.routes.draw do
 
   match '/pdf_gen', to: 'static_pages#home'
 
-
   match '/homepage' , to: 'sessions#redirect_to_asigned', as: "homepage"
   match '/verificare', to: 'evaluarea_cursurilor#verificare'
   match '/admin/(:spec/(:anul))', to: 'pagina_administrator#pagAdmin', as: "homepage_admin"
   match '/params', to: 'pagina_administrator#setare_resetare', as: 'update_params'
   match '/profesor/(:spec/(:anul))', to: 'pagina_profesor#pagProfesor', as: "homepage_profesor"
   match '/student/(:spec/(:anul))', to: 'pagina_student#pagStudent', as: "homepage_student"
- #match '/signup', to: 'users#new'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

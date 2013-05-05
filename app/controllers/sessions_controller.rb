@@ -5,18 +5,17 @@ class SessionsController < ApplicationController
 
   # pagina de login
   def new
-    redirect_to verificare_path if session[:user_token]
-    redirect_to homepage_path if session[:user_signed]
+    redirect_to_asigned if token_logged or fmi_logged
   end
 
   # logare prin token pentru evaluarea cursurilor
   def create
-    if params[:sessions][:token].blank?
+    if params[:token].blank?
       flash[:error] = "Nu te poti loga cu un camp gol!"
       render 'new' and return
     end
 
-    i_user = IncognitoUser.find_by_token params[:sessions][:token].strip
+    i_user = IncognitoUser.find_by_token params[:token].strip
     if i_user
       # verifica daca e perioada de evaluare
       data_eval =  i_user.grupa.data_evaluare.data
@@ -68,8 +67,10 @@ class SessionsController < ApplicationController
     session[:user_signed] = { uid: env["omniauth.auth"]["uid"],
                               token: env["omniauth.auth"]['credentials']['token'],
                               first_name: env["omniauth.auth"]["extra"]["first_name"],
-                              last_name: env["omniauth.auth"]["extra"]["last_name"],
-                              role: role_extract(env["omniauth.auth"]["extra"])}
+                              last_name: env["omniauth.auth"]["extra"]["last_name"]}
+    session[:user_signed][:role] = role_extract(env["omniauth.auth"]["extra"])
+    # logger.info env["omniauth.auth"]["extra"]
+    # logger.info "ROL :: #{session[:user_signed][:role]}"
     redirect_to_asigned
   end
 
@@ -114,9 +115,9 @@ class SessionsController < ApplicationController
       rescue
         flash[:error] = "Nu am putut determina daca sunteti sef departament"
       ensure
-        sesiune[:user_signed][:sef] = sef_dep
-        'teacher'
+        session[:user_signed][:sef] = sef_dep
       end
+      'profesor'
     when extra["admin"] && (extra["admin"] == true  || extra["admin"] == 'true') then 'admin'
     when extra["administrator"] && (extra["administrator"] == true  || extra["administrator"] == 'true') then 'admin'
     else nil

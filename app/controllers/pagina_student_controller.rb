@@ -1,67 +1,26 @@
 class PaginaStudentController < ApplicationController
+  before_filter :signed_login_required
   def pagStudent
-		@param_specializare = params[:spec]
-		@param_an = params[:anul]
-		@cursuri= Curs.all
-		@specializare =Array.new
-		@an = Array.new
-		@cursuri.each do |c|
-			@specializare << c.specializare
-		end
-		@specializare = @specializare.uniq
+		@acces_pdf = false
+    @specializari = []
+    Grupa.select(:specializare).uniq.each { |s| @specializari << s.specializare }
+    @serii = []
+    Grupa.select(:serie).uniq.each { |s| @serii << s.serie }
+    @ani = []
+    Asociere.select(:an).uniq.each { |a| @ani << a.an }
 
+    ops = { specializare: params[:spec], 
+            an: params[:anul], 
+            serie: params[:serie] }
 
-		@cursuri.each do |c|
-			@an << c.an
-		end
-		@an = @an.uniq
-
-
-
-					tmp=0
-				if @param_an == "1"
-					tmp=1
-					#@cursuri = Curs.find(:all, :conditions => {:an => 1})
-				elsif  @param_an == "2"
-					tmp=2
-					#@cursuri = Curs.find(:all, :conditions => {:an => 2})
-				elsif  @param_an == "3"
-					tmp=3
-					#@cursuri = Curs.find(:all, :conditions => {:an => 3})
-				elsif @param_an == "4"
-					tmp=4
-					#@cursuri = Curs.find(:all, :conditions => {:an => 4})
-				elsif @param_an == "5"
-					tmp=5
-					#@cursuri = Curs.find(:all, :conditions => {:an => 5})
-				end
-				if tmp == 0
-					if @param_specializare.eql? "Matematica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica"})
-					elsif @param_specializare.eql? "Matematica aplicata"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata"})
-					elsif @param_specializare.eql? "Matematica informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica"})
-					elsif @param_specializare.eql? "Informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica"})
-					elsif @param_specializare.eql? "CTI"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI"})
-					end
-				else
-					if @param_specializare.eql? "Matematica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica", :an => tmp})
-					elsif @param_specializare.eql? "Matematica aplicata"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica aplicata", :an => tmp})
-					elsif @param_specializare.eql? "Matematica informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Matematica informatica", :an => tmp})
-					elsif @param_specializare.eql? "Informatica"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "Informatica", :an => tmp})
-					elsif @param_specializare.eql? "CTI"
-						@cursuri = Curs.find(:all, :conditions => {:specializare =>  "CTI", :an => tmp})
-					else
-						@cursuri = Curs.find(:all, :conditions => {:an => tmp})
-					end
-				end
-
+    where_args = Grupa.where_arguments ops
+    where_string = "where #{ where_args }" unless where_args.empty?
+    select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id" 
+                 FROM cursuri LEFT JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
+                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" 
+                 INNER JOIN grupe on "asocieri"."grupa_id" = "grupe"."id" }
+    query = "#{select} #{where_string};"
+    @cursuri = Curs.connection.execute query
   end
 end

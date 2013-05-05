@@ -38,5 +38,11 @@ $(function(){
     var action_link = "/get_stats/" + id + '.js';
     $.get(action_link, $(this).serialize(), null, "script");
   });
+
+  $(".dropdown-menu > li > a").click( function() { 
+            v = $(this).attr('value');
+            camp = $(this).parent().parent().attr('value');
+            $.post('<%= homepage_admin_path %>', { camp: v });
+        });
 });
 </script>

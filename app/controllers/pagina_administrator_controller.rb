@@ -1,5 +1,6 @@
 class PaginaAdministratorController < ApplicationController
   before_filter :signed_login_required
+  before_filter :admin_required
 
   def pagAdmin
     @acces_pdf = true

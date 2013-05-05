@@ -236,6 +236,8 @@ body {
   background-color: #ffffff;
   background-image: url("/assets/bg2.jpg");
   background-size:200%;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
 }
 
 a {
@@ -6251,4 +6253,9 @@ a.badge:focus {
 }
 .vizualizare{
   margin: 12px 300px auto;
+}
+
+
+.w80{
+  width: 80px;
 }
