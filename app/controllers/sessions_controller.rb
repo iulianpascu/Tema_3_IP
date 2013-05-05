@@ -69,7 +69,8 @@ class SessionsController < ApplicationController
                               first_name: env["omniauth.auth"]["extra"]["first_name"],
                               last_name: env["omniauth.auth"]["extra"]["last_name"]}
     session[:user_signed][:role] = role_extract(env["omniauth.auth"]["extra"])
-    # logger.info env["omniauth.auth"]["extra"]
+    
+    logger.info env["omniauth.auth"]
     # logger.info "ROL :: #{session[:user_signed][:role]}"
     redirect_to_asigned
   end
@@ -112,6 +113,7 @@ class SessionsController < ApplicationController
         response = Net::HTTP.get_response(user_url)
         user = JSON.load response.body
         sef_dep = true if user['user']['teacher']['is_responsable'] == 1
+        session[:user_signed][:departament] = user['user']['teacher']['department']
       rescue
         flash[:error] = "Nu am putut determina daca sunteti sef departament"
       ensure

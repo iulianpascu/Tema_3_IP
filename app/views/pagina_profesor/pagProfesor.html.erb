@@ -1,33 +1,35 @@
 <% content_for :head do %>
-  
+
 <% end %>
 
 <% content_for :brand do %>
-  <%= "#{session[:user_signed][:last_name]} #{session[:user_signed][:first_name]}" %>
+<%= "#{session[:user_signed][:last_name]} #{session[:user_signed][:first_name]}" %>
 <% end %>
 
 <% content_for :iesire do %>
-  <a href="<%= sign_out_path %>">
-    <i class="icon-off icon-white"></i> Iesire
-  </a>
+<a href="<%= sign_out_path %>">
+  <i class="icon-off icon-white"></i> Iesire
+</a>
 <% end %>
 
 <div class="container-narrow">
   <%= render 'shared/selector_cursuri' %>
-  <%= render 'shared/lista_cursuri_evaluate' %>
+  <div class="well" id="lista_curs">
+    <%= render 'shared/lista_cursuri_evaluate' %>
+  </div>
 </div>
 
 <div class="modal hide fade" id="modal">
 
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Blalala</h3>
-    </div>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Blalala</h3>
+  </div>
 
 
-    <div class="modal-body">
+  <div class="modal-body">
 
-    </div> <!-- modal-body -->
+  </div> <!-- modal-body -->
 </div>
 
 <script type="text/javascript">
@@ -42,15 +44,17 @@ $(function(){
   });
 
   var reload_table = function(data) {
-    var refresh = $(data).find("#lista_curs");
-    $("#lista_curs").replaceWith(refresh);
+    $("#lista_curs").empty();
+    $("#lista_curs").append(data);
   };
 
 
   $(".dropdown-menu > li > a").click( function() { 
     v = $(this).attr('value');
     camp = $(this).parent().parent().attr('value');
-    $.post('<%= homepage_profesor_path %>', {camp: v},reload_table, 'html');
+    hashs = {};
+    hashs[camp] = v;
+    $.post('<%= homepage_profesor_path %>', hashs ,reload_table, 'html');
   });
 });
 </script>
