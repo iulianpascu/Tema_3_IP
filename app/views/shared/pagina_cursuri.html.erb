@@ -54,7 +54,7 @@ $(function(){
     camp = $(this).parent().parent().attr('value');
     hashs = {};
     hashs[camp] = v;
-    $.post('<%= homepage_admin_path %>', hashs ,reload_table, 'html');
+    $.post('<%= @pathhh %>', hashs ,reload_table, 'html');
   });
 });
 </script>

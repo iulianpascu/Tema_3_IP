@@ -6,4 +6,9 @@ class EvalCompletata < ActiveRecord::Base
                                 :inverse_of => :eval_completate }
   belongs_to :asociere, :inverse_of => :eval_completate
   belongs_to :curs
+
+  def self.where_arguments(options = {})
+    options.delete_if { |k, val| val == nil }
+    self.sanitize_sql_hash_for_conditions options
+  end
 end

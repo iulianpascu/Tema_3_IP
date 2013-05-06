@@ -1,0 +1,64 @@
+<div class="masthead">
+    <div id="navbar-example" class="navbar navbar-static">
+        <div class="navbar-inner">
+            <div class="container" style="width: auto;">
+                <ul class="nav" role="navigation">
+                    <% #if session[:user_signed][:role] == 'admin' %>
+                    <li class="dropdown">
+                        <a>Departament <b class="caret"></b></a>
+                        <ul class="dropdown-menu" value="departament" role="menu" aria-labelledby="drop2">
+
+                            <li role="presentation" ><a value="mate" style="text-align: left;">Matematica</a></li>
+                            <li role="presentation" ><a value="info" style="text-align: left;">Informatica</a></li>
+                            <li role="presentation" ><a value="ti" style="text-align: left;">TI</a></li>  
+                        </ul>
+                    </li>
+                    <% #end %>
+                    <li class="dropdown">
+                        <a>An Universitar <b class="caret"></b></a>
+                        <ul class="dropdown-menu" value='an' role="menu" aria-labelledby="drop2">
+                            <% @ani.each do |an| %>
+                            <li >
+                                <a  value="<%= an %>" style="text-align: left;"><%= "#{ an } - #{ an + 1 }" %></a>
+                            </li>
+                            <% end %>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a>Semestru <b class="caret"></b></a>
+                        <ul class="dropdown-menu" value='semestru' aria-labelledby="drop2">
+                            <% (1..2).each do |sem| %>
+                            <li >
+                                <a value="<%= sem %>" style="text-align: left;"><%= sem == 1 ? 'I' : 'II' %></a>
+                            </li>
+                            <% end %>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a>Tip <b class="caret"></b></a>
+                        <ul class="dropdown-menu" value='tip' aria-labelledby="drop2">
+                            <% ['curs','seminar','laborator'].each do |t| %>
+                            <li >
+                                <a value="<%= t.first %>" style="text-align: left;"><%= t %></a>
+                            </li>
+                            <% end %>
+                        </ul>
+                    </li>
+                </ul>
+
+
+            
+                <% if session[:user_signed][:role] == 'admin' %>
+                <div style="float:right">
+                    
+                    <a class="btn" href="<%= update_params_path %>"><i class="icon-wrench"></i> Setare parametri</a>
+                
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+

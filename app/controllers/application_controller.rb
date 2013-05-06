@@ -53,9 +53,40 @@ class ApplicationController < ActionController::Base
     else
       @selection = JSON.load cookies[:selection]
     end
+
+    @selection['an'] = params['an'] if params['an']
+    @selection['semestru'] = params['semestru'] if params['semestru']
+    @selection["departament"] = params['departament'] if params['departament']
+    @selection["tip"] = params['tip'] if params['tip']
+
+    
+    cookies[:selection] = @selection.to_json
   end
 
-  def update_cookie
-    cookies[:selection] = @selection.to_json
+  protected
+
+  def incarca_cursuri(ops ={})
+    select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id",
+                 "profesori"."departament" as dep, "profesori"."id" as profesor_id
+                 FROM cursuri INNER JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
+                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" 
+                 LEFT JOIN grupe on "asocieri"."grupa_id" = "grupe"."id" where 1 = 1 }
+    
+    asoc_where = Asociere.where_arguments( an: ops[:an], 
+                                           semestru: ops[:semestru] )
+    
+    if ops[:departament]
+      prof_where = Profesor.where_arguments departament: ops[:departament]
+    elsif ops[:profesor_id]
+      prof_where = Profesor.where_arguments id: ops[:profesor_id]
+    end
+
+    where_string = ""
+    where_string << " AND #{ asoc_where }" unless asoc_where.blank?
+    where_string << " AND #{ prof_where }" unless prof_where.blank?
+    where_string << " And cursuri.tip like '#{ ops[:tip].first }%' " unless ops[:tip].blank?
+    
+    @cursuri = Curs.connection.execute "#{ select } #{ where_string };"
   end
 end

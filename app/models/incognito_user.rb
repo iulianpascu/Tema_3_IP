@@ -5,4 +5,9 @@ class IncognitoUser < ActiveRecord::Base
                        :inverse_of => :incognito_users }
   has_one :sesiune_activa
   has_many :eval_completate
+
+  def self.where_arguments(options = {})
+    options.delete_if { |k, val| val == nil }
+    self.sanitize_sql_hash_for_conditions options
+  end
 end

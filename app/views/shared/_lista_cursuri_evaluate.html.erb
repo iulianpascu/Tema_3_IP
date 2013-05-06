@@ -1,0 +1,40 @@
+
+<table class="table table-striped" >
+    <tr>
+        <th style="max-width:150px;">An Universitar</th>
+        <th style="max-width:200px;">Curs</th>
+        <th style="max-width:200px;">profesor</th>
+        <th style="max-width:150px;">Arata statistici</th>
+
+        <% if @acces_pdf %>
+        <th style="span2">Comentarii</th>
+        <% end %>
+
+    </tr>
+
+    <% @cursuri.each do |curs| %>
+    <tr>
+        <td style="max-width:150px;"><%= "#{ curs['an'] } - #{ curs['an'].to_i + 1 }" %></td>
+        <td style="max-width:200px;"><%= curs['denumire'] %></td>
+        <td style="max-width:200px;"><%= curs['profesor'] %></td>
+        <td style="max-width:150px;">
+            <a class="btn btn-info modalButton" id="<%= curs['id'] %>"><i class=" icon-align-left icon-white"></i> Detalii</a>
+        </td> 
+        <% if @acces_pdf  %>
+            <% if comentarii_disponibile( curs['dep'], curs['profesor_id']) %>
+            <td style="max-width:150px;">
+                <a class="btn btn-primary w80" href="/get_coments/<%= curs['id'] %>.pdf"><i class="icon-file icon-white"></i> Descarca</a>
+            </td> 
+            <% else %>
+            <td style="max-width:150px;">
+                <a class="btn btn-primary disabled w80"><i class="icon-minus-sign icon-white"></i></a>
+            </td> 
+            <% end %>
+        <% end %>
+
+    </tr>
+    <% end %>
+
+</table>  
+<div class="clearfix">
+</div> 
