@@ -4,6 +4,7 @@ class Asociere < ActiveRecord::Base
   belongs_to :grupa, :inverse_of => :asocieri
   belongs_to :formular, :inverse_of => :asocieri
   has_many :eval_completate, :inverse_of => :asociere
+  
 
   def self.where_arguments(options = {})
     options.delete_if { |k, val| val == nil }

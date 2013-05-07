@@ -3,24 +3,24 @@ class ApplicationController < ActionController::Base
   #include SessionsHelper
 
   def signed_login_required
-    redirect_to homepage_path unless fmi_logged
+    redirect_to_asigned unless fmi_logged
   end
 
   def token_login_required
-    redirect_to homepage_path unless token_logged
+    redirect_to_asigned unless token_logged
   end
 
   def proffesor_required
     unless session[:user_signed][:role] == 'profesor'
       flash[:notice] = "Doar profesorii au acces la acea pagina" 
-      redirect_to homepage_path
+      redirect_to_asigned
     end
   end
 
   def admin_required
     unless session[:user_signed][:role] == 'admin'
       flash[:notice] = "Doar administratorul are acces la acea pagina" 
-      redirect_to homepage_path
+      redirect_to_asigned
     end
   end
 
@@ -54,10 +54,12 @@ class ApplicationController < ActionController::Base
       @selection = JSON.load cookies[:selection]
     end
 
-    @selection['an'] = params['an'] if params['an']
-    @selection['semestru'] = params['semestru'] if params['semestru']
-    @selection["departament"] = params['departament'] if params['departament']
-    @selection["tip"] = params['tip'] if params['tip']
+    if params['an']
+    end
+
+    %w{an semestru departament tip in_progres}.each do |key|
+      @selection[key] = ( params[key] == 'clear' ? nil : params[key] ) if params[key]
+    end
 
     
     cookies[:selection] = @selection.to_json
@@ -65,13 +67,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
+
   def incarca_cursuri(ops ={})
     select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
-                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id",
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id" 
+                 as id_curs,  "asocieri"."id" as id_eval,
                  "profesori"."departament" as dep, "profesori"."id" as profesor_id
                  FROM cursuri INNER JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
-                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" 
-                 LEFT JOIN grupe on "asocieri"."grupa_id" = "grupe"."id" where 1 = 1 }
+                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" where 1 = 1 }
     
     asoc_where = Asociere.where_arguments( an: ops[:an], 
                                            semestru: ops[:semestru] )
@@ -83,10 +86,36 @@ class ApplicationController < ActionController::Base
     end
 
     where_string = ""
+    
+    if ops[:in_progres] == 'true'
+      where_string << " AND (asocieri.an < #{ an_universitar_curent} OR (asocieri.an = #{ an_universitar_curent} AND asocieri.semestru < #{ semestru_curent} ) OR ( asocieri.an = #{an_universitar_curent} AND asocieri.semestru = #{ semestru_curent} AND ( SELECT (data + #{ GossipLogin::perioada_evaluare() -1}) < '#{Date.today}' FROM data_evaluari INNER JOIN grupe on data_evaluari.grupa_terminal = grupe.terminal WHERE grupe.id = asocieri.grupa_id)))"
+    else
+      where_string << " AND ( asocieri.an = #{an_universitar_curent} AND asocieri.semestru = #{ semestru_curent} AND ( SELECT (data + #{ GossipLogin::perioada_evaluare() -1}) >= '#{Date.today}' FROM data_evaluari INNER JOIN grupe on data_evaluari.grupa_terminal = grupe.terminal WHERE grupe.id = asocieri.grupa_id))"
+    end
     where_string << " AND #{ asoc_where }" unless asoc_where.blank?
     where_string << " AND #{ prof_where }" unless prof_where.blank?
     where_string << " And cursuri.tip like '#{ ops[:tip].first }%' " unless ops[:tip].blank?
     
     @cursuri = Curs.connection.execute "#{ select } #{ where_string };"
+  end
+
+  def redirect_to_asigned
+    if token_logged
+      redirect_to verificare_path
+    elsif fmi_logged
+      case session[:user_signed][:role]
+      when "student" then
+        redirect_to homepage_student_path
+      when "profesor" then
+        redirect_to homepage_profesor_path
+      when "admin" then
+        redirect_to homepage_admin_path
+      else
+        flash[:error] = "Rol nesuportat de aplicatie"
+        redirect_to sign_out_path
+      end
+    else
+      redirect_to root_path
+    end
   end
 end

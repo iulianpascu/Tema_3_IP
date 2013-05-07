@@ -1,6 +1,6 @@
 class Formular < ActiveRecord::Base
   attr_accessible :continut
-  has_many :grupe
+  has_many :asocieri
 
   def self.where_arguments(options = {})
     options.delete_if { |k, val| val == nil }

@@ -1,6 +1,9 @@
 GossipLogin::Application.routes.draw do
 
   
+  get "sintetic_login/choose_role"
+  post "sintetic_login/choose_role"
+
   match '/get_stats/:id', to: 'coments_and_stats#get_stats', via: :get
   match '/get_coments/:id', to: 'coments_and_stats#get_coments', via: :get
 

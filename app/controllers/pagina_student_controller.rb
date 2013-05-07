@@ -16,7 +16,7 @@ class PaginaStudentController < ApplicationController
     if request.method == "POST"
       render 'shared/_lista_cursuri_evaluate', :handler => :erb, :layout => false
     else
-      render 'shared/pagina_cursuri', :handler => :erb, :locals => { :pathh => homepage_student_path }
+      render 'shared/pagina_cursuri', :handler => :erb, :locals => { :pathh => homepage_student_path, :show_progress => false }
     end
   end
 end

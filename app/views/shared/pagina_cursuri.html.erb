@@ -14,8 +14,16 @@
 
 <div class="container-narrow">
   <%= render 'shared/selector_cursuri' %>
-  <div class="well" id="lista_curs">
+  <div class="well" >
+    <% if show_progress %>
+    <ul class="nav nav-tabs in_progres">
+      <li class="active"><a value="false" >Evaluate</a></li>
+      <li><a value="true">In asteptare</a></li>
+    </ul>
+    <% end %>
+    <div id="lista_curs">
     <%= render 'shared/lista_cursuri_evaluate' %>
+    </div>
   </div>
 </div>
 
@@ -55,6 +63,14 @@ $(function(){
     hashs = {};
     hashs[camp] = v;
     $.post('<%= @pathhh %>', hashs ,reload_table, 'html');
+  });
+
+  $(".in_progres > li > a").click( function() { 
+    v = $(this).attr('value');
+    $(this).parent().siblings().removeClass('active');
+    $(this).parent().addClass('active');
+
+    $.post('<%= @pathhh %>', {'in_progres' : v} ,reload_table, 'html');
   });
 });
 </script>

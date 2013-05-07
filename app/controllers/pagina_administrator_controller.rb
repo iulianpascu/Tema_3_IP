@@ -8,15 +8,16 @@ class PaginaAdministratorController < ApplicationController
     @ani = []
     Asociere.select(:an).uniq.each { |a| @ani << a.an }
 
-    incarca_cursuri( an: @selection["an"], 
-                     semestru: @selection["semestru"],
-                     departament: @selection["departament"],
+    incarca_cursuri( an: @selection['an'], 
+                     semestru: @selection['semestru'],
+                     departament: @selection['departament'],
+                     in_progres: @selection['in_progres'],
                      tip: @selection['tip'] )
 
-    if request.method == "POST"
+    if request.method == 'POST'
       render 'shared/_lista_cursuri_evaluate', :handler => :erb, :layout => false
     else
-      render 'shared/pagina_cursuri', :handler => :erb, :locals => { :pathh => homepage_admin_path }
+      render 'shared/pagina_cursuri', :handler => :erb, :locals => { :pathh => homepage_admin_path, :show_progress => true }
     end
 end
 
@@ -132,8 +133,8 @@ end
         gr.nume        = g["group"].to_i
         gr.studenti    = g["number"].to_i
         gr.terminal    = g["group"].at(0).in?(terminal)
-        # TODO formular dinamic!!!!!
-        gr.formular_id = 1
+        # TODO formular mai dinamic!!!!!
+        gr.formular_id = @formular.id
         gr.save
 
         (1..(g["number"].to_i)).each do

@@ -51,7 +51,8 @@ CREATE TABLE asocieri (
     curs_id integer,
     grupa_id integer,
     an integer,
-    semestru integer
+    semestru integer,
+    formular_id integer
 );
 
 
@@ -169,44 +170,17 @@ ALTER SEQUENCE eval_completate_id_seq OWNED BY eval_completate.id;
 
 
 --
--- Name: eval_disponibile; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE eval_disponibile (
-    id integer NOT NULL,
-    curs_id integer,
-    grupa_nume integer,
-    formular_id integer,
-    semestru integer
-);
-
-
---
--- Name: eval_disponibile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE eval_disponibile_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: eval_disponibile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE eval_disponibile_id_seq OWNED BY eval_disponibile.id;
-
-
---
 -- Name: formulare; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE formulare (
     id integer NOT NULL,
-    continut text
+    continut text,
+    an integer,
+    semestru integer,
+    stadiu character varying(255),
+    specializare character varying(255),
+    tip_curs character varying(1) DEFAULT 'c'::character varying
 );
 
 
@@ -239,14 +213,11 @@ CREATE TABLE grupe (
     studenti integer,
     terminal boolean,
     an integer,
-<<<<<<< Updated upstream
     serie integer,
     specializare character varying(255),
-    formular_id integer,
-    domeniu character varying(255)
-=======
-    serie integer
->>>>>>> Stashed changes
+    domeniu character varying(255),
+    zi_id character varying(2),
+    lmd character varying(1)
 );
 
 
@@ -401,13 +372,6 @@ ALTER TABLE ONLY eval_completate ALTER COLUMN id SET DEFAULT nextval('eval_compl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY eval_disponibile ALTER COLUMN id SET DEFAULT nextval('eval_disponibile_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY formulare ALTER COLUMN id SET DEFAULT nextval('formulare_id_seq'::regclass);
 
 
@@ -469,14 +433,6 @@ ALTER TABLE ONLY data_evaluari
 
 ALTER TABLE ONLY eval_completate
     ADD CONSTRAINT evaluare_completate_pkey PRIMARY KEY (id);
-
-
---
--- Name: evaluare_disponibile_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY eval_disponibile
-    ADD CONSTRAINT evaluare_disponibile_pkey PRIMARY KEY (id);
 
 
 --
@@ -595,7 +551,6 @@ INSERT INTO schema_migrations (version) VALUES ('20130428195714');
 
 INSERT INTO schema_migrations (version) VALUES ('20130428195922');
 
-<<<<<<< Updated upstream
 INSERT INTO schema_migrations (version) VALUES ('20130428201019');
 
 INSERT INTO schema_migrations (version) VALUES ('20130428201656');
@@ -617,6 +572,9 @@ INSERT INTO schema_migrations (version) VALUES ('20130504130222');
 INSERT INTO schema_migrations (version) VALUES ('20130504180205');
 
 INSERT INTO schema_migrations (version) VALUES ('20130504180315');
-=======
-INSERT INTO schema_migrations (version) VALUES ('20130428201019');
->>>>>>> Stashed changes
+
+INSERT INTO schema_migrations (version) VALUES ('20130506164903');
+
+INSERT INTO schema_migrations (version) VALUES ('20130506182721');
+
+INSERT INTO schema_migrations (version) VALUES ('20130507070003');

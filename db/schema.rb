@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504180315) do
+ActiveRecord::Schema.define(:version => 20130506164903) do
 
   create_table "asocieri", :force => true do |t|
     t.integer "curs_id"
@@ -42,7 +42,12 @@ ActiveRecord::Schema.define(:version => 20130504180315) do
   add_index "eval_completate", ["continut"], :name => "eval_comp_continut"
 
   create_table "formulare", :force => true do |t|
-    t.text "continut"
+    t.text    "continut"
+    t.integer "an"
+    t.integer "semestru"
+    t.string  "stadiu"
+    t.string  "specializare"
+    t.string  "tip_curs",     :limit => 1, :default => "c"
   end
 
   create_table "grupe", :force => true do |t|

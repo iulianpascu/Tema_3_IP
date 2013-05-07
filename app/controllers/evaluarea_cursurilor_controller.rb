@@ -13,14 +13,15 @@ class EvaluareaCursurilorController < ApplicationController
     unless gr
       redirect_to token_sign_out_path and return
     end
-    cursuri = Curs.joins(:grupe).where( asocieri: semestru_curent_hash, grupe: {id: gr.id})
+    cursuri = Asociere.joins(:grupa).where( asocieri: semestru_curent_hash, grupe: {id: gr.id})
     
     @curs = []
 
     cursuri.each do |e|
-      @curs << {nume: e.nume, 
-                prof: "#{e.profesor.nume} #{e.profesor.prenume}",
-                tip: e.tip,
+      c = e.curs
+      @curs << {nume: c.nume, 
+                prof: "#{c.profesor.nume} #{c.profesor.prenume}",
+                tip: c.tip,
                 id: e.id,
                 disabled: if EvalCompletata.find_by_incognito_user_token_and_curs_id(user.token, e.id)
                            true
@@ -38,11 +39,12 @@ class EvaluareaCursurilorController < ApplicationController
     asoc = Asociere.where( an: an_universitar_curent,
                            semestru: semestru_curent,
                            grupa_id: gr.id,
-                           curs_id: params[:id_curs].to_i ).first if gr
+                           id: params[:id_curs].to_i ).first if gr
+
 
     # verific daca a completat deja aceasta evaluare
     if asoc && !EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_curs].to_i)
-      formular = JSON.parse gr.formular.continut 
+      formular = JSON.parse asoc.formular.continut 
       @continuturi = formular["chestionar"]
       @id_curs = params[:id_curs].to_i
     else
@@ -60,12 +62,12 @@ class EvaluareaCursurilorController < ApplicationController
     asoc = Asociere.where( an: an_universitar_curent,
                            semestru: semestru_curent,
                            grupa_id: gr.id,
-                           curs_id: params[:id_curs].to_i ).first if gr
+                           id: params[:id_curs].to_i ).first if gr
 
     comp = EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_curs].to_i)
     # verific daca a completat deja aceasta evaluare
     if asoc && !comp
-      formular = JSON.parse gr.formular.continut 
+      formular = JSON.parse asoc.formular.continut 
       continuturi = formular["chestionar"]
       @necompletate = false
       nc = []

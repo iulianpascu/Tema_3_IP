@@ -12,10 +12,15 @@ end
 module GossipLogin
   # cate zile sunt deschise "urnele" pentru vot
   DURATA_PERIOADA_EVALUARE = 14
+  def self.perioada_evaluare
+    DURATA_PERIOADA_EVALUARE
+  end
   # cate minute dureaza o sesiune anonima
   DURATA_LOGIN = 30
-  
+
   class Application < Rails::Application
+    
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
