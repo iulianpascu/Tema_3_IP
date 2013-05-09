@@ -51,11 +51,13 @@ class SessionsController < ApplicationController
 
 
   def abort_token_session
+    flash.keep
     clear_session
     redirect_to root_path
   end
 
   def abort_signed_session
+    flash.keep
     clear_session
     redirect_to root_path
   end

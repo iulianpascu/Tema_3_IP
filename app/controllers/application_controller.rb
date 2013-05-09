@@ -88,9 +88,9 @@ class ApplicationController < ActionController::Base
     where_string = ""
     
     if ops[:in_progres] == 'true'
-      where_string << " AND (asocieri.an < #{ an_universitar_curent} OR (asocieri.an = #{ an_universitar_curent} AND asocieri.semestru < #{ semestru_curent} ) OR ( asocieri.an = #{an_universitar_curent} AND asocieri.semestru = #{ semestru_curent} AND ( SELECT (data + #{ GossipLogin::perioada_evaluare() -1}) < '#{Date.today}' FROM data_evaluari INNER JOIN grupe on data_evaluari.grupa_terminal = grupe.terminal WHERE grupe.id = asocieri.grupa_id)))"
-    else
       where_string << " AND ( asocieri.an = #{an_universitar_curent} AND asocieri.semestru = #{ semestru_curent} AND ( SELECT (data + #{ GossipLogin::perioada_evaluare() -1}) >= '#{Date.today}' FROM data_evaluari INNER JOIN grupe on data_evaluari.grupa_terminal = grupe.terminal WHERE grupe.id = asocieri.grupa_id))"
+    else
+      where_string << " AND (asocieri.an < #{ an_universitar_curent} OR (asocieri.an = #{ an_universitar_curent} AND asocieri.semestru < #{ semestru_curent} ) OR ( asocieri.an = #{an_universitar_curent} AND asocieri.semestru = #{ semestru_curent} AND ( SELECT (data + #{ GossipLogin::perioada_evaluare() -1}) < '#{Date.today}' FROM data_evaluari INNER JOIN grupe on data_evaluari.grupa_terminal = grupe.terminal WHERE grupe.id = asocieri.grupa_id)))"
     end
     where_string << " AND #{ asoc_where }" unless asoc_where.blank?
     where_string << " AND #{ prof_where }" unless prof_where.blank?
