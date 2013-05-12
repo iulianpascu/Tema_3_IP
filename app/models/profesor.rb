@@ -1,5 +1,5 @@
 class Profesor < ActiveRecord::Base
-  attr_accessible :nume, :prenume
+  attr_accessible :nume, :prenume, :departament
   has_many :cursuri
 
   def self.where_arguments(options = {})

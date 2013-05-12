@@ -11,4 +11,11 @@ class Asociere < ActiveRecord::Base
     self.sanitize_sql_hash_for_conditions options
   end
   
+  def atribuie_formular_id
+    raise 'nu pot determina formular_id fara grupa_id' unless self.grupa_id
+    g = Grupa.find_by_id self.grupa_id
+    raise 'nu pot determina formular_id: grupa_id nu referentiaza o grupa valida' unless g
+    raise 'NEIMPLEMENTAT inca..'
+    self.formular_id = 102
+  end
 end

@@ -34,6 +34,7 @@ class UserPdf < Prawn::Document
 				
 				table(data, :width => 450)#, :cell_style => {:align=> :center, :height => 70,:padding => 15}) 
 			end
+			start_new_page
 		end
 	end
 

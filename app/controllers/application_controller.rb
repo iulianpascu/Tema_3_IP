@@ -69,12 +69,12 @@ class ApplicationController < ActionController::Base
 
 
   def incarca_cursuri(ops ={})
-    select = %q{ SELECT DISTINCT "cursuri"."nume" as denumire, "asocieri"."an",
-                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor, "cursuri"."id" 
-                 as id_curs,  "asocieri"."id" as id_eval,
-                 "profesori"."departament" as dep, "profesori"."id" as profesor_id
-                 FROM cursuri INNER JOIN profesori on "cursuri"."profesor_id" = "profesori"."id" 
-                 INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" where 1 = 1 }
+    select = %q{ SELECT distinct "cursuri"."nume" as denumire, "asocieri"."an", asocieri.semestru,
+                 "profesori"."nume" || ' ' || "profesori"."prenume" as profesor,
+                 min(asocieri.id) as eval_id, "cursuri"."id"  as id_curs,
+                 string_agg(trim(both ' ' from to_char("asocieri"."grupa_id", '99999')), ', ') as grupe,
+                 "profesori"."departament" as dep, "profesori"."id" as profesor_id,
+                 asocieri.formular_id  FROM cursuri INNER JOIN profesori on "cursuri"."profesor_id" = "profesori"."id"  INNER JOIN asocieri on "cursuri"."id" = "asocieri"."curs_id" WHERE 1 = 1 }
     
     asoc_where = Asociere.where_arguments( an: ops[:an], 
                                            semestru: ops[:semestru] )
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
     where_string << " AND #{ prof_where }" unless prof_where.blank?
     where_string << " And cursuri.tip like '#{ ops[:tip].first }%' " unless ops[:tip].blank?
     
-    @cursuri = Curs.connection.execute "#{ select } #{ where_string };"
+    @cursuri = Curs.connection.execute "#{ select } #{ where_string } GROUP BY profesori.id, cursuri.id, asocieri.an, asocieri.semestru , asocieri.formular_id;"
   end
 
   def redirect_to_asigned
