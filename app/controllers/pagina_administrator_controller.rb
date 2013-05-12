@@ -194,7 +194,7 @@ end
     end
       
 
-    end
+
   rescue JSON::ParserError
     flash[:error] << 'eroare parsare JSON profesori'
     @error_raised = :warn

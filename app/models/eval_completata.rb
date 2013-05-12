@@ -1,5 +1,5 @@
 class EvalCompletata < ActiveRecord::Base
-  attr_accessible :continut, :curs_id, :incognito_user_token, :timp, :data
+  attr_accessible :continut, :curs_id, :incognito_user_token, :timp, :data, :an, :semestru
   serialize :continut, ActiveRecord::Coders::Hstore
   belongs_to :incognito_user, { :primary_key => 'token', 
                                 :foreign_key => 'incognito_user_token', 

@@ -146,7 +146,9 @@ CREATE TABLE eval_completate (
     incognito_user_token character varying(255),
     timp integer,
     continut hstore,
-    data date
+    data date,
+    semestru integer,
+    an integer
 );
 
 
@@ -578,3 +580,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130506164903');
 INSERT INTO schema_migrations (version) VALUES ('20130506182721');
 
 INSERT INTO schema_migrations (version) VALUES ('20130507070003');
+
+INSERT INTO schema_migrations (version) VALUES ('20130512172545');

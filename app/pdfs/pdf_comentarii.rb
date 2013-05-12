@@ -5,6 +5,10 @@ class PdfComentarii < Prawn::Document
     generate
   end
 
+  def choose_eval(eval_id)
+    @eval_id = eval_id
+  end
+
   def generate
     grupa = Grupa.all
     grupa.each do |g|
@@ -18,9 +22,9 @@ class PdfComentarii < Prawn::Document
         
         i_users.each_slice(2) do |a,b|
 
-          cell_1 = make_cell(:content =>"Grupa #{g.nume}\n#{a.token}")
+          cell_1 = make_cell(:content =>"Grupa #{g.nume}\n#{a.token}\n#{Date.today}")
           if b
-            cell_2 = make_cell(:content =>"Grupa #{g.nume}\n#{b.token}")
+            cell_2 = make_cell(:content =>"Grupa #{g.nume}\n#{b.token}\n#{Date.today}")
             data << [cell_1,cell_2]
           else
             data << [cell_1]

@@ -94,6 +94,8 @@ class EvaluareaCursurilorController < ApplicationController
 
       EvalCompletata.create(incognito_user_token: session[:user_token][:token],
                                 curs_id: params[:id_curs],
+                                an: asoc.an,
+                                semestru: asoc.semestru,
                                 continut: raspunsuri,
                                 timp: params[:tpcp]) unless @necompletate
     else

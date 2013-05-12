@@ -7,7 +7,7 @@ class ComentsAndStatsController < ApplicationController
     require 'json'
     
     if @asociere
-      formular = JSON.parse asoc.formular.continut 
+      formular = JSON.parse @asociere.formular.continut 
       @continuturi = formular["chestionar"]
     else
       flash[:error] = "Curs nedisponibil"
