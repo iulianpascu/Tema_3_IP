@@ -48,32 +48,37 @@
 
 $(function(){
   //sa fie AJAX
-  $(".modalButton").click(function(){
-    var id = this.id;
-    var action_link = "/get_stats/" + id + '.js';
-    $.get(action_link, $(this).serialize(), null, "script");
-  });
+  var reload_bindings = function(){
+    $(".modalButton").click(function(){
+      var id = this.id;
+      var action_link = "/get_stats/" + id + '.js';
+      $.get(action_link, $(this).serialize(), null, "script");
+    });
+    
+    $(".dropdown-menu > li > a").click( function() { 
+      v = $(this).attr('value');
+      camp = $(this).parent().parent().attr('value');
+      hashs = {};
+      hashs[camp] = v;
+      $.post('<%= @pathhh %>', hashs ,reload_table, 'html');
+    });
+
+    $(".in_progres > li > a").click( function() { 
+      v = $(this).attr('value');
+      $(this).parent().siblings().removeClass('active');
+      $(this).parent().addClass('active');
+
+      $.post('<%= @pathhh %>', {'in_progres' : v} ,reload_table, 'html');
+    });
+  }
+
+  reload_bindings();
 
   var reload_table = function(data) {
     $("#lista_curs").empty();
     $("#lista_curs").append(data);
+    reload_bindings();
   };
 
-
-  $(".dropdown-menu > li > a").click( function() { 
-    v = $(this).attr('value');
-    camp = $(this).parent().parent().attr('value');
-    hashs = {};
-    hashs[camp] = v;
-    $.post('<%= @pathhh %>', hashs ,reload_table, 'html');
-  });
-
-  $(".in_progres > li > a").click( function() { 
-    v = $(this).attr('value');
-    $(this).parent().siblings().removeClass('active');
-    $(this).parent().addClass('active');
-
-    $.post('<%= @pathhh %>', {'in_progres' : v} ,reload_table, 'html');
-  });
 });
 </script>
