@@ -18,4 +18,9 @@ class Asociere < ActiveRecord::Base
     raise 'NEIMPLEMENTAT inca..'
     self.formular_id = 102
   end
+
+  def obtine_raspunsuri_pt(qindex)
+    query = "select continut -> '#{qindex}' as text from eval_completate where curs_id = #{self.curs_id} and semestru = #{self.semestru} and an = #{self.an} and not continut @> '\"#{qindex}\"=>\"\"';"
+    self.connection.execute query
+  end
 end

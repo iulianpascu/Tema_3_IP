@@ -20,7 +20,7 @@ class ComentsAndStatsController < ApplicationController
   def get_coments
     respond_to do |format|
       format.pdf do
-        pdf = @aproved ? PdfComentarii.new() : PdfErr.new()
+        pdf = @aproved ? PdfComentarii.new(@asociere.id) : PdfErr.new()
         send_data pdf.render, filename: @aproved ? 
           "#{@asociere.curs.nume}-#{@asociere.curs.id}.pdf" : 'eroare',
         type: "application/pdf"

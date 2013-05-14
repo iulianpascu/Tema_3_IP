@@ -1,41 +1,29 @@
 class PdfComentarii < Prawn::Document
 
-  def initialize()
+  def initialize(eval_id)
+    @eval_id = eval_id
     super()
     generate
   end
 
-  def choose_eval(eval_id)
-    @eval_id = eval_id
-  end
-
   def generate
-    grupa = Grupa.all
-    grupa.each do |g|
-      i_users = IncognitoUser.find_all_by_grupa_nume(g.nume)
-      if i_users.any?
-
-        text_box "Grupa #{g.nume} #{i_users.count}", :at => [200,cursor-20]
-        move_down 50
-
-        data = []
-        
-        i_users.each_slice(2) do |a,b|
-
-          cell_1 = make_cell(:content =>"Grupa #{g.nume}\n#{a.token}\n#{Date.today}")
-          if b
-            cell_2 = make_cell(:content =>"Grupa #{g.nume}\n#{b.token}\n#{Date.today}")
-            data << [cell_1,cell_2]
-          else
-            data << [cell_1]
+    if @eval_id
+      asoc = Asociere.find_by_id @eval_id
+      intrebari = asoc.formular.intrebari_libere
+      intrebari.each do |intrebare|
+        text intrebare[:text]
+        rasp = asoc.obtine_raspunsuri_pt intrebare[:index]
+        if rasp.any?
+          rasp.each do |raspuns|
+            text raspuns['text']
           end
-
+        else
+          text 'nici un raspuns'
         end
-
-        # # data += [[cell_1, nil]] if i_users.count % 2 == 1
-        
-        table(data, :width => 450)#, :cell_style => {:align=> :center, :height => 70,:padding => 15}) 
       end
+      
+    else
+      text 'Eroare: acest curs nu a putut fi gasit'
     end
   end
 

@@ -81,7 +81,7 @@ class EvaluareaCursurilorController < ApplicationController
             @necompletate = true 
             nc << {(qindex).to_s => "EMPTY"}
           else
-            raspunsuri[key] = params[key]   
+            raspunsuri[key] = params[key].nil? ? '' : params[key].strip
           end
         else
           nc << {(qindex).to_s => "label"}
@@ -93,11 +93,11 @@ class EvaluareaCursurilorController < ApplicationController
 
 
       EvalCompletata.create(incognito_user_token: session[:user_token][:token],
-                                curs_id: params[:id_curs],
-                                an: asoc.an,
-                                semestru: asoc.semestru,
-                                continut: raspunsuri,
-                                timp: params[:tpcp]) unless @necompletate
+                            curs_id: params[:id_curs],
+                            an: asoc.an,
+                            semestru: asoc.semestru,
+                            continut: raspunsuri,
+                            timp: params[:tpcp]) unless @necompletate
     else
       flash[:error] = "Acea evaluare nu iti este disponibila, poate ai completat-o deja"
     end
