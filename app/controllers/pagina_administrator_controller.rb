@@ -3,28 +3,36 @@ class PaginaAdministratorController < ApplicationController
   before_filter :admin_required
   before_filter :load_selection_from_cookie
 
+
   def pagAdmin
     @acces_pdf = true
     @ani = []
     Asociere.select(:an).uniq.each { |a| @ani << a.an }
 
     incarca_cursuri( an: @selection['an'], 
-                     semestru: @selection['semestru'],
-                     departament: @selection['departament'],
-                     in_progres: @selection['in_progres'],
-                     tip: @selection['tip'] )
+     semestru: @selection['semestru'],
+     departament: @selection['departament'],
+     in_progres: @selection['in_progres'],
+     tip: @selection['tip'] )
 
     if request.method == 'POST'
       render 'shared/_lista_cursuri_evaluate', :handler => :erb, :layout => false
     else
       render 'shared/pagina_cursuri', :handler => :erb, :locals => { :pathh => homepage_admin_path, :show_progress => true }
     end
-end
+  end
 
   def setare_resetare
     @formular = Formular.last
     @error_raised = nil
     submit_method if request.method == 'POST'
+  end
+
+  def get_tokens
+    generate_tokens    
+    pdf = TokensPdf.new(params['id'])
+    send_data pdf.render, filename: "Grupe_#{params[:id]}e.pdf", type: 'application/pdf'
+    
   end
 
   private
@@ -44,17 +52,20 @@ end
       
       # daca ceva pica, baza nu e compromisa
       ActiveRecord::Base.transaction do
+        require 'net/http'  
+        Asociere.where( semestru: semestru_curent, an: an_universitar_curent).delete_all
         if reset_db
-          hard_reset
-          set_start_time
-          require 'net/http'    
+          DataEvaluare.delete_all
+          set_start_time  
+          Grupa.delete_all
           retrive_and_load_groups
           retrive_and_load_teachers
           retrive_and_load_courses # with group assoc
         else
-          soft_refresh
+          DataEvaluare.delete_all
           set_start_time
-          # regenerate_tokens
+          retrive_and_load_teachers
+          retrive_and_load_courses 
         end
       end
     end
@@ -98,25 +109,6 @@ end
     nil
   end
 
-  # Reseteaza Token-uri
-  def soft_refresh
-    IncognitoUser.delete_all
-    SesiuneActiva.delete_all
-    DataEvaluare.delete_all
-    Grupa.delete_all
-  end
-
-  # Reseteaza
-  # - grupele + token-uri
-  # - asocierile grupa-curs-profesor din semestrul curent
-  def hard_reset
-    IncognitoUser.delete_all
-    SesiuneActiva.delete_all
-    DataEvaluare.delete_all
-    Grupa.delete_all
-    Asociere.delete_all semestru_curent_hash
-  end
-
   def json_check_for_error(rhash)
     if rhash['error']
       if rhash['error'] == 'Token expired'
@@ -130,9 +122,22 @@ end
     end
   end
 
-  def retrive_and_load_groups
+  def generate_tokens
     require 'securerandom'
-    
+    ActiveRecord::Base.transaction do
+      IncognitoUser.delete_all
+      Grupa.all.each do |g|
+        if g.studenti
+          g.studenti.times do
+            rand = SecureRandom.base64(16)
+            IncognitoUser.create(grupa_nume: g.nume, token: rand)
+          end
+        end
+      end
+    end
+  end
+
+  def retrive_and_load_groups
     url = URI.parse('http://coursemanager.herokuapp.com/api/groups/students_number.json')
     response = Net::HTTP.post_form(url, {})
     rhash = JSON.load response.body
@@ -144,22 +149,18 @@ end
     # TODO adaugare master
     terminal = %w(3 4)
     grupe.each do |g|
-      
+
       gr = Grupa.new
       gr.id          = g['group'].to_i
       gr.nume        = g['group'].to_i
       gr.studenti    = g['number'].to_i
       gr.terminal    = g['group'].at(0).in?(terminal)
       gr.an          = gr.nume.at 0
-      # TODO mutare formular pe asociere
-      # # TODO formular mai dinamic!!!!!
-      # gr.formular_id = @formular.id
       gr.save
 
-      (1..(g['number'].to_i)).each do
+      gr.studenti.times do
         rand = SecureRandom.base64(16)
-        IncognitoUser.create(grupa_nume: g['group'].to_i,
-         token: rand)
+        IncognitoUser.create(grupa_nume: gr.nume, token: rand)
       end
 
     end
@@ -192,7 +193,7 @@ end
         p.save
       end
     end
-      
+
 
 
   rescue JSON::ParserError
@@ -231,24 +232,31 @@ end
         csuri += 1
       end
 
-      assoc = Asociere.new
+      assoc = Asociere.where(curs_id: cr.id,
+                            grupa_id: c['group'].to_i,
+                            an: an_universitar_curent,
+                            semestru: semestru_curent).first
+      unless assoc
+        assoc = Asociere.new 
         assoc.curs_id  = cr.id
         assoc.grupa_id = c['group'].to_i
         assoc.an       = an_universitar_curent 
         assoc.semestru = semestru_curent
-        assoc.formular_id = @formular.id
-        # assoc.formular_id = determina_formular assoc.grupa_id
+      end
+
+      assoc.formular_id = @formular.id
       assoc.save
+      
 
     end
 
-    
-    flash[:notice] << '#{profi} profesori noi'
-    flash[:notice] << '#{csuri} cursuri noi'
+
+    flash[:notice] << "#{profi} profesori noi"
+    flash[:notice] << "#{csuri} cursuri noi"
   rescue JSON::ParserError
     flash[:error] = 'eroare parsare JSON cursuri'
   rescue => e
-    flash[:error] = 'eroare cursuri: #{e}'
+    flash[:error] = "eroare cursuri: #{e}"
   end
 
   def set_start_time

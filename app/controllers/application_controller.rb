@@ -34,17 +34,24 @@ class ApplicationController < ActionController::Base
 
   def semestru_curent_hash
     { an: (Date.today.year - (Date.today.month > 6 ? 0 : 1)), 
-      semestru: ((Date.today.month > 6) ? 1 : 2) }
+      semestru: semestru_curent }
   end
 
   helper_method :an_universitar_curent
   def an_universitar_curent 
-    Date.today.year - (Date.today.month > 6 ? 0 : 1)
+    Date.today.year - (Date.today.month > 9 ? 0 : 1)
   end
 
   helper_method :semestru_curent
   def semestru_curent
-    Date.today.month > 6 ? 1 : 2
+    t = Date.today
+    if 10 <= t.month or t.month <= 1
+      1
+    elsif t.month == 2
+      t.day < 18 ? 1 : 2
+    else
+      2
+    end
   end
 
   def load_selection_from_cookie

@@ -6,6 +6,7 @@ GossipLogin::Application.routes.draw do
 
   match '/get_stats/:id', to: 'coments_and_stats#get_stats', via: :get
   match '/get_coments/:id', to: 'coments_and_stats#get_coments', via: :get
+  match '/get_tokens/:id', to: 'pagina_administrator#get_tokens', via: :get, as: 'get_tokens'
 
   match 'auth/:provider/callback' => 'sessions#create_signed'
   match 'auth/failure' => 'sessions#failure'
