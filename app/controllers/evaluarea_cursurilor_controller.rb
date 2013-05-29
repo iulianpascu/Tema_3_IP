@@ -13,7 +13,7 @@ class EvaluareaCursurilorController < ApplicationController
     unless gr
       redirect_to token_sign_out_path and return
     end
-    cursuri = Asociere.joins(:grupa).where( asocieri: semestru_curent_hash, grupe: {id: gr.id})
+    cursuri = Asociere.joins(:grupa, :curs).where( asocieri: semestru_curent_hash, grupe: {id: gr.id}).order("cursuri.nume ASC")
     
     @curs = []
 
@@ -93,7 +93,7 @@ class EvaluareaCursurilorController < ApplicationController
 
 
       EvalCompletata.create(incognito_user_token: session[:user_token][:token],
-                            curs_id: params[:id_curs],
+                            curs_id: asoc.curs_id,
                             an: asoc.an,
                             semestru: asoc.semestru,
                             continut: raspunsuri,

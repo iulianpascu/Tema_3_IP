@@ -65,7 +65,7 @@ class SessionsController < ApplicationController
   # logare prin FMI-Connect
   def create_signed
     # raise env["omniauth.auth"].to_yaml
-
+    cookies[:selection] = nil
     session[:user_signed] = { uid: env["omniauth.auth"]["uid"],
                               token: env["omniauth.auth"]['credentials']['token'],
                               first_name: env["omniauth.auth"]["extra"]["first_name"],

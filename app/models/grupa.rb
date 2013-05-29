@@ -1,7 +1,7 @@
 class Grupa < ActiveRecord::Base
   attr_accessible :nume, :studenti, :terminal, :an, :serie, :specializare,  :domeniu
-  belongs_to :data_evaluare, { :primary_key => 'grupa_terminal',
-                               :foreign_key => 'terminal' }
+  has_one :data_evaluare, { :primary_key => 'terminal',
+                               :foreign_key => 'grupa_terminal'}
   has_many :incognito_users, { :primary_key => 'nume',
                                :foreign_key => 'grupa_nume',
                                :inverse_of => :grupa }

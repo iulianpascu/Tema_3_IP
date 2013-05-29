@@ -72,11 +72,24 @@
 
         <input type="hidden"  id="tpcp" name="tpcp" />
         <div id="modal-warn" class="span"></div>
-        <%= submit_tag "Trimite", {"class" => "btn btn-info"}%>
+        <%= submit_tag "Trimite", {"class" => "btn btn-info", "id" => "trimitepebune"}%>
     </div>
     <% end %>
 </div>
-
+<div class="modal hide fade" id="warning">
+    <div class="modal-header">
+        <h3>Atentie!</h3>
+    </div>
+    <div class="modal-body">
+        Asupra unei evaluari nu se poate reveni dupa ce este trimisa!<br>
+        Daca doresti sa-ti revezi raspunsurile apasa pe <b>Inapoi</b><br>
+        Daca doresti sa trimiti in forma curenta apasa pe <b>Trimite</b>
+    </div>    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="inapoi">Inapoi</button>
+        <button type="button" class="btn btn-success" id="trimite">Trimite</button>
+    </div>
+</div>
 
 
 <script src="/assets/jquery.min.js" type="text/javascript"></script>
@@ -95,12 +108,33 @@ $(".modalButton").click(function(){
 });
 
 $("#charlie").submit(function(){
+    $('#modal').modal('hide');
+    $('#warning').modal('show');
+    return false;
+});
+
+var send_eval = function(){
     var id_eval = $("#id_eval").text();
     var diff = ($.now() - timp_sesiune)/1000;
     $('#tpcp').val(diff);
-    $.post("/post_chestionar/" + id_eval + '.js', $(this).serialize(), null, "script");
+    $.post("/post_chestionar/" + id_eval + '.js', $("#charlie").serialize(), null, "script");
     return false;  
+};
+
+$("#trimitepebune").click(function(){
+    $('#modal').modal('hide');
+    $('#warning').modal('show');
+    return false;
+})
+
+$("#inapoi").click(function(){
+    $('#warning').modal('hide');
+    $('#modal').modal('show');
+    
 });
 
+$("#trimite").click(function(){
+    send_eval();
+});
 var timp_sesiune = 0;
 </script>

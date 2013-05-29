@@ -1,10 +1,11 @@
 
 <% if @continuturi %>
+var mesaj_acceptat = false;
 $('#error-div').empty();
 $('#modal-warn').empty();
-$(".modal-body").empty();
+$("#modal .modal-body").empty();
   
-$(".modal-body").append("<%=j render "modal_micut" %>");
+$("#modal .modal-body").append("<%=j render "modal_micut" %>");
   
 $('#modal').modal('show');
 

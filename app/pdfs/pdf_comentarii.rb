@@ -40,7 +40,7 @@ class PdfComentarii < Prawn::Document
         end
       end
       intrebari.each do |intrebare|
-        intrebare_box intrebare[:text]
+        text intrebare[:text], :size => 16, :style => :bold, :align => :center
         
         rasp = asoc.obtine_raspunsuri_pt intrebare[:index]
         if rasp.any?

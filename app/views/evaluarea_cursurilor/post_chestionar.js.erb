@@ -1,8 +1,10 @@
+$('#warning').modal('hide');
 <% if @necompletate %>
+  $('#modal').modal('show');
   $('#modal-warn').empty();
   $('#modal-warn').append('<div class="alert alert-error">Intrebarile cu variante de raspuns sunt obligatorii!</div>')
 <% else %>
-  $("#modal").modal("hide");
+  //$("#modal").modal("hide");
   $('#error-div').empty();
   $('#error-div').append("<%=j render template: 'layouts/_error_and_alert_div' %> ");
   $('#<%= params[:id_curs] %>').removeClass('modalButton');
