@@ -113,7 +113,8 @@ ALTER SEQUENCE cursuri_id_seq OWNED BY cursuri.id;
 CREATE TABLE data_evaluari (
     id integer NOT NULL,
     grupa_terminal boolean,
-    data date
+    data date,
+    last_refresh date
 );
 
 
@@ -582,3 +583,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130506182721');
 INSERT INTO schema_migrations (version) VALUES ('20130507070003');
 
 INSERT INTO schema_migrations (version) VALUES ('20130512172545');
+
+INSERT INTO schema_migrations (version) VALUES ('20130529141936');

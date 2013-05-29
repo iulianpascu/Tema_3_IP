@@ -108,6 +108,7 @@
         <label class="control-label">ani neterminali</label> 
         <div class="controls"> 
           <%= link_to "Download" , { controller: "pagina_administrator", action: "get_tokens", id: "neterminal"},class: "btn btn-info" %>
+          <p class="help-block">Ultima generare: <%= last_refresh(false) %></p>
         </div>
 
       </div>
@@ -115,6 +116,7 @@
         <label class="control-label">ani terminali</label> 
         <div class="controls"> 
           <%= link_to "Download" , { controller: "pagina_administrator", action: "get_tokens", id: "terminal" }, class: "btn btn-info" %>
+          <p class="help-block">Ultima generare: <%= last_refresh(true) %></p>
         </div>
 
       </div>

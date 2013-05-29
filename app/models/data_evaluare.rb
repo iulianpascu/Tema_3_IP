@@ -1,5 +1,5 @@
 class DataEvaluare < ActiveRecord::Base
-  attr_accessible :data, :grupa_terminal
+  attr_accessible :data, :grupa_terminal, :last_refresh
   has_many :grupe, { :primary_key => 'grupa_terminal', 
                      :foreign_key => 'terminal'}
 

@@ -29,9 +29,17 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def get_tokens
-    generate_tokens    
+    term = params[:id] == 'terminal' ? true : false 
+    d = DataEvaluare.find_by_grupa_terminal term
+    if d
+      d.last_refresh = Date.today
+      d.save
+    else
+      DataEvaluare.create(grupa_terminal: term, last_refresh: Date.today)
+    end
+    generate_tokens(term) 
     pdf = TokensPdf.new(params['id'])
-    send_data pdf.render, filename: "Grupe_#{params[:id]}e.pdf", type: 'application/pdf'
+    send_data pdf.render, filename: "Grupe_#{params[:id]}e.pdf", type: 'application/pdf', disposition: 'inline'
     
   end
 
@@ -122,12 +130,12 @@ class PaginaAdministratorController < ApplicationController
     end
   end
 
-  def generate_tokens
+  def generate_tokens(term)
     require 'securerandom'
     ActiveRecord::Base.transaction do
       IncognitoUser.delete_all
       Grupa.all.each do |g|
-        if g.studenti
+        if g.studenti and g.terminal == term
           g.studenti.times do
             rand = SecureRandom.base64(16)
             IncognitoUser.create(grupa_nume: g.nume, token: rand)
@@ -260,8 +268,20 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def set_start_time
-    DataEvaluare.create data: @data_norm, grupa_terminal: false
-    DataEvaluare.create data: @data_term, grupa_terminal: true
+    d1 = DataEvaluare.find_by_grupa_terminal false
+    if d1
+      d1.data = @data_norm
+      d1.save
+    else
+      DataEvaluare.create data: @data_norm, grupa_terminal: false 
+    end
+    d2 = DataEvaluare.find_by_grupa_terminal false
+    if d2
+      d2.data = @data_term
+      d2.save
+    else
+      DataEvaluare.create data: @data_term, grupa_terminal: true
+    end
   end
 
   require 'nokogiri'
