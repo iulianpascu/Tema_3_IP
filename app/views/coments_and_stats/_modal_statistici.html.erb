@@ -1,0 +1,40 @@
+<% @continuturi.each_with_index do |parent, qindex| %>
+  
+  <% if parent["label"] %>
+  
+    <h4><%= parent["label"] %></h4><hr>
+  
+  <% elsif parent["intrebare"] %>
+  
+    <% if parent["intrebare"].first["enunt"] %>
+  
+      <% enunt = parent["intrebare"].first["enunt"] %>
+      <% r = parent["intrebare"].drop 1 %>
+  
+    <% else %>
+  
+      <% r = parent["intrebare"] %>
+  
+    <% end %>
+  
+    <% if r.any? %>
+      <% if enunt %>
+      <h5><%= enunt %></h5>
+      <% end %>
+      <% v = voturi(@asociere.id, qindex+1, r.count) %>
+      <ul>
+      
+      <% r.each_with_index do |rasp, i| %>
+        <li><%= "#{v[i]} voturi: #{rasp["rasp"]}" %>
+        <% procent = v[i].to_i * 100 / nr_participanti(@asociere.id) %>
+        <div class="progress progress-info">
+          <div class="bar" style="width: <%= procent %>%"></div>
+        </div>
+        </li>
+      <% end %>
+    
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
+<div style="display:none" id="id_eval"><%= @id_curs %></div>

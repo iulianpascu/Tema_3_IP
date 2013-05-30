@@ -1,0 +1,18 @@
+
+<% if @continuturi %>
+$('#error-div').empty();
+$('#modal-warn').empty();
+$('#modal > .modal-header').empty();
+$('#modal > .modal-header').append("<%=j render 'header_statistici' %>");
+$(".modal-body").empty();
+<% if nr_participanti(@asociere.id) > 0 %>
+$(".modal-body").append("<%=j render 'modal_statistici' %>");
+<% end %>
+$('#modal').modal('show');
+
+
+<% else %>
+  $('#error-div').empty();
+  $('#error-div').append("<%=j render template: 'layouts/_error_and_alert_div' %> ");
+
+<% end %>
