@@ -118,7 +118,8 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def json_check_for_error(rhash)
-    if rhash['error']
+    
+    if rhash.class == {}.class && rhash['error']
       if rhash['error'] == 'Token expired'
         flash[:error] << 'Sesiunea dumneavoastra a expirat' 
         flash[:notice] << 'Pentru a putea folosi in continuare aplicatia va rugam sa va reautentificati'
@@ -146,10 +147,13 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def retrive_and_load_groups
-    url = URI.parse('http://coursemanager.herokuapp.com/api/groups/students_number.json')
-    response = Net::HTTP.post_form(url, {})
-    rhash = JSON.load response.body
-
+    # url = URI.parse('http://coursemanager.herokuapp.com/api/groups/students_number.json')
+    # response = Net::HTTP.post_form(url, {})
+    # rhash = JSON.load response.body
+    f = File.open('stud_no.json')
+    rhash = JSON.load f.read
+    f.close
+    
     @error_raised = json_check_for_error rhash
     return if @error_raised
 
@@ -162,8 +166,8 @@ class PaginaAdministratorController < ApplicationController
       gr.id          = g['group'].to_i
       gr.nume        = g['group'].to_i
       gr.studenti    = g['number'].to_i
-      gr.terminal    = g['group'].at(0).in?(terminal)
-      gr.an          = gr.nume.at 0
+      gr.terminal    = g['group'].to_s.at(0).in?(terminal)
+      gr.an          = gr.nume.to_s.at 0
       gr.save
 
       gr.studenti.times do
@@ -175,15 +179,18 @@ class PaginaAdministratorController < ApplicationController
   rescue JSON::ParserError
     flash[:error] << 'eroare parsare JSON grupe'
     @error_raised = :warn
-  rescue => e
-    flash[:error] << 'eroare grupe: #{e}'
-    @error_raised = :warn
+  # rescue => e
+  #   flash[:error] << 'eroare grupe: #{e}'
+  #   @error_raised = :warn
   end
 
   def retrive_and_load_teachers
-    url = URI.parse('http://fmi-autentificare.herokuapp.com/teacher/departments.json?oauth_token=#{session[:user_signed][:token].to_s}')
-    response = Net::HTTP.post_form(url, {})
-    rhash = JSON.load response.body
+    # url = URI.parse('http://fmi-autentificare.herokuapp.com/teacher/departments.json?oauth_token=#{session[:user_signed][:token].to_s}')
+    # response = Net::HTTP.post_form(url, {})
+    # rhash = JSON.load response.body
+    f = File.open('dep.json')
+    rhash = JSON.load f.read
+    f.close
 
     @error_raised = json_check_for_error rhash
     return if @error_raised
@@ -213,9 +220,13 @@ class PaginaAdministratorController < ApplicationController
   end
 
   def retrive_and_load_courses
-    url = URI.parse('http://coursemanager.herokuapp.com/api/teachers/groups.json')
-    response = Net::HTTP.post_form(url, {})
-    cursuri = Set.new JSON.load response.body
+    # url = URI.parse('http://coursemanager.herokuapp.com/api/teachers/groups.json')
+    # response = Net::HTTP.post_form(url, {})
+    # cursuri = Set.new JSON.load response.body
+    f = File.open('grupe.json')
+    cursuri = Set.new JSON.load f.read
+    f.close
+
     terminal = %w(3 5 8)
     profi = csuri = evals = 0
 
@@ -233,6 +244,7 @@ class PaginaAdministratorController < ApplicationController
       cr = Curs.find_by_nume_and_profesor_id_and_tip(c['course_name'], c['teacher_id'].to_i, c['course_type'])
       unless cr
         cr = Curs.new
+        cr.id = c['course_name']
         cr.nume           = c['course_name']
         cr.profesor_id    = c['teacher_id'].to_i
         cr.tip            = c['course_type']
