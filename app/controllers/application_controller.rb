@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
                                            semestru: ops[:semestru] )
     
     if ops[:departament]
-      prof_where = Profesor.where_arguments departament: ops[:departament]
+      prof_where = "lower(\"profesori\".\"departament\") like '#{ops[:departament].at 0}%'"
     elsif ops[:profesor_id]
       prof_where = Profesor.where_arguments id: ops[:profesor_id]
     end
