@@ -159,7 +159,7 @@ class PaginaAdministratorController < ApplicationController
 
     grupe = Set.new rhash
     # TODO adaugare master
-    terminal = %w(3 4)
+    terminal = %w(3 5)
     grupe.each do |g|
 
       gr = Grupa.new
