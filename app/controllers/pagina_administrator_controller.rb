@@ -139,6 +139,9 @@ class PaginaAdministratorController < ApplicationController
         if g.studenti and g.terminal == term
           g.studenti.times do
             rand = SecureRandom.base64(16)
+            while IncognitoUser.find_by_token(rand)
+              rand = SecureRandom.base64(16)
+            end
             IncognitoUser.create(grupa_nume: g.nume, token: rand)
           end
         end
