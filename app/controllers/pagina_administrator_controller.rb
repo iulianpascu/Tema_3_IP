@@ -134,7 +134,7 @@ class PaginaAdministratorController < ApplicationController
   def generate_tokens(term)
     require 'securerandom'
     ActiveRecord::Base.transaction do
-      IncognitoUser.delete_all
+      IncognitoUser.in_last_year(term).delete_all
       Grupa.all.each do |g|
         if g.studenti and g.terminal == term
           g.studenti.times do
@@ -158,22 +158,20 @@ class PaginaAdministratorController < ApplicationController
     return if @error_raised
 
     grupe = Set.new rhash
-    # TODO adaugare master
-    terminal = %w(3 5)
     grupe.each do |g|
 
       gr = Grupa.new
       gr.id          = g['group'].to_i
       gr.nume        = g['group'].to_i
       gr.studenti    = g['number'].to_i
-      gr.terminal    = g['group'].to_s.at(0).in?(terminal)
+      gr.terminal    = g['group'].to_s =~ /^(30|31|32|33|34|50)/ ? true : false
       gr.an          = gr.nume.to_s.at 0
       gr.save
 
-      gr.studenti.times do
-        rand = SecureRandom.base64(16)
-        IncognitoUser.create(grupa_nume: gr.nume, token: rand)
-      end
+      # gr.studenti.times do
+      #   rand = SecureRandom.base64(16)
+      #   IncognitoUser.create(grupa_nume: gr.nume, token: rand)
+      # end
 
     end
   rescue JSON::ParserError
@@ -227,7 +225,6 @@ class PaginaAdministratorController < ApplicationController
     cursuri = Set.new JSON.load f.read
     f.close
 
-    terminal = %w(3 5 8)
     profi = csuri = evals = 0
 
     
@@ -244,7 +241,6 @@ class PaginaAdministratorController < ApplicationController
       cr = Curs.find_by_nume_and_profesor_id_and_tip(c['course_name'], c['teacher_id'].to_i, c['course_type'])
       unless cr
         cr = Curs.new
-        cr.id = c['course_name']
         cr.nume           = c['course_name']
         cr.profesor_id    = c['teacher_id'].to_i
         cr.tip            = c['course_type']

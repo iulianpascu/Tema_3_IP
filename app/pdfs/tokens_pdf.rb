@@ -19,9 +19,9 @@ class TokensPdf < Prawn::Document
         
         i_users.each_slice(2) do |a,b|
 
-          cell_1 = make_cell(:content =>"Grupa #{g.nume}\n#{a.token}\n#{Date.today}")
+          cell_1 = make_cell(:content =>"Grupa #{g.nume}\n#{a.token}\n#{Time.now}\n188.240.47.87")
           if b
-            cell_2 = make_cell(:content =>"Grupa #{g.nume}\n#{b.token}\n#{Date.today}")
+            cell_2 = make_cell(:content =>"Grupa #{g.nume}\n#{b.token}\n#{Time.now}\n188.240.47.87")
             data << [cell_1,cell_2]
           else
             data << [cell_1]

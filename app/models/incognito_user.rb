@@ -10,4 +10,7 @@ class IncognitoUser < ActiveRecord::Base
     options.delete_if { |k, val| val == nil }
     self.sanitize_sql_hash_for_conditions options
   end
+
+  scope :in_last_year, lambda { |term|  where("grupa_nume IN (#{select("grupa_nume").joins(:grupa).where("grupe.terminal = ?").to_sql})", term)
+  }
 end
