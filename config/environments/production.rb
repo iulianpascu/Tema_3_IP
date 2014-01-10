@@ -1,3 +1,5 @@
+#config.assets.prefix = ENV['RAILS_RELATIVE_URL_ROOT'] ? ENV['RAILS_RELATIVE_URL_ROOT'] + '/assets' : '/assets'
+
 GossipLogin::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -21,7 +23,7 @@ GossipLogin::Application.configure do
   config.assets.digest = true
 
 
-	config.assets.precompile += %w[ stylesheets/*.css javascripts/*.js ]
+  config.assets.precompile += %w[ stylesheets/*.css javascripts/*.js ]
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
@@ -66,4 +68,7 @@ GossipLogin::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  config.relative_url_root = "/EvalCurs"
+
 end

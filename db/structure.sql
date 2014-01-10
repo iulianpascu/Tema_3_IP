@@ -173,6 +173,38 @@ ALTER SEQUENCE eval_completate_id_seq OWNED BY eval_completate.id;
 
 
 --
+-- Name: eval_disponibile; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE eval_disponibile (
+    id integer NOT NULL,
+    curs_id integer,
+    grupa_nume integer,
+    formular_id integer,
+    semestru integer
+);
+
+
+--
+-- Name: eval_disponibile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE eval_disponibile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: eval_disponibile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE eval_disponibile_id_seq OWNED BY eval_disponibile.id;
+
+
+--
 -- Name: formulare; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -375,6 +407,13 @@ ALTER TABLE ONLY eval_completate ALTER COLUMN id SET DEFAULT nextval('eval_compl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY eval_disponibile ALTER COLUMN id SET DEFAULT nextval('eval_disponibile_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY formulare ALTER COLUMN id SET DEFAULT nextval('formulare_id_seq'::regclass);
 
 
@@ -436,6 +475,14 @@ ALTER TABLE ONLY data_evaluari
 
 ALTER TABLE ONLY eval_completate
     ADD CONSTRAINT evaluare_completate_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: evaluare_disponibile_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY eval_disponibile
+    ADD CONSTRAINT evaluare_disponibile_pkey PRIMARY KEY (id);
 
 
 --

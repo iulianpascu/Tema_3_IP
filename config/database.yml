@@ -1,11 +1,21 @@
+production:
+  adapter: postgresql
+  encoding: UTF8
+  database: fmi_db_prod_evalcurs
+  host: localhost
+  pool: 5
+  port: 5432
+  username: fmi_user_evalcurs
+  password: K3p0!3
+
 development:
   adapter: postgresql
   encoding: UTF8
-  database: evaluari_development
+  database: evalcurs_development
   pool: 5
   port: 5432
   username: 
-  password:
+  password: 
 
 test:
   adapter: postgresql
