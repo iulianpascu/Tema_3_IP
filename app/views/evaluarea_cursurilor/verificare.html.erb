@@ -103,7 +103,7 @@
 //sa fie AJAX
 $(".modalButton").click(function(){
     var id = this.id;
-    var action_link = "/get_chestionar/" + id + '.js';
+    var action_link = "get_chestionar/" + id + '.js';
     $.post(action_link, $(this).serialize(), null, "script");
 });
 
@@ -117,7 +117,7 @@ var send_eval = function(){
     var id_eval = $("#id_eval").text();
     var diff = ($.now() - timp_sesiune)/1000;
     $('#tpcp').val(diff);
-    $.post("/post_chestionar/" + id_eval + '.js', $("#charlie").serialize(), null, "script");
+    $.post("post_chestionar/" + id_eval + '.js', $("#charlie").serialize(), null, "script");
     return false;  
 };
 
