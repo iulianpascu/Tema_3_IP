@@ -62,6 +62,7 @@ class PaginaAdministratorController < ApplicationController
       ActiveRecord::Base.transaction do
         require 'net/http'  
         Asociere.where( semestru: semestru_curent, an: an_universitar_curent).delete_all
+        @profi = @csuri = @nrgr = 0
         if reset_db
           DataEvaluare.delete_all
           set_start_time  
@@ -84,7 +85,7 @@ class PaginaAdministratorController < ApplicationController
 
     # fisier chestionar
     mesaje_validare << 'Va rugam specificati un formular' unless @formular or params[:chestionar]
-    unless params[:chestionar].nil? || params[:chestionar].empty?
+    unless params[:chestionar].nil? 
       begin
         @chestionar = xml_file_to_json_string params[:chestionar]
       ensure
@@ -170,7 +171,7 @@ class PaginaAdministratorController < ApplicationController
       gr.terminal    = g['group'].to_s =~ /^(30|31|32|33|34|50)/ ? true : false
       gr.an          = gr.nume.to_s.at 0
       gr.save
-
+      @nrgr += 1
       # gr.studenti.times do
       #   rand = SecureRandom.base64(16)
       #   IncognitoUser.create(grupa_nume: gr.nume, token: rand)
@@ -207,6 +208,7 @@ class PaginaAdministratorController < ApplicationController
         p.departament = departament
 
         p.save
+        @proff += 1
       end
     end
 
@@ -228,7 +230,7 @@ class PaginaAdministratorController < ApplicationController
     cursuri = Set.new JSON.load f.read
     f.close
 
-    profi = csuri = evals = 0
+    
 
     
     cursuri.each do |c|
@@ -238,7 +240,7 @@ class PaginaAdministratorController < ApplicationController
         p.prenume = c['teacher_firstname']
         p.id      = c['teacher_id'].to_i
         p.save
-        profi += 1
+        @profi += 1
       end
 
       cr = Curs.find_by_nume_and_profesor_id_and_tip(c['course_name'], c['teacher_id'].to_i, c['course_type'])
@@ -248,7 +250,7 @@ class PaginaAdministratorController < ApplicationController
         cr.profesor_id    = c['teacher_id'].to_i
         cr.tip            = c['course_type']
         cr.save
-        csuri += 1
+        @csuri += 1
       end
 
       assoc = Asociere.where(curs_id: cr.id,
@@ -269,9 +271,9 @@ class PaginaAdministratorController < ApplicationController
 
     end
 
-
-    flash[:notice] << "#{profi} profesori noi"
-    flash[:notice] << "#{csuri} cursuri noi"
+    flash[:notice] << "#{@nrgr} grupe adaugate"
+    flash[:notice] << "#{@profi} profesori adaugati"
+    flash[:notice] << "#{@csuri} cursuri adaugate"
   rescue JSON::ParserError
     flash[:error] = 'eroare parsare JSON cursuri'
   rescue => e

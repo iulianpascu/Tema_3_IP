@@ -19,11 +19,12 @@ class EvaluareaCursurilorController < ApplicationController
 
     cursuri.each do |e|
       c = e.curs
+      logger.info e.curs_id
       @curs << {nume: c.nume, 
                 prof: "#{c.profesor.nume} #{c.profesor.prenume}",
                 tip: c.tip,
                 id: e.id,
-                disabled: if EvalCompletata.find_by_incognito_user_token_and_curs_id(user.token, e.id)
+                disabled: if EvalCompletata.find_by_incognito_user_token_and_curs_id(user.token, e.curs_id)
                            true
                          else 
                            false
@@ -63,8 +64,8 @@ class EvaluareaCursurilorController < ApplicationController
                            semestru: semestru_curent,
                            grupa_id: gr.id,
                            id: params[:id_curs].to_i ).first if gr
-
-    comp = EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], params[:id_curs].to_i)
+    logger.info params[:id_curs].to_i
+    comp = EvalCompletata.find_by_incognito_user_token_and_curs_id(session[:user_token][:token], asoc.curs_id)
     # verific daca a completat deja aceasta evaluare
     if asoc && !comp
       formular = JSON.parse asoc.formular.continut 
